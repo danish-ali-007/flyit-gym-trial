@@ -1170,12 +1170,7 @@
 
   line-height: 1.35;
 }
-
-.clickable-stat-card:hover {
-  transform: translateY(-2px);
-}
-
-  /* =========================
+/* =========================
      HEADINGS
   ========================= */
 
@@ -1726,3 +1721,35 @@
   }
 }
 
+/* =========================================
+   REAL TOUCH DEVICE - DISABLE CARD HOVER
+========================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .stat-card:hover,
+  .clickable-stat-card:hover {
+    transform: none;
+    border-color: #eceef1;
+    box-shadow:
+      0 6px 20px
+      rgba(17, 24, 39, 0.06);
+  }
+
+  .clickable-stat-card:hover {
+    background: linear-gradient(
+      145deg,
+      #ffffff,
+      #fbfbfc
+    );
+  }
+
+  .clickable-stat-card:hover .stat-icon {
+    transform: none;
+    background: #fff1ed;
+  }
+
+  .clickable-stat-card {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+}

@@ -25,7 +25,13 @@
   color: white;
 
   border-right:
-    1px solid rgba(255, 255, 255, 0.05);
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.05
+    );
 
   box-sizing: border-box;
 
@@ -48,8 +54,15 @@
   margin-bottom: 15px;
 
   border-bottom:
-    1px solid rgba(255, 255, 255, 0.08);
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.08
+    );
 }
+
 
 .logo-mark {
   width: 44px;
@@ -78,12 +91,20 @@
   letter-spacing: 1px;
 
   box-shadow:
-    0 7px 18px rgba(255, 77, 48, 0.25);
+    0 7px 18px
+    rgba(
+      255,
+      77,
+      48,
+      0.25
+    );
 }
+
 
 .logo-text {
   min-width: 0;
 }
+
 
 .logo-text h2 {
   margin: 0;
@@ -98,9 +119,11 @@
   white-space: nowrap;
 }
 
+
 .logo-text h2 span {
   color: #ff4d30;
 }
+
 
 .logo-text p {
   margin: 4px 0 0;
@@ -125,6 +148,7 @@
 
   flex: 1;
 }
+
 
 .sidebar-link {
   position: relative;
@@ -151,14 +175,22 @@
     transform 0.2s ease;
 }
 
+
 .sidebar-link:hover {
   background:
-    rgba(255, 255, 255, 0.06);
+    rgba(
+      255,
+      255,
+      255,
+      0.06
+    );
 
   color: #ffffff;
 
-  transform: translateX(2px);
+  transform:
+    translateX(2px);
 }
+
 
 .sidebar-link.active {
   background:
@@ -171,13 +203,34 @@
   color: white;
 
   box-shadow:
-    0 7px 18px rgba(255, 77, 48, 0.2);
+    0 7px 18px
+    rgba(
+      255,
+      77,
+      48,
+      0.2
+    );
 }
+
 
 .sidebar-icon {
   font-size: 18px;
 
   flex-shrink: 0;
+}
+
+
+/* =========================
+   SIDEBAR BOTTOM
+========================= */
+
+.sidebar-bottom {
+  margin-top: auto;
+}
+
+
+.sidebar-profile-link {
+  margin-bottom: 14px;
 }
 
 
@@ -189,8 +242,15 @@
   padding: 16px 10px 4px;
 
   border-top:
-    1px solid rgba(255, 255, 255, 0.08);
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.08
+    );
 }
+
 
 .sidebar-footer p {
   margin: 0 0 3px;
@@ -200,6 +260,7 @@
   font-size: 12px;
   font-weight: 600;
 }
+
 
 .sidebar-footer span {
   color: #777f8a;
@@ -223,14 +284,18 @@
 
 @media (max-width: 768px) {
 
-  /* Hide desktop sidebar */
+  /* =========================
+     HIDE DESKTOP SIDEBAR
+  ========================= */
 
   .sidebar {
     display: none;
   }
 
 
-  /* Bottom navigation */
+  /* =========================
+     BOTTOM NAV
+  ========================= */
 
   .mobile-bottom-nav {
     position: fixed;
@@ -240,46 +305,80 @@
     bottom: 0;
 
     width: 100%;
-    height: 66px;
+
+    height:
+      calc(
+        64px +
+        env(
+          safe-area-inset-bottom,
+          0px
+        )
+      );
 
     display: grid;
 
     grid-template-columns:
-      repeat(5, minmax(0, 1fr));
+      repeat(
+        5,
+        minmax(0, 1fr)
+      );
 
     align-items: stretch;
 
-    background:
-      linear-gradient(
-        180deg,
-        #111318 0%,
-        #151820 100%
+    padding: 0;
+
+    padding-bottom:
+      env(
+        safe-area-inset-bottom,
+        0px
       );
 
+    margin: 0;
+
+    background: #14171d;
+
     border-top:
-      1px solid rgba(255, 255, 255, 0.08);
+      1px solid
+      rgba(
+        255,
+        255,
+        255,
+        0.08
+      );
 
     box-shadow:
-      0 -6px 20px
-      rgba(0, 0, 0, 0.22);
+      0 -2px 10px
+      rgba(
+        0,
+        0,
+        0,
+        0.15
+      );
+
+    box-sizing:
+      border-box;
 
     z-index: 9999;
 
-    isolation: isolate;
+    -webkit-user-select:
+      none;
 
-    pointer-events: auto;
-
-    touch-action: manipulation;
-
-    -webkit-user-select: none;
-    user-select: none;
+    user-select:
+      none;
 
     -webkit-tap-highlight-color:
       transparent;
   }
 
 
+  /* =========================
+     MOBILE NAV ITEM
+  ========================= */
+
   .mobile-nav-item {
+    appearance: none;
+    -webkit-appearance: none;
+
     position: relative;
 
     width: 100%;
@@ -287,45 +386,57 @@
 
     min-width: 0;
 
+    margin: 0;
+    padding: 5px 2px;
+
+    border: 0;
+    border-radius: 0;
+
+    outline: none;
+
     display: flex;
+
     flex-direction: column;
 
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
     gap: 4px;
 
+    background: transparent;
+
     color: #8f96a1;
 
-    text-decoration: none;
+    font-family: inherit;
 
     font-size: 10px;
     font-weight: 600;
 
+    line-height: 1;
+
     cursor: pointer;
 
-    pointer-events: auto;
-
-    touch-action: manipulation;
+    touch-action:
+      manipulation;
 
     -webkit-tap-highlight-color:
       transparent;
 
-    -webkit-user-select: none;
-    user-select: none;
+    -webkit-user-select:
+      none;
 
-    z-index: 1;
+    user-select:
+      none;
 
     transition:
-      color 0.2s ease,
-      background 0.2s ease;
+      color 80ms linear,
+      background-color 80ms linear;
   }
 
 
-  /*
-    Icon/text khud click capture nahi karenge.
-    Pura NavLink click target rahega.
-  */
+  /* =========================
+     ICON / TEXT
+  ========================= */
 
   .mobile-nav-item svg,
   .mobile-nav-item span {
@@ -334,32 +445,71 @@
 
 
   .mobile-nav-item svg {
+    flex-shrink: 0;
+
     font-size: 19px;
 
-    flex-shrink: 0;
+    transform: none;
+
+    transition: none;
   }
 
+
+  .mobile-nav-item span {
+    line-height: 1;
+
+    white-space: nowrap;
+  }
+
+
+  /* =========================
+     ACTIVE
+  ========================= */
 
   .mobile-nav-item.active {
     color: #ff4d30;
 
     background:
-      rgba(255, 77, 48, 0.08);
+      rgba(
+        255,
+        77,
+        48,
+        0.08
+      );
   }
 
 
-  .mobile-nav-item.active svg {
-    transform: translateY(-1px);
-  }
-
-
-  /*
-    Tap feedback
-  */
+  /* =========================
+     TAP FEEDBACK
+  ========================= */
 
   .mobile-nav-item:active {
+    color: #ff4d30;
+
     background:
-      rgba(255, 255, 255, 0.06);
+      rgba(
+        255,
+        77,
+        48,
+        0.13
+      );
+  }
+
+
+  /* =========================
+     MOBILE HOVER OFF
+  ========================= */
+
+  @media (
+    hover: none
+  ) and (
+    pointer: coarse
+  ) {
+
+    .mobile-nav-item:hover {
+      transform: none;
+    }
+
   }
 
 }
@@ -372,12 +522,21 @@
 @media (max-width: 420px) {
 
   .mobile-bottom-nav {
-    height: 62px;
+    height:
+      calc(
+        61px +
+        env(
+          safe-area-inset-bottom,
+          0px
+        )
+      );
   }
 
 
   .mobile-nav-item {
     gap: 3px;
+
+    padding: 4px 1px;
 
     font-size: 9px;
   }
@@ -387,16 +546,4 @@
     font-size: 18px;
   }
 
-}
-
-/* =========================================
-   SIDEBAR BOTTOM PROFILE AREA
-========================================= */
-
-.sidebar-bottom {
-  margin-top: auto;
-}
-
-.sidebar-profile-link {
-  margin-bottom: 14px;
 }

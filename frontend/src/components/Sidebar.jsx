@@ -1,4 +1,8 @@
-import { NavLink } from "react-router-dom";
+import {
+  NavLink,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
 import {
   FiHome,
@@ -14,23 +18,31 @@ import "./Sidebar.css";
 
 const Sidebar = () => {
 
+  const navigate =
+    useNavigate();
+
+  const location =
+    useLocation();
+
+
   // =========================
   // TRIAL MODE
   // =========================
 
   const isTrial =
-    localStorage.getItem("isTrial") ===
-    "true";
+    localStorage.getItem(
+      "isTrial"
+    ) === "true";
 
 
-  const trialGym = JSON.parse(
-    localStorage.getItem("trialGym") ||
-      "{}"
-  );
+  const trialGym =
+    JSON.parse(
+      localStorage.getItem(
+        "trialGym"
+      ) || "{}"
+    );
 
 
-  // Trial me actual client gym name.
-  // Normal system me existing Olympics Gym.
   const gymName =
     isTrial
       ? trialGym.gymName ||
@@ -38,13 +50,18 @@ const Sidebar = () => {
       : "Olympics Gym";
 
 
-  // Logo initials
+  // =========================
+  // LOGO INITIALS
+  // =========================
+
   const getGymInitials = (
     name
   ) => {
+
     if (!name) {
       return "GY";
     }
+
 
     const words =
       String(name)
@@ -52,15 +69,22 @@ const Sidebar = () => {
         .split(/\s+/)
         .filter(Boolean);
 
-    if (words.length === 1) {
+
+    if (
+      words.length === 1
+    ) {
+
       return words[0]
         .slice(0, 2)
         .toUpperCase();
     }
 
+
     return (
       words[0][0] +
-      words[words.length - 1][0]
+      words[
+        words.length - 1
+      ][0]
     ).toUpperCase();
   };
 
@@ -69,6 +93,53 @@ const Sidebar = () => {
     getGymInitials(
       gymName
     );
+
+
+  // =========================
+  // MOBILE ACTIVE ROUTE
+  // =========================
+
+  const isMobileRouteActive =
+    (path) => {
+
+      if (
+        path === "/dashboard"
+      ) {
+
+        return (
+          location.pathname ===
+          "/dashboard"
+        );
+      }
+
+
+      return (
+        location.pathname ===
+          path ||
+        location.pathname.startsWith(
+          `${path}/`
+        )
+      );
+    };
+
+
+  // =========================
+  // MOBILE NAVIGATION
+  // =========================
+
+  const handleMobileNavigate =
+    (path) => {
+
+      if (
+        location.pathname ===
+        path
+      ) {
+        return;
+      }
+
+
+      navigate(path);
+    };
 
 
   return (
@@ -83,7 +154,9 @@ const Sidebar = () => {
         <div className="sidebar-logo">
 
           <div className="logo-mark">
+
             {gymInitials}
+
           </div>
 
 
@@ -106,81 +179,101 @@ const Sidebar = () => {
 
           <NavLink
             to="/dashboard"
-            className={({ isActive }) =>
+            className={({
+              isActive,
+            }) =>
               isActive
                 ? "sidebar-link active"
                 : "sidebar-link"
             }
           >
+
             <FiHome className="sidebar-icon" />
 
             <span>
               Dashboard
             </span>
+
           </NavLink>
 
 
           <NavLink
             to="/members"
-            className={({ isActive }) =>
+            className={({
+              isActive,
+            }) =>
               isActive
                 ? "sidebar-link active"
                 : "sidebar-link"
             }
           >
+
             <FiUsers className="sidebar-icon" />
 
             <span>
               Members
             </span>
+
           </NavLink>
 
 
           <NavLink
             to="/plans"
-            className={({ isActive }) =>
+            className={({
+              isActive,
+            }) =>
               isActive
                 ? "sidebar-link active"
                 : "sidebar-link"
             }
           >
+
             <FiLayers className="sidebar-icon" />
 
             <span>
               Plans
             </span>
+
           </NavLink>
 
 
           <NavLink
             to="/payments"
-            className={({ isActive }) =>
+            className={({
+              isActive,
+            }) =>
               isActive
                 ? "sidebar-link active"
                 : "sidebar-link"
             }
           >
+
             <FiCreditCard className="sidebar-icon" />
 
             <span>
               Payments
             </span>
+
           </NavLink>
 
 
           <NavLink
             to="/reports"
-            className={({ isActive }) =>
+            className={({
+              isActive,
+            }) =>
               isActive
                 ? "sidebar-link active"
                 : "sidebar-link"
             }
           >
+
             <FiBarChart2 className="sidebar-icon" />
 
             <span>
               Reports
             </span>
+
           </NavLink>
 
         </nav>
@@ -192,8 +285,8 @@ const Sidebar = () => {
 
         <div className="sidebar-bottom">
 
-          {/* Normal admin only */}
           {!isTrial && (
+
             <NavLink
               to="/profile"
               className={({
@@ -204,12 +297,15 @@ const Sidebar = () => {
                   : "sidebar-link sidebar-profile-link"
               }
             >
+
               <FiUser className="sidebar-icon" />
 
               <span>
                 Profile
               </span>
+
             </NavLink>
+
           )}
 
 
@@ -234,86 +330,134 @@ const Sidebar = () => {
           MOBILE BOTTOM NAV
       ========================= */}
 
-      <nav className="mobile-bottom-nav">
+      <nav
+        className="mobile-bottom-nav"
+        aria-label="Mobile navigation"
+      >
 
-        <NavLink
-          to="/dashboard"
-          className={({ isActive }) =>
-            isActive
+        <button
+          type="button"
+          className={
+            isMobileRouteActive(
+              "/dashboard"
+            )
               ? "mobile-nav-item active"
               : "mobile-nav-item"
           }
+          onClick={() =>
+            handleMobileNavigate(
+              "/dashboard"
+            )
+          }
         >
+
           <FiHome />
 
           <span>
             Home
           </span>
-        </NavLink>
+
+        </button>
 
 
-        <NavLink
-          to="/members"
-          className={({ isActive }) =>
-            isActive
+        <button
+          type="button"
+          className={
+            isMobileRouteActive(
+              "/members"
+            )
               ? "mobile-nav-item active"
               : "mobile-nav-item"
           }
+          onClick={() =>
+            handleMobileNavigate(
+              "/members"
+            )
+          }
         >
+
           <FiUsers />
 
           <span>
             Members
           </span>
-        </NavLink>
+
+        </button>
 
 
-        <NavLink
-          to="/plans"
-          className={({ isActive }) =>
-            isActive
+        <button
+          type="button"
+          className={
+            isMobileRouteActive(
+              "/plans"
+            )
               ? "mobile-nav-item active"
               : "mobile-nav-item"
           }
+          onClick={() =>
+            handleMobileNavigate(
+              "/plans"
+            )
+          }
         >
+
           <FiLayers />
 
           <span>
             Plans
           </span>
-        </NavLink>
+
+        </button>
 
 
-        <NavLink
-          to="/payments"
-          className={({ isActive }) =>
-            isActive
+        <button
+          type="button"
+          className={
+            isMobileRouteActive(
+              "/payments"
+            )
               ? "mobile-nav-item active"
               : "mobile-nav-item"
           }
+          onClick={() =>
+            handleMobileNavigate(
+              "/payments"
+            )
+          }
         >
+
           <FiCreditCard />
 
           <span>
             Payments
           </span>
-        </NavLink>
+
+        </button>
 
 
-        <NavLink
-          to="/reports"
-          className={({ isActive }) =>
-            isActive
+        <button
+          type="button"
+          className={
+            isMobileRouteActive(
+              "/reports"
+            )
               ? "mobile-nav-item active"
               : "mobile-nav-item"
           }
+          onClick={() =>
+            handleMobileNavigate(
+              "/reports"
+            )
+          }
         >
+
           <FiBarChart2 />
 
           <span>
             Reports
           </span>
-        </NavLink>
+
+        </button>
 
       </nav>
 

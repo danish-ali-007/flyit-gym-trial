@@ -16,811 +16,373 @@ import Header from "../components/Header";
 import "./DashboardLayout.css";
 
 
-/* =====================================================
-   SCROLL MEMORY
+// =====================================================
+// SIMPLE SCROLL MEMORY
+// =====================================================
 
-   - Dashboard / Members / Plans / Payments / Reports
-     ka scroll separately remember hoga.
-
-   - Query params bhi route ka part rahenge.
-
-   - Same page ke andar filter / payment / data refresh
-     se layout height change hui to previous scroll
-     position maintain hogi.
-
-   - F5 / browser refresh par memory reset hogi.
-===================================================== */
-
-const scrollMemory = new Map();
+const scrollMemory =
+  new Map();
 
 
-const getRouteKey = (location) => {
-  return `${location.pathname}${location.search}`;
-};
+const getRouteKey =
+  (location) => {
 
-
-const getCurrentBrowserRouteKey = () => {
-  return `${window.location.pathname}${window.location.search}`;
-};
-
-
-const DashboardLayout = () => {
-  const [sidebarOpen, setSidebarOpen] =
-    useState(false);
-
-  const location = useLocation();
-
-  const contentRef = useRef(null);
-
-  const activeRouteRef = useRef(
-    getRouteKey(location)
-  );
-
-  const restoringScrollRef =
-    useRef(false);
-
-  const userScrollingRef =
-    useRef(false);
-
-  const userScrollTimerRef =
-    useRef(null);
-
-  const restoreTimerRef =
-    useRef(null);
-
-  const stabilizationTimerRef =
-    useRef(null);
-
-  const resizeRestoreTimerRef =
-    useRef(null);
-
-  const dashboardMinHeightTimerRef =
-    useRef(null);
-
-
-  const openSidebar = () => {
-    setSidebarOpen(true);
+    return `${location.pathname}${location.search}`;
   };
 
 
-  const closeSidebar = () => {
-    setSidebarOpen(false);
-  };
+// =====================================================
+// COMPONENT
+// =====================================================
+
+const DashboardLayout =
+  () => {
+
+    const [
+      sidebarOpen,
+      setSidebarOpen,
+    ] = useState(false);
 
 
-  /* =====================================================
-     USER SCROLL DETECTION
-
-     Important:
-     Browser/layout ke automatic scroll shift aur
-     actual user scroll ko alag rakhne ke liye.
-  ===================================================== */
-
-  useEffect(() => {
-    const markUserScrolling = () => {
-      userScrollingRef.current = true;
+    const location =
+      useLocation();
 
 
-      if (userScrollTimerRef.current) {
-        clearTimeout(
-          userScrollTimerRef.current
+    const currentRouteRef =
+      useRef(
+        getRouteKey(
+          location
+        )
+      );
+
+
+    const scrollFrameRef =
+      useRef(null);
+
+
+    // =====================================================
+    // SIDEBAR
+    // =====================================================
+
+    const openSidebar =
+      () => {
+
+        setSidebarOpen(
+          true
         );
-      }
-
-
-      userScrollTimerRef.current =
-        window.setTimeout(() => {
-          userScrollingRef.current =
-            false;
-        }, 300);
-    };
-
-
-    const handleKeyDown = (event) => {
-      const scrollKeys = [
-        "ArrowUp",
-        "ArrowDown",
-        "PageUp",
-        "PageDown",
-        "Home",
-        "End",
-        " ",
-      ];
-
-
-      if (
-        scrollKeys.includes(event.key)
-      ) {
-        markUserScrolling();
-      }
-    };
-
-
-    window.addEventListener(
-      "wheel",
-      markUserScrolling,
-      {
-        passive: true,
-      }
-    );
-
-
-    window.addEventListener(
-      "touchstart",
-      markUserScrolling,
-      {
-        passive: true,
-      }
-    );
-
-
-    window.addEventListener(
-      "touchmove",
-      markUserScrolling,
-      {
-        passive: true,
-      }
-    );
-
-
-    window.addEventListener(
-      "pointerdown",
-      markUserScrolling,
-      {
-        passive: true,
-      }
-    );
-
-
-    window.addEventListener(
-      "keydown",
-      handleKeyDown
-    );
-
-
-    return () => {
-      window.removeEventListener(
-        "wheel",
-        markUserScrolling
-      );
-
-      window.removeEventListener(
-        "touchstart",
-        markUserScrolling
-      );
-
-      window.removeEventListener(
-        "touchmove",
-        markUserScrolling
-      );
-
-      window.removeEventListener(
-        "pointerdown",
-        markUserScrolling
-      );
-
-      window.removeEventListener(
-        "keydown",
-        handleKeyDown
-      );
-
-
-      if (
-        userScrollTimerRef.current
-      ) {
-        clearTimeout(
-          userScrollTimerRef.current
-        );
-      }
-    };
-
-  }, []);
-
-
-  /* =====================================================
-     SAVE ACTUAL USER SCROLL
-  ===================================================== */
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        restoringScrollRef.current
-      ) {
-        return;
-      }
-
-
-      const browserRoute =
-        getCurrentBrowserRouteKey();
-
-
-      if (
-        browserRoute !==
-        activeRouteRef.current
-      ) {
-        return;
-      }
-
-
-      /*
-        Layout/data change ki wajah se browser
-        khud position change kare to saved scroll
-        overwrite nahi karenge.
-
-        Sirf actual user scrolling save hogi.
-      */
-
-      if (
-        !userScrollingRef.current
-      ) {
-        return;
-      }
-
-
-      scrollMemory.set(
-        activeRouteRef.current,
-        window.scrollY
-      );
-
-
-      /*
-        Momentum scrolling ke liye timer
-        extend karte rahenge.
-      */
-
-      if (
-        userScrollTimerRef.current
-      ) {
-        clearTimeout(
-          userScrollTimerRef.current
-        );
-      }
-
-
-      userScrollTimerRef.current =
-        window.setTimeout(() => {
-          userScrollingRef.current =
-            false;
-        }, 300);
-    };
-
-
-    window.addEventListener(
-      "scroll",
-      handleScroll,
-      {
-        passive: true,
-      }
-    );
-
-
-    return () => {
-      window.removeEventListener(
-        "scroll",
-        handleScroll
-      );
-    };
-
-  }, []);
-
-
-  /* =====================================================
-     RESTORE WHEN ROUTE CHANGES
-  ===================================================== */
-
-  useLayoutEffect(() => {
-    const routeKey =
-      getRouteKey(location);
-
-
-    activeRouteRef.current =
-      routeKey;
-
-
-    const savedScroll =
-      scrollMemory.get(routeKey);
-
-
-    restoringScrollRef.current =
-      true;
-
-
-    /* ==================================================
-       DASHBOARD ONLY
-    ================================================== */
-
-    if (
-      location.pathname === "/dashboard" &&
-      typeof savedScroll === "number"
-    ) {
-      const contentElement =
-        contentRef.current;
-
-      if (contentElement) {
-        const previousMinHeight =
-          contentElement.style.minHeight;
-
-        const requiredHeight =
-          savedScroll + window.innerHeight;
-
-        const currentHeight =
-          contentElement.getBoundingClientRect().height;
-
-        if (currentHeight < requiredHeight) {
-          contentElement.style.minHeight =
-            `${requiredHeight}px`;
-        }
-
-        window.scrollTo({
-          top: savedScroll,
-          left: 0,
-          behavior: "auto",
-        });
-
-        requestAnimationFrame(() => {
-          window.scrollTo({
-            top: savedScroll,
-            left: 0,
-            behavior: "auto",
-          });
-
-          requestAnimationFrame(() => {
-            restoringScrollRef.current =
-              false;
-          });
-        });
-
-        if (
-          dashboardMinHeightTimerRef.current
-        ) {
-          clearTimeout(
-            dashboardMinHeightTimerRef.current
-          );
-        }
-
-        dashboardMinHeightTimerRef.current =
-          window.setTimeout(() => {
-            const beforeRemoving =
-              window.scrollY;
-
-            contentElement.style.minHeight =
-              previousMinHeight;
-
-            requestAnimationFrame(() => {
-              const documentHeight =
-                Math.max(
-                  document.body.scrollHeight,
-                  document.documentElement
-                    .scrollHeight
-                );
-
-              const maxPossibleScroll =
-                Math.max(
-                  0,
-                  documentHeight -
-                    window.innerHeight
-                );
-
-              window.scrollTo({
-                top: Math.min(
-                  beforeRemoving,
-                  maxPossibleScroll
-                ),
-                left: 0,
-                behavior: "auto",
-              });
-            });
-
-            dashboardMinHeightTimerRef.current =
-              null;
-          }, 900);
-      }
-
-      return () => {
-        if (
-          dashboardMinHeightTimerRef.current
-        ) {
-          clearTimeout(
-            dashboardMinHeightTimerRef.current
-          );
-
-          dashboardMinHeightTimerRef.current =
-            null;
-        }
       };
-    }
 
 
-    /* ==================================================
-       FIRST VISIT
-    ================================================== */
+    const closeSidebar =
+      () => {
 
-    if (
-      typeof savedScroll !== "number"
-    ) {
-      window.scrollTo(
-        0,
-        0
-      );
-
-
-      scrollMemory.set(
-        routeKey,
-        0
-      );
-
-
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          restoringScrollRef.current =
-            false;
-        });
-      });
-
-
-      return;
-    }
-
-
-    /* ==================================================
-       WAIT UNTIL PAGE HAS ENOUGH HEIGHT
-    ================================================== */
-
-    let attempts = 0;
-
-    const maxAttempts = 80;
-
-
-    const restoreWhenReady = () => {
-      attempts += 1;
-
-
-      const documentHeight =
-        Math.max(
-          document.body.scrollHeight,
-          document.documentElement
-            .scrollHeight
+        setSidebarOpen(
+          false
         );
+      };
 
 
-      const maxPossibleScroll =
-        Math.max(
-          0,
-          documentHeight -
-            window.innerHeight
-        );
+    // =====================================================
+    // SAVE SCROLL
+    //
+    // Sirf actual scroll event par save.
+    // touchstart / pointerdown tracking nahi.
+    // =====================================================
+
+    useEffect(() => {
+
+      let ticking =
+        false;
 
 
-      if (
-        maxPossibleScroll >=
-        savedScroll
-      ) {
-        window.scrollTo({
-          top: savedScroll,
-          left: 0,
-          behavior: "auto",
-        });
+      const handleScroll =
+        () => {
 
-
-        /* =============================================
-           SHORT STABILIZATION
-
-           Async table/cards/chart loading ke time
-           position ko kuch baar enforce karenge.
-        ============================================= */
-
-        let stabilizationCount = 0;
-
-        const maxStabilizationCount = 10;
-
-
-        const stabilize = () => {
-          stabilizationCount += 1;
-
-
-          window.scrollTo({
-            top: savedScroll,
-            left: 0,
-            behavior: "auto",
-          });
-
-
-          if (
-            stabilizationCount <
-            maxStabilizationCount
-          ) {
-            stabilizationTimerRef.current =
-              window.setTimeout(
-                stabilize,
-                80
-              );
-
+          if (ticking) {
             return;
           }
 
 
-          restoringScrollRef.current =
-            false;
+          ticking =
+            true;
+
+
+          scrollFrameRef.current =
+            requestAnimationFrame(
+              () => {
+
+                scrollMemory.set(
+                  currentRouteRef.current,
+                  window.scrollY
+                );
+
+
+                ticking =
+                  false;
+              }
+            );
         };
 
 
-        stabilizationTimerRef.current =
-          window.setTimeout(
-            stabilize,
-            80
-          );
+      window.addEventListener(
+        "scroll",
+        handleScroll,
+        {
+          passive: true,
+        }
+      );
 
 
-        return;
-      }
+      return () => {
 
-
-      if (
-        attempts <
-        maxAttempts
-      ) {
-        restoreTimerRef.current =
-          window.setTimeout(
-            restoreWhenReady,
-            50
-          );
-
-        return;
-      }
-
-
-      window.scrollTo({
-        top: Math.min(
-          savedScroll,
-          maxPossibleScroll
-        ),
-        left: 0,
-        behavior: "auto",
-      });
-
-
-      restoringScrollRef.current =
-        false;
-    };
-
-
-    restoreWhenReady();
-
-
-    return () => {
-      if (
-        restoreTimerRef.current
-      ) {
-        clearTimeout(
-          restoreTimerRef.current
+        window.removeEventListener(
+          "scroll",
+          handleScroll
         );
 
-        restoreTimerRef.current =
-          null;
-      }
+
+        if (
+          scrollFrameRef.current
+        ) {
+
+          cancelAnimationFrame(
+            scrollFrameRef.current
+          );
+        }
+      };
+
+    }, []);
 
 
-      if (
-        stabilizationTimerRef.current
-      ) {
-        clearTimeout(
-          stabilizationTimerRef.current
-        );
+    // =====================================================
+    // ROUTE CHANGE
+    //
+    // Lightweight restore:
+    // no 80 retries
+    // no stabilization loop
+    // no ResizeObserver
+    // =====================================================
 
-        stabilizationTimerRef.current =
-          null;
-      }
-    };
+    useLayoutEffect(() => {
 
-  }, [
-    location.pathname,
-    location.search,
-  ]);
-
-
-  /* =====================================================
-     SAME PAGE DATA / LAYOUT CHANGE
-
-     Members filter result
-     Payment record
-     Plans update
-     Reports data/filter
-
-     se content height badli to saved scroll
-     dobara maintain hoga.
-  ===================================================== */
-
-  useEffect(() => {
-    const contentElement =
-      contentRef.current;
-
-
-    if (
-      !contentElement ||
-      typeof ResizeObserver ===
-        "undefined"
-    ) {
-      return;
-    }
-
-
-    const restoreSavedPosition = () => {
       const routeKey =
-        activeRouteRef.current;
+        getRouteKey(
+          location
+        );
+
+
+      currentRouteRef.current =
+        routeKey;
 
 
       const savedScroll =
-        scrollMemory.get(routeKey);
-
-
-      if (
-        typeof savedScroll !== "number"
-      ) {
-        return;
-      }
-
-
-      if (
-        restoringScrollRef.current
-      ) {
-        return;
-      }
-
-
-      if (
-        userScrollingRef.current
-      ) {
-        return;
-      }
-
-
-      const documentHeight =
-        Math.max(
-          document.body.scrollHeight,
-          document.documentElement
-            .scrollHeight
+        scrollMemory.get(
+          routeKey
         );
 
 
-      const maxPossibleScroll =
-        Math.max(
-          0,
-          documentHeight -
-            window.innerHeight
-        );
-
-
-      const targetScroll =
-        Math.min(
-          savedScroll,
-          maxPossibleScroll
-        );
-
-
-      /*
-        Tiny 1-2px browser rounding ke liye
-        unnecessary scroll nahi karenge.
-      */
+      // =================================================
+      // FIRST VISIT
+      // =================================================
 
       if (
-        Math.abs(
-          window.scrollY -
-            targetScroll
-        ) <= 2
+        typeof savedScroll !==
+        "number"
       ) {
-        return;
-      }
+
+        scrollMemory.set(
+          routeKey,
+          0
+        );
 
 
-      restoringScrollRef.current =
-        true;
-
-
-      window.scrollTo({
-        top: targetScroll,
-        left: 0,
-        behavior: "auto",
-      });
-
-
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          restoringScrollRef.current =
-            false;
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "auto",
         });
-      });
-    };
 
 
-    const observer =
-      new ResizeObserver(() => {
+        return;
+      }
 
-        /*
-          Button/filter click ke immediately
-          baad pointer/touch user interaction
-          active ho sakta hai.
 
-          Thoda delay karke final layout par
-          position restore karenge.
-        */
+      // =================================================
+      // RESTORE SAVED POSITION
+      // =================================================
 
-        if (
-          resizeRestoreTimerRef.current
-        ) {
-          clearTimeout(
-            resizeRestoreTimerRef.current
+      let frame1;
+      let frame2;
+      let timer;
+
+
+      frame1 =
+        requestAnimationFrame(
+          () => {
+
+            frame2 =
+              requestAnimationFrame(
+                () => {
+
+                  const maxScroll =
+                    Math.max(
+                      0,
+
+                      document.documentElement
+                        .scrollHeight -
+                        window.innerHeight
+                    );
+
+
+                  window.scrollTo({
+                    top:
+                      Math.min(
+                        savedScroll,
+                        maxScroll
+                      ),
+
+                    left: 0,
+
+                    behavior:
+                      "auto",
+                  });
+
+
+                  // =========================================
+                  // ONE lightweight retry
+                  //
+                  // Async page content thoda late render hua
+                  // to sirf ek baar position correct karenge.
+                  // =========================================
+
+                  timer =
+                    window.setTimeout(
+                      () => {
+
+                        const updatedMaxScroll =
+                          Math.max(
+                            0,
+
+                            document.documentElement
+                              .scrollHeight -
+                              window.innerHeight
+                          );
+
+
+                        const target =
+                          Math.min(
+                            savedScroll,
+                            updatedMaxScroll
+                          );
+
+
+                        if (
+                          Math.abs(
+                            window.scrollY -
+                              target
+                          ) >
+                          4
+                        ) {
+
+                          window.scrollTo({
+                            top:
+                              target,
+
+                            left:
+                              0,
+
+                            behavior:
+                              "auto",
+                          });
+                        }
+
+                      },
+                      120
+                    );
+                }
+              );
+          }
+        );
+
+
+      return () => {
+
+        if (frame1) {
+          cancelAnimationFrame(
+            frame1
           );
         }
 
 
-        resizeRestoreTimerRef.current =
-          window.setTimeout(() => {
-            restoreSavedPosition();
-          }, 350);
-
-      });
-
-
-    observer.observe(
-      contentElement
-    );
+        if (frame2) {
+          cancelAnimationFrame(
+            frame2
+          );
+        }
 
 
-    return () => {
-      observer.disconnect();
+        if (timer) {
+          clearTimeout(
+            timer
+          );
+        }
+      };
+
+    }, [
+      location.pathname,
+      location.search,
+    ]);
 
 
-      if (
-        resizeRestoreTimerRef.current
-      ) {
-        clearTimeout(
-          resizeRestoreTimerRef.current
-        );
+    // =====================================================
+    // UI
+    // =====================================================
 
-        resizeRestoreTimerRef.current =
-          null;
-      }
-    };
+    return (
+      <div className="dashboard-layout">
 
-  }, []);
-
-
-  return (
-    <div className="dashboard-layout">
-
-      <Sidebar
-        isOpen={sidebarOpen}
-        onClose={closeSidebar}
-      />
-
-
-      {sidebarOpen && (
-        <div
-          className="sidebar-overlay"
-          onClick={closeSidebar}
-        />
-      )}
-
-
-      <div className="dashboard-main">
-
-        <Header
-          onMenuClick={openSidebar}
+        <Sidebar
+          isOpen={
+            sidebarOpen
+          }
+          onClose={
+            closeSidebar
+          }
         />
 
 
-        <main
-          ref={contentRef}
-          className="dashboard-content"
-        >
-          <Outlet />
-        </main>
+        {sidebarOpen && (
+
+          <div
+            className="sidebar-overlay"
+            onClick={
+              closeSidebar
+            }
+          />
+
+        )}
+
+
+        <div className="dashboard-main">
+
+          <Header
+            onMenuClick={
+              openSidebar
+            }
+          />
+
+
+          <main className="dashboard-content">
+
+            <Outlet />
+
+          </main>
+
+        </div>
 
       </div>
-
-    </div>
-  );
-};
+    );
+  };
 
 
 export default DashboardLayout;
