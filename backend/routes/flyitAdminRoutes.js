@@ -1,27 +1,47 @@
-const express = require("express");
+const express =
+  require("express");
 
-const router = express.Router();
+const router =
+  express.Router();
+
 
 const {
   loginFlyitAdmin,
+
   createTrialGym,
+
   getAllTrialGyms,
+
   getTrialGymById,
+
   extendTrial,
+
   disableTrial,
+
   enableTrial,
-} = require("../controllers/flyitAdminController");
+
+  deleteTrialGym,
+} =
+  require(
+    "../controllers/flyitAdminController"
+  );
+
 
 const {
   protectFlyitAdmin,
-} = require("../middleware/flyitAdminAuth");
+} =
+  require(
+    "../middleware/flyitAdminAuth"
+  );
 
 
 // =====================================================
 // PUBLIC
 // =====================================================
 
+
 // Flyit Admin Login
+
 router.post(
   "/login",
   loginFlyitAdmin
@@ -32,7 +52,12 @@ router.post(
 // PRIVATE - FLYIT ADMIN ONLY
 // =====================================================
 
-// Create Trial Gym
+
+// =====================================================
+// CREATE TRIAL GYM
+// POST /api/flyit-admin/trials
+// =====================================================
+
 router.post(
   "/trials",
   protectFlyitAdmin,
@@ -40,7 +65,11 @@ router.post(
 );
 
 
-// Get All Trial Gyms
+// =====================================================
+// GET ALL TRIAL GYMS
+// GET /api/flyit-admin/trials
+// =====================================================
+
 router.get(
   "/trials",
   protectFlyitAdmin,
@@ -48,7 +77,11 @@ router.get(
 );
 
 
-// Get Single Trial Gym
+// =====================================================
+// GET SINGLE TRIAL
+// GET /api/flyit-admin/trials/:gymId
+// =====================================================
+
 router.get(
   "/trials/:gymId",
   protectFlyitAdmin,
@@ -56,7 +89,11 @@ router.get(
 );
 
 
-// Extend Trial
+// =====================================================
+// EXTEND TRIAL
+// PUT /api/flyit-admin/trials/:gymId/extend
+// =====================================================
+
 router.put(
   "/trials/:gymId/extend",
   protectFlyitAdmin,
@@ -64,7 +101,11 @@ router.put(
 );
 
 
-// Disable Trial
+// =====================================================
+// DISABLE TRIAL
+// PUT /api/flyit-admin/trials/:gymId/disable
+// =====================================================
+
 router.put(
   "/trials/:gymId/disable",
   protectFlyitAdmin,
@@ -72,7 +113,11 @@ router.put(
 );
 
 
-// Enable Trial
+// =====================================================
+// ENABLE TRIAL
+// PUT /api/flyit-admin/trials/:gymId/enable
+// =====================================================
+
 router.put(
   "/trials/:gymId/enable",
   protectFlyitAdmin,
@@ -80,4 +125,17 @@ router.put(
 );
 
 
-module.exports = router;
+// =====================================================
+// DELETE TRIAL
+// DELETE /api/flyit-admin/trials/:gymId
+// =====================================================
+
+router.delete(
+  "/trials/:gymId",
+  protectFlyitAdmin,
+  deleteTrialGym
+);
+
+
+module.exports =
+  router;

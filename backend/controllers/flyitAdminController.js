@@ -7,6 +7,18 @@ const FlyitAdmin =
 const Gym =
   require("../models/Gym");
 
+const Member =
+  require("../models/Member");
+
+const Payment =
+  require("../models/Payment");
+
+const MembershipRenewal =
+  require("../models/MembershipRenewal");
+
+const Admin =
+  require("../models/Admin");
+
 const seedTrialDemoData =
   require("../utils/seedTrialDemoData");
 
@@ -17,11 +29,14 @@ const seedTrialDemoData =
 
 const generateFlyitAdminToken =
   (id) => {
+
     return jwt.sign(
       {
         id,
+
         role:
           "superadmin",
+
         type:
           "flyit-admin",
       },
@@ -42,6 +57,7 @@ const generateFlyitAdminToken =
 
 const generateTrialToken =
   () => {
+
     return crypto
       .randomBytes(24)
       .toString("hex");
@@ -50,10 +66,13 @@ const generateTrialToken =
 
 // =====================================================
 // FLYIT ADMIN LOGIN
+// POST /api/flyit-admin/login
+// PUBLIC
 // =====================================================
 
 exports.loginFlyitAdmin =
   async (req, res) => {
+
     try {
 
       const {
@@ -67,6 +86,7 @@ exports.loginFlyitAdmin =
         !email ||
         !password
       ) {
+
         return res
           .status(400)
           .json({
@@ -96,6 +116,7 @@ exports.loginFlyitAdmin =
           )
         )
       ) {
+
         return res
           .status(401)
           .json({
@@ -163,6 +184,8 @@ exports.loginFlyitAdmin =
 
 // =====================================================
 // CREATE TRIAL GYM
+// POST /api/flyit-admin/trials
+// PRIVATE - FLYIT ADMIN
 // =====================================================
 
 exports.createTrialGym =
@@ -188,6 +211,7 @@ exports.createTrialGym =
         !ownerName ||
         !phone
       ) {
+
         return res
           .status(400)
           .json({
@@ -213,6 +237,7 @@ exports.createTrialGym =
         days < 1 ||
         days > 30
       ) {
+
         return res
           .status(400)
           .json({
@@ -368,9 +393,14 @@ exports.createTrialGym =
       );
 
 
+      // ==========================================
+      // CLEANUP INCOMPLETE GYM
+      // ==========================================
+
       if (
         createdGym?._id
       ) {
+
         try {
 
           await Gym.findByIdAndDelete(
@@ -404,15 +434,22 @@ exports.createTrialGym =
 
 // =====================================================
 // GET ALL TRIAL GYMS
+// GET /api/flyit-admin/trials
+// PRIVATE - FLYIT ADMIN
 // =====================================================
 
 exports.getAllTrialGyms =
   async (req, res) => {
+
     try {
 
       const now =
         new Date();
 
+
+      // ==========================================
+      // AUTO MARK EXPIRED TRIALS
+      // ==========================================
 
       await Gym.updateMany(
         {
@@ -478,8 +515,11 @@ exports.getAllTrialGyms =
 
           summary: {
             totalTrials,
+
             activeTrials,
+
             expiredTrials,
+
             disabledTrials,
           },
 
@@ -510,10 +550,13 @@ exports.getAllTrialGyms =
 
 // =====================================================
 // GET SINGLE TRIAL GYM
+// GET /api/flyit-admin/trials/:gymId
+// PRIVATE
 // =====================================================
 
 exports.getTrialGymById =
   async (req, res) => {
+
     try {
 
       const gym =
@@ -523,6 +566,7 @@ exports.getTrialGymById =
 
 
       if (!gym) {
+
         return res
           .status(404)
           .json({
@@ -568,10 +612,13 @@ exports.getTrialGymById =
 
 // =====================================================
 // EXTEND TRIAL
+// PUT /api/flyit-admin/trials/:gymId/extend
+// PRIVATE
 // =====================================================
 
 exports.extendTrial =
   async (req, res) => {
+
     try {
 
       const {
@@ -593,6 +640,7 @@ exports.extendTrial =
         extendDays < 1 ||
         extendDays > 30
       ) {
+
         return res
           .status(400)
           .json({
@@ -612,6 +660,7 @@ exports.extendTrial =
 
 
       if (!gym) {
+
         return res
           .status(404)
           .json({
@@ -635,11 +684,14 @@ exports.extendTrial =
         gym.trialEnd &&
         gym.trialEnd > now
       ) {
+
         baseDate =
           new Date(
             gym.trialEnd
           );
+
       } else {
+
         baseDate =
           new Date();
       }
@@ -698,10 +750,13 @@ exports.extendTrial =
 
 // =====================================================
 // DISABLE TRIAL
+// PUT /api/flyit-admin/trials/:gymId/disable
+// PRIVATE
 // =====================================================
 
 exports.disableTrial =
   async (req, res) => {
+
     try {
 
       const gym =
@@ -711,6 +766,7 @@ exports.disableTrial =
 
 
       if (!gym) {
+
         return res
           .status(404)
           .json({
@@ -766,10 +822,13 @@ exports.disableTrial =
 
 // =====================================================
 // ENABLE TRIAL
+// PUT /api/flyit-admin/trials/:gymId/enable
+// PRIVATE
 // =====================================================
 
 exports.enableTrial =
   async (req, res) => {
+
     try {
 
       const gym =
@@ -779,6 +838,7 @@ exports.enableTrial =
 
 
       if (!gym) {
+
         return res
           .status(404)
           .json({
@@ -799,6 +859,7 @@ exports.enableTrial =
         !gym.trialEnd ||
         gym.trialEnd <= now
       ) {
+
         return res
           .status(400)
           .json({
@@ -847,6 +908,165 @@ exports.enableTrial =
 
           message:
             error.message,
+        });
+    }
+  };
+
+
+// =====================================================
+// DELETE TRIAL GYM
+// DELETE /api/flyit-admin/trials/:gymId
+// PRIVATE - FLYIT ADMIN
+//
+// IMPORTANT:
+// Gym ke saath uska complete tenant data delete hoga.
+// =====================================================
+
+exports.deleteTrialGym =
+  async (req, res) => {
+
+    try {
+
+      const gymId =
+        req.params.gymId;
+
+
+      // ==========================================
+      // FIND GYM FIRST
+      // ==========================================
+
+      const gym =
+        await Gym.findById(
+          gymId
+        );
+
+
+      if (!gym) {
+
+        return res
+          .status(404)
+          .json({
+            success:
+              false,
+
+            message:
+              "Gym not found",
+          });
+      }
+
+
+      // ==========================================
+      // DELETE ALL GYM RELATED DATA
+      // ==========================================
+
+      const [
+        memberResult,
+        paymentResult,
+        renewalResult,
+        adminResult,
+      ] =
+        await Promise.all([
+          Member.deleteMany({
+            gymId,
+          }),
+
+          Payment.deleteMany({
+            gymId,
+          }),
+
+          MembershipRenewal.deleteMany({
+            gymId,
+          }),
+
+          Admin.deleteMany({
+            gymId,
+          }),
+        ]);
+
+
+      // ==========================================
+      // DELETE GYM LAST
+      // ==========================================
+
+      await Gym.findByIdAndDelete(
+        gymId
+      );
+
+
+      console.log(
+        `Trial gym deleted: ${gym.gymName}`
+      );
+
+
+      console.log(
+        `Members deleted: ${memberResult.deletedCount}`
+      );
+
+
+      console.log(
+        `Payments deleted: ${paymentResult.deletedCount}`
+      );
+
+
+      console.log(
+        `Renewals deleted: ${renewalResult.deletedCount}`
+      );
+
+
+      console.log(
+        `Admins deleted: ${adminResult.deletedCount}`
+      );
+
+
+      return res
+        .status(200)
+        .json({
+          success:
+            true,
+
+          message:
+            "Trial gym deleted successfully",
+
+          data: {
+            gymId:
+              gym._id,
+
+            gymName:
+              gym.gymName,
+
+            deleted: {
+              members:
+                memberResult.deletedCount,
+
+              payments:
+                paymentResult.deletedCount,
+
+              renewals:
+                renewalResult.deletedCount,
+
+              admins:
+                adminResult.deletedCount,
+            },
+          },
+        });
+
+    } catch (error) {
+
+      console.error(
+        "Delete Trial Gym Error:",
+        error
+      );
+
+
+      return res
+        .status(500)
+        .json({
+          success:
+            false,
+
+          message:
+            error.message ||
+            "Unable to delete trial gym",
         });
     }
   };

@@ -17,6 +17,7 @@ import {
   FiRefreshCw,
   FiSearch,
   FiSlash,
+  FiTrash2,
   FiX,
   FiXCircle,
 } from "react-icons/fi";
@@ -217,6 +218,12 @@ const FlyitAdminDashboard = () => {
 
 
   const [
+    showDeleteModal,
+    setShowDeleteModal,
+  ] = useState(false);
+
+
+  const [
     selectedGym,
     setSelectedGym,
   ] = useState(null);
@@ -253,13 +260,21 @@ const FlyitAdminDashboard = () => {
 
   // =====================================================
   // FETCH TRIALS
+  // silent = true means no full page loading flash
   // =====================================================
 
   const fetchTrials =
-    async () => {
+    async (
+      silent = false
+    ) => {
+
       try {
 
-        setLoading(true);
+        if (!silent) {
+          setLoading(true);
+        }
+
+
         setError("");
 
 
@@ -301,7 +316,9 @@ const FlyitAdminDashboard = () => {
 
       } finally {
 
-        setLoading(false);
+        if (!silent) {
+          setLoading(false);
+        }
       }
     };
 
@@ -350,6 +367,7 @@ const FlyitAdminDashboard = () => {
       setForm(
         (previous) => ({
           ...previous,
+
           [name]:
             value,
         })
@@ -461,7 +479,9 @@ const FlyitAdminDashboard = () => {
         );
 
 
-        await fetchTrials();
+        await fetchTrials(
+          true
+        );
 
       } catch (error) {
 
@@ -536,13 +556,18 @@ const FlyitAdminDashboard = () => {
 
 
   // =====================================================
-  // OPEN
+  // OPEN TRIAL
   // =====================================================
 
   const openTrial =
     (gym) => {
 
       if (!gym?.trialToken) {
+
+        setError(
+          "Trial link is not available."
+        );
+
         return;
       }
 
@@ -563,6 +588,11 @@ const FlyitAdminDashboard = () => {
     (gym) => {
 
       if (!gym?.trialToken) {
+
+        setError(
+          "Trial link is not available."
+        );
+
         return;
       }
 
@@ -613,7 +643,7 @@ const FlyitAdminDashboard = () => {
 
 
   // =====================================================
-  // EXTEND
+  // EXTEND TRIAL
   // =====================================================
 
   const extendTrial =
@@ -649,6 +679,10 @@ const FlyitAdminDashboard = () => {
         );
 
 
+        setError("");
+        setSuccessMessage("");
+
+
         await flyitAdminApi.put(
           `/trials/${gym._id}/extend`,
           {
@@ -673,9 +707,22 @@ const FlyitAdminDashboard = () => {
         );
 
 
-        await fetchTrials();
+        setExtendDays(
+          3
+        );
+
+
+        await fetchTrials(
+          true
+        );
 
       } catch (error) {
+
+        console.error(
+          "Extend Trial Error:",
+          error
+        );
+
 
         setError(
           error.response?.data
@@ -691,7 +738,7 @@ const FlyitAdminDashboard = () => {
 
 
   // =====================================================
-  // DISABLE
+  // DISABLE TRIAL
   // =====================================================
 
   const disableTrial =
@@ -704,6 +751,10 @@ const FlyitAdminDashboard = () => {
         );
 
 
+        setError("");
+        setSuccessMessage("");
+
+
         await flyitAdminApi.put(
           `/trials/${gym._id}/disable`
         );
@@ -714,9 +765,17 @@ const FlyitAdminDashboard = () => {
         );
 
 
-        await fetchTrials();
+        await fetchTrials(
+          true
+        );
 
       } catch (error) {
+
+        console.error(
+          "Disable Trial Error:",
+          error
+        );
+
 
         setError(
           error.response?.data
@@ -732,7 +791,7 @@ const FlyitAdminDashboard = () => {
 
 
   // =====================================================
-  // ENABLE
+  // ENABLE TRIAL
   // =====================================================
 
   const enableTrial =
@@ -745,6 +804,10 @@ const FlyitAdminDashboard = () => {
         );
 
 
+        setError("");
+        setSuccessMessage("");
+
+
         await flyitAdminApi.put(
           `/trials/${gym._id}/enable`
         );
@@ -755,14 +818,90 @@ const FlyitAdminDashboard = () => {
         );
 
 
-        await fetchTrials();
+        await fetchTrials(
+          true
+        );
 
       } catch (error) {
+
+        console.error(
+          "Enable Trial Error:",
+          error
+        );
+
 
         setError(
           error.response?.data
             ?.message ||
             "Unable to enable trial."
+        );
+
+      } finally {
+
+        setActionLoading("");
+      }
+    };
+
+
+  // =====================================================
+  // DELETE TRIAL
+  // =====================================================
+
+  const deleteTrial =
+    async (gym) => {
+
+      if (!gym?._id) {
+        return;
+      }
+
+
+      try {
+
+        setActionLoading(
+          `delete-${gym._id}`
+        );
+
+
+        setError("");
+        setSuccessMessage("");
+
+
+        await flyitAdminApi.delete(
+          `/trials/${gym._id}`
+        );
+
+
+        setShowDeleteModal(
+          false
+        );
+
+
+        setSelectedGym(
+          null
+        );
+
+
+        setSuccessMessage(
+          `${gym.gymName} and all trial data deleted permanently.`
+        );
+
+
+        await fetchTrials(
+          true
+        );
+
+      } catch (error) {
+
+        console.error(
+          "Delete Trial Error:",
+          error
+        );
+
+
+        setError(
+          error.response?.data
+            ?.message ||
+            "Unable to delete trial."
         );
 
       } finally {
@@ -952,7 +1091,9 @@ const FlyitAdminDashboard = () => {
 
             {error}
 
+
             <button
+              type="button"
               onClick={() =>
                 setError("")
               }
@@ -971,7 +1112,9 @@ const FlyitAdminDashboard = () => {
 
             {successMessage}
 
+
             <button
+              type="button"
               onClick={() =>
                 setSuccessMessage("")
               }
@@ -1086,6 +1229,7 @@ const FlyitAdminDashboard = () => {
                   key={
                     key
                   }
+                  type="button"
                   onClick={() =>
                     setActiveFilter(
                       key
@@ -1110,7 +1254,7 @@ const FlyitAdminDashboard = () => {
 
 
         {/* =================================================
-            LIST
+            TRIAL LIST
         ================================================= */}
 
         {loading ? (
@@ -1123,9 +1267,11 @@ const FlyitAdminDashboard = () => {
         0 ? (
 
           <div className="rounded-xl border border-slate-200 bg-white py-20 text-center">
+
             <p className="font-medium text-slate-600">
               No trials found.
             </p>
+
           </div>
 
         ) : (
@@ -1150,6 +1296,7 @@ const FlyitAdminDashboard = () => {
                   >
 
                     <div className="p-4 sm:p-5">
+
 
                       {/* TOP */}
 
@@ -1203,7 +1350,9 @@ const FlyitAdminDashboard = () => {
                             {gym.status ===
                             "trial"
                               ? "ACTIVE"
-                              : gym.status.toUpperCase()}
+                              : String(
+                                  gym.status
+                                ).toUpperCase()}
                           </span>
 
 
@@ -1314,9 +1463,11 @@ const FlyitAdminDashboard = () => {
                               gym
                             );
 
+
                             setExtendDays(
                               3
                             );
+
 
                             setShowExtendModal(
                               true
@@ -1348,7 +1499,7 @@ const FlyitAdminDashboard = () => {
                                 ? "Enabling..."
                                 : "Enable"
                             }
-                            className="col-span-2 border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
+                            className="border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
                           />
 
                         ) : (
@@ -1368,10 +1519,30 @@ const FlyitAdminDashboard = () => {
                                 ? "Disabling..."
                                 : "Disable"
                             }
-                            className="col-span-2 border-red-200 bg-red-50 text-red-700 hover:bg-red-100"
+                            className="border-red-200 bg-red-50 text-red-700 hover:bg-red-100"
                           />
 
                         )}
+
+
+                        <ActionButton
+                          onClick={() => {
+
+                            setSelectedGym(
+                              gym
+                            );
+
+
+                            setShowDeleteModal(
+                              true
+                            );
+                          }}
+                          icon={
+                            <FiTrash2 />
+                          }
+                          text="Delete"
+                          className="col-span-2 border-red-200 bg-white text-red-600 hover:border-red-300 hover:bg-red-50 sm:col-span-1"
+                        />
 
                       </div>
 
@@ -1477,7 +1648,12 @@ const FlyitAdminDashboard = () => {
 
                 <div className="grid grid-cols-4 gap-2">
 
-                  {[1, 3, 7, 14].map(
+                  {[
+                    1,
+                    3,
+                    7,
+                    14,
+                  ].map(
                     (days) => (
 
                       <button
@@ -1491,6 +1667,7 @@ const FlyitAdminDashboard = () => {
                               previous
                             ) => ({
                               ...previous,
+
                               trialDays:
                                 days,
                             })
@@ -1537,12 +1714,15 @@ const FlyitAdminDashboard = () => {
 
               <button
                 type="button"
+                disabled={
+                  creating
+                }
                 onClick={() =>
                   setShowCreateModal(
                     false
                   )
                 }
-                className="h-10 rounded-lg border border-slate-200 px-4 text-xs font-semibold text-slate-600"
+                className="h-10 rounded-lg border border-slate-200 px-4 text-xs font-semibold text-slate-600 disabled:opacity-50"
               >
                 Cancel
               </button>
@@ -1553,7 +1733,7 @@ const FlyitAdminDashboard = () => {
                 disabled={
                   creating
                 }
-                className="h-10 rounded-lg bg-blue-600 px-5 text-xs font-bold text-white hover:bg-blue-700"
+                className="h-10 rounded-lg bg-blue-600 px-5 text-xs font-bold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {creating
                   ? "Creating..."
@@ -1577,11 +1757,23 @@ const FlyitAdminDashboard = () => {
         selectedGym && (
 
         <ModalOverlay
-          onClose={() =>
-            setShowExtendModal(
-              false
-            )
-          }
+          onClose={() => {
+
+            if (
+              actionLoading !==
+              `extend-${selectedGym._id}`
+            ) {
+
+              setShowExtendModal(
+                false
+              );
+
+
+              setSelectedGym(
+                null
+              );
+            }
+          }}
         >
 
           <div
@@ -1596,11 +1788,23 @@ const FlyitAdminDashboard = () => {
             <ModalHeader
               title={`Extend ${selectedGym.gymName}`}
               subtitle="Choose how many days to add."
-              onClose={() =>
-                setShowExtendModal(
-                  false
-                )
-              }
+              onClose={() => {
+
+                if (
+                  actionLoading !==
+                  `extend-${selectedGym._id}`
+                ) {
+
+                  setShowExtendModal(
+                    false
+                  );
+
+
+                  setSelectedGym(
+                    null
+                  );
+                }
+              }}
             />
 
 
@@ -1626,7 +1830,12 @@ const FlyitAdminDashboard = () => {
 
               <div className="mt-3 grid grid-cols-4 gap-2">
 
-                {[1, 3, 7, 14].map(
+                {[
+                  1,
+                  3,
+                  7,
+                  14,
+                ].map(
                   (days) => (
 
                     <button
@@ -1662,27 +1871,266 @@ const FlyitAdminDashboard = () => {
             <div className="flex justify-end gap-2 border-t border-slate-100 p-4">
 
               <button
-                onClick={() =>
+                type="button"
+                disabled={
+                  actionLoading ===
+                  `extend-${selectedGym._id}`
+                }
+                onClick={() => {
+
                   setShowExtendModal(
                     false
-                  )
-                }
-                className="h-10 rounded-lg border border-slate-200 px-4 text-xs font-semibold text-slate-600"
+                  );
+
+
+                  setSelectedGym(
+                    null
+                  );
+                }}
+                className="h-10 rounded-lg border border-slate-200 px-4 text-xs font-semibold text-slate-600 disabled:opacity-50"
               >
                 Cancel
               </button>
 
 
               <button
+                type="button"
+                disabled={
+                  actionLoading ===
+                  `extend-${selectedGym._id}`
+                }
                 onClick={() =>
                   extendTrial(
                     selectedGym,
                     extendDays
                   )
                 }
-                className="h-10 rounded-lg bg-blue-600 px-5 text-xs font-bold text-white hover:bg-blue-700"
+                className="inline-flex h-10 items-center gap-2 rounded-lg bg-blue-600 px-5 text-xs font-bold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                Extend Trial
+
+                {actionLoading ===
+                `extend-${selectedGym._id}` ? (
+                  <>
+                    <FiRefreshCw className="animate-spin" />
+                    Extending...
+                  </>
+                ) : (
+                  <>
+                    <FiRefreshCw />
+                    Extend Trial
+                  </>
+                )}
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </ModalOverlay>
+
+      )}
+
+
+      {/* =================================================
+          DELETE MODAL
+      ================================================= */}
+
+      {showDeleteModal &&
+        selectedGym && (
+
+        <ModalOverlay
+          onClose={() => {
+
+            if (
+              actionLoading !==
+              `delete-${selectedGym._id}`
+            ) {
+
+              setShowDeleteModal(
+                false
+              );
+
+
+              setSelectedGym(
+                null
+              );
+            }
+          }}
+        >
+
+          <div
+            className="w-full max-w-md rounded-2xl bg-white shadow-2xl"
+            onClick={(
+              event
+            ) =>
+              event.stopPropagation()
+            }
+          >
+
+            <div className="flex items-start gap-4 border-b border-slate-100 p-5">
+
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-red-50 text-xl text-red-600">
+                <FiTrash2 />
+              </div>
+
+
+              <div className="flex-1">
+
+                <h2 className="text-lg font-bold text-slate-900">
+                  Delete Trial?
+                </h2>
+
+
+                <p className="mt-1 text-xs leading-5 text-slate-500">
+                  This will permanently remove the gym
+                  and all data connected to this trial.
+                </p>
+
+              </div>
+
+
+              <button
+                type="button"
+                disabled={
+                  actionLoading ===
+                  `delete-${selectedGym._id}`
+                }
+                onClick={() => {
+
+                  setShowDeleteModal(
+                    false
+                  );
+
+
+                  setSelectedGym(
+                    null
+                  );
+                }}
+                className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <FiX />
+              </button>
+
+            </div>
+
+
+            <div className="p-5">
+
+              <div className="rounded-xl border border-red-100 bg-red-50/70 p-4">
+
+                <p className="text-[10px] font-bold uppercase tracking-wider text-red-500">
+                  Trial to be deleted
+                </p>
+
+
+                <p className="mt-2 font-bold text-slate-900">
+                  {selectedGym.gymName}
+                </p>
+
+
+                <p className="mt-1 text-xs text-slate-500">
+                  {selectedGym.ownerName}
+                  {" • "}
+                  {selectedGym.phone}
+                </p>
+
+              </div>
+
+
+              <div className="mt-4 rounded-xl bg-slate-50 p-4">
+
+                <p className="text-xs font-semibold text-slate-700">
+                  This will permanently delete:
+                </p>
+
+
+                <div className="mt-3 space-y-2 text-xs text-slate-500">
+
+                  <p>
+                    • Gym trial record
+                  </p>
+
+                  <p>
+                    • All members and demo members
+                  </p>
+
+                  <p>
+                    • All payment records
+                  </p>
+
+                  <p>
+                    • Membership renewal records
+                  </p>
+
+                  <p>
+                    • Linked gym admin data
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <p className="mt-4 text-xs font-semibold text-red-600">
+                This action cannot be undone.
+              </p>
+
+            </div>
+
+
+            <div className="flex justify-end gap-2 border-t border-slate-100 p-4">
+
+              <button
+                type="button"
+                disabled={
+                  actionLoading ===
+                  `delete-${selectedGym._id}`
+                }
+                onClick={() => {
+
+                  setShowDeleteModal(
+                    false
+                  );
+
+
+                  setSelectedGym(
+                    null
+                  );
+                }}
+                className="h-10 rounded-lg border border-slate-200 px-4 text-xs font-semibold text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Cancel
+              </button>
+
+
+              <button
+                type="button"
+                disabled={
+                  actionLoading ===
+                  `delete-${selectedGym._id}`
+                }
+                onClick={() =>
+                  deleteTrial(
+                    selectedGym
+                  )
+                }
+                className="inline-flex h-10 items-center gap-2 rounded-lg bg-red-600 px-5 text-xs font-bold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+
+                {actionLoading ===
+                `delete-${selectedGym._id}` ? (
+                  <>
+                    <FiRefreshCw className="animate-spin" />
+                    Deleting...
+                  </>
+                ) : (
+                  <>
+                    <FiTrash2 />
+                    Permanently Delete
+                  </>
+                )}
+
               </button>
 
             </div>
@@ -1710,6 +2158,7 @@ const FlyitAdminDashboard = () => {
                 Trial Created
               </p>
 
+
               <p className="mt-1 text-sm font-semibold text-slate-900">
                 {createdTrial.gymName}
               </p>
@@ -1718,6 +2167,7 @@ const FlyitAdminDashboard = () => {
 
 
             <button
+              type="button"
               onClick={() =>
                 setCreatedTrial(
                   null
@@ -1739,6 +2189,7 @@ const FlyitAdminDashboard = () => {
           <div className="mt-3 grid grid-cols-2 gap-2">
 
             <button
+              type="button"
               onClick={() =>
                 copyTrialLink(
                   createdTrial
@@ -1753,6 +2204,7 @@ const FlyitAdminDashboard = () => {
 
 
             <button
+              type="button"
               onClick={() =>
                 shareOnWhatsApp(
                   createdTrial
@@ -1777,7 +2229,7 @@ const FlyitAdminDashboard = () => {
 
 
 // =====================================================
-// SMALL COMPONENTS
+// SUMMARY CARD
 // =====================================================
 
 const SummaryCard = ({
@@ -1811,6 +2263,10 @@ const SummaryCard = ({
 };
 
 
+// =====================================================
+// META
+// =====================================================
+
 const Meta = ({
   title,
   value,
@@ -1840,6 +2296,10 @@ const Meta = ({
 };
 
 
+// =====================================================
+// ACTION BUTTON
+// =====================================================
+
 const ActionButton = ({
   icon,
   text,
@@ -1863,6 +2323,10 @@ const ActionButton = ({
 };
 
 
+// =====================================================
+// MODAL OVERLAY
+// =====================================================
+
 const ModalOverlay = ({
   children,
   onClose,
@@ -1881,6 +2345,10 @@ const ModalOverlay = ({
 };
 
 
+// =====================================================
+// MODAL HEADER
+// =====================================================
+
 const ModalHeader = ({
   title,
   subtitle,
@@ -1895,6 +2363,7 @@ const ModalHeader = ({
         <h2 className="text-lg font-bold text-slate-900">
           {title}
         </h2>
+
 
         <p className="mt-1 text-xs text-slate-500">
           {subtitle}
@@ -1917,6 +2386,10 @@ const ModalHeader = ({
   );
 };
 
+
+// =====================================================
+// FORM FIELD
+// =====================================================
 
 const FormField = ({
   label,
@@ -1957,4 +2430,4 @@ const FormField = ({
 };
 
 
-export default FlyitAdminDashboard;
+export default FlyitAdminDashboard; 
