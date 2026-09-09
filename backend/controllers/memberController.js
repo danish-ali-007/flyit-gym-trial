@@ -791,8 +791,13 @@ exports.deleteMember = async (req, res) => {
     }
 
 
-    // Existing payment delete behavior same
+    // ==================================================
+    // DELETE PAYMENTS
+    // CURRENT GYM ONLY
+    // ==================================================
+
     await Payment.deleteMany({
+      gymId,
       member: member._id,
     });
 

@@ -26,6 +26,51 @@ import "./Members.css";
 const membersCache = new Map();
 
 
+let membersMemoryGymKey = null;
+
+
+const getMembersGymKey = () => {
+
+  const isTrial =
+    localStorage.getItem("isTrial") ===
+    "true";
+
+
+  if (isTrial) {
+
+    const trialGym =
+      JSON.parse(
+        localStorage.getItem(
+          "trialGym"
+        ) || "{}"
+      );
+
+
+    return `trial:${
+      trialGym._id ||
+      trialGym.gymId ||
+      trialGym.trialToken ||
+      "unknown"
+    }`;
+  }
+
+
+  const admin =
+    JSON.parse(
+      localStorage.getItem(
+        "admin"
+      ) || "{}"
+    );
+
+
+  return `admin:${
+    admin.gymId ||
+    admin._id ||
+    "olympics-gym"
+  }`;
+};
+
+
 // ====================================================
 // MEMBERS PAGE NAVIGATION MEMORY
 // SPA navigation par preserve rahega.
@@ -52,6 +97,7 @@ const createCacheKey = (
   search
 ) => {
   return [
+    getMembersGymKey(),
     page,
     status || "All",
     plan || "All",
@@ -63,6 +109,40 @@ const createCacheKey = (
 
 
 const Members = () => {
+
+  const currentGymMemoryKey =
+    getMembersGymKey();
+
+
+  if (
+    membersMemoryGymKey !==
+    currentGymMemoryKey
+  ) {
+
+    membersMemoryGymKey =
+      currentGymMemoryKey;
+
+
+    membersPageMemory.initialized =
+      false;
+
+    membersPageMemory.searchTerm =
+      "";
+
+    membersPageMemory.statusFilter =
+      "All";
+
+    membersPageMemory.planFilter =
+      "All";
+
+    membersPageMemory.currentPage =
+      1;
+
+    membersPageMemory.scrollY =
+      0;
+  }
+
+
   const navigate = useNavigate();
 
   const [

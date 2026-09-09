@@ -41,6 +41,86 @@ let dashboardPastExpiredCountCache = null;
 let dashboardMonthlyRevenueCache = null;
 
 
+let dashboardCacheOwnerKey = null;
+
+
+const getDashboardGymKey = () => {
+
+  const isTrial =
+    localStorage.getItem("isTrial") ===
+    "true";
+
+
+  if (isTrial) {
+
+    const trialGym =
+      JSON.parse(
+        localStorage.getItem(
+          "trialGym"
+        ) || "{}"
+      );
+
+
+    return `trial:${
+      trialGym._id ||
+      trialGym.gymId ||
+      trialGym.trialToken ||
+      "unknown"
+    }`;
+  }
+
+
+  const admin =
+    JSON.parse(
+      localStorage.getItem(
+        "admin"
+      ) || "{}"
+    );
+
+
+  return `admin:${
+    admin.gymId ||
+    admin._id ||
+    "olympics-gym"
+  }`;
+};
+
+
+const ensureDashboardCacheOwner =
+  (gymKey) => {
+
+    if (
+      dashboardCacheOwnerKey ===
+      gymKey
+    ) {
+      return;
+    }
+
+
+    dashboardCacheOwnerKey =
+      gymKey;
+
+
+    dashboardStatsCache =
+      null;
+
+    dashboardTodayExpiringCache =
+      null;
+
+    dashboardUpcomingExpiryCache =
+      null;
+
+    dashboardPastExpiredCache =
+      null;
+
+    dashboardPastExpiredCountCache =
+      null;
+
+    dashboardMonthlyRevenueCache =
+      null;
+  };
+
+
 const Dashboard = () => {
   const navigate = useNavigate();
 
@@ -62,6 +142,19 @@ const Dashboard = () => {
     isTrial
       ? trialGym.gymName || "Trial Gym"
       : "Olympics Gym";
+
+
+  // ====================================================
+  // GYM-WISE CACHE ISOLATION
+  // ====================================================
+
+  const dashboardGymKey =
+    getDashboardGymKey();
+
+
+  ensureDashboardCacheOwner(
+    dashboardGymKey
+  );
 
 
   // ====================================================
