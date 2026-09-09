@@ -1383,12 +1383,7 @@ const Dashboard = () => {
                                   href={
                                     member.whatsappLink
                                   }
-
-                                  target="_blank"
-
-                                  rel="noreferrer"
-
-                                  className="whatsapp-btn"
+className="whatsapp-btn"
                                 >
                                   WhatsApp
                                 </a>
@@ -1502,12 +1497,7 @@ const Dashboard = () => {
                             href={
                               member.whatsappLink
                             }
-
-                            target="_blank"
-
-                            rel="noreferrer"
-
-                            className="mobile-whatsapp-action"
+className="mobile-whatsapp-action"
                           >
 
                             <FiMessageCircle />
@@ -1681,12 +1671,7 @@ const Dashboard = () => {
                                   href={
                                     member.upcomingWhatsappLink
                                   }
-
-                                  target="_blank"
-
-                                  rel="noreferrer"
-
-                                  className="whatsapp-btn"
+className="whatsapp-btn"
                                 >
                                   WhatsApp
                                 </a>
@@ -1822,12 +1807,7 @@ const Dashboard = () => {
                             href={
                               member.upcomingWhatsappLink
                             }
-
-                            target="_blank"
-
-                            rel="noreferrer"
-
-                            className="mobile-whatsapp-action"
+className="mobile-whatsapp-action"
                           >
 
                             <FiMessageCircle />
@@ -1983,12 +1963,7 @@ const Dashboard = () => {
                                     href={
                                       member.whatsappLink
                                     }
-
-                                    target="_blank"
-
-                                    rel="noreferrer"
-
-                                    className="expiry-icon-btn whatsapp-icon-btn"
+className="expiry-icon-btn whatsapp-icon-btn"
 
                                     title="WhatsApp"
 
@@ -2142,12 +2117,7 @@ const Dashboard = () => {
                             href={
                               member.whatsappLink
                             }
-
-                            target="_blank"
-
-                            rel="noreferrer"
-
-                            className="mobile-whatsapp-action"
+className="mobile-whatsapp-action"
 
                             aria-label={`WhatsApp ${member.name}`}
                           >
