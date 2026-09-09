@@ -1,0 +1,426 @@
+.header {
+  width: calc(100% - 250px);
+  min-height: 74px;
+
+  position: fixed;
+  top: 0;
+  right: 0;
+
+  z-index: 1500;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 0 28px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border-bottom: 1px solid #eceef1;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================
+   HEADER LEFT
+========================= */
+
+.header-left {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.header-left h2 {
+  margin: 0;
+
+  color: #171b22;
+
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+
+  font-size: 18px;
+  font-weight: 800;
+
+  letter-spacing: 0.3px;
+}
+
+.header-left p {
+  margin: 3px 0 0;
+
+  color: #8a9099;
+
+  font-size: 11px;
+}
+
+
+/* =========================
+   MOBILE MENU BUTTON
+========================= */
+
+.mobile-menu-btn {
+  display: none;
+
+  width: 40px;
+  height: 40px;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  padding: 0;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #1f2937;
+
+  font-size: 20px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.mobile-menu-btn:hover {
+  background: #f8f9fb;
+
+  border-color: #d1d5db;
+}
+
+
+/* =========================
+   HEADER RIGHT
+========================= */
+
+.header-right {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================
+   ADMIN AVATAR
+========================= */
+
+.admin-avatar {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #fff1ed;
+  color: #ff4d30;
+
+  font-size: 17px;
+}
+
+
+/* =========================
+   ADMIN INFO
+========================= */
+
+.admin-info {
+  display: flex;
+  flex-direction: column;
+
+  text-align: right;
+}
+
+.admin-name {
+  color: #1f2937;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.admin-role {
+  margin-top: 2px;
+
+  color: #9ca3af;
+
+  font-size: 10px;
+}
+
+
+/* =========================
+   LOGOUT BUTTON
+========================= */
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 9px 13px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #ff4d30;
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: #e63d23;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+  .header {
+    width: 100%;
+
+    min-height: 64px;
+
+    left: 0;
+    right: 0;
+
+    padding: 8px 14px;
+
+    background:
+      linear-gradient(
+        180deg,
+        #111318 0%,
+        #151820 100%
+      );
+
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+
+    border-bottom:
+      1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+      0 4px 18px
+      rgba(0, 0, 0, 0.22);
+  }
+
+
+  /* Mobile bottom nav already exists */
+
+  .mobile-menu-btn {
+    display: none;
+  }
+
+
+  /* =========================
+     OLYMPIC GYM
+  ========================= */
+
+  .header-left h2 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-family:
+      system-ui,
+      -apple-system,
+      "Segoe UI",
+      sans-serif;
+
+    font-size: 19px;
+    font-weight: 800;
+
+    letter-spacing: 0.8px;
+
+    line-height: 1;
+  }
+
+
+  .header-left p {
+    display: none;
+  }
+
+
+  /* =========================
+     ADMIN INFO
+  ========================= */
+
+  .admin-info {
+    display: none;
+  }
+
+
+  /* =========================
+     ADMIN AVATAR
+  ========================= */
+
+  .admin-avatar {
+    width: 34px;
+    height: 34px;
+
+    background:
+      rgba(255, 77, 48, 0.12);
+
+    color: #ff4d30;
+
+    border:
+      1px solid rgba(255, 77, 48, 0.18);
+
+    font-size: 15px;
+  }
+
+
+  /* =========================
+     LOGOUT
+  ========================= */
+
+  .logout-btn {
+    padding: 8px 10px;
+
+    background:
+      linear-gradient(
+        135deg,
+        #ff4d30,
+        #e63d23
+      );
+
+    color: #ffffff;
+
+    box-shadow:
+      0 6px 14px
+      rgba(255, 77, 48, 0.2);
+  }
+
+  .logout-btn:hover {
+    background:
+      linear-gradient(
+        135deg,
+        #ff4d30,
+        #e63d23
+      );
+  }
+
+  .logout-btn span {
+    display: none;
+  }
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 420px) {
+
+  .header {
+    min-height: 60px;
+
+    padding: 7px 10px;
+
+    background:
+      linear-gradient(
+        180deg,
+        #111318 0%,
+        #151820 100%
+      );
+  }
+
+
+  .header-left {
+    gap: 8px;
+  }
+
+
+  .header-left h2 {
+    font-size: 17px;
+    font-weight: 800;
+
+    letter-spacing: 0.7px;
+  }
+
+
+  .header-right {
+    gap: 6px;
+  }
+
+
+  .admin-avatar {
+    width: 32px;
+    height: 32px;
+
+    font-size: 14px;
+  }
+
+
+  .logout-btn {
+    width: 34px;
+    height: 34px;
+
+    padding: 0;
+  }
+}
+
+/* =========================================
+   CLICKABLE PROFILE AREA
+========================================= */
+
+.header-profile-button {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font: inherit;
+  color: inherit;
+
+  cursor: pointer;
+  text-align: left;
+
+  border-radius: 10px;
+}
+
+.header-profile-button:focus {
+  outline: none;
+}
+
+.header-profile-button:focus-visible {
+  outline: 2px solid #111827;
+  outline-offset: 4px;
+}

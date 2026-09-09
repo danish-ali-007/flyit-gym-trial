@@ -1,0 +1,88 @@
+.dashboard-layout {
+  width: 100%;
+  min-height: 100vh;
+
+  background: #f4f5f7;
+
+  overflow-x: hidden;
+}
+
+/* =========================
+   MAIN AREA
+========================= */
+
+.dashboard-main {
+  margin-left: 250px;
+
+  width: calc(100% - 250px);
+
+  min-height: 100vh;
+  min-width: 0;
+}
+
+/* =========================
+   PAGE CONTENT
+========================= */
+
+.dashboard-content {
+  width: 100%;
+  min-width: 0;
+
+  box-sizing: border-box;
+
+  /*
+    Header = 74px
+    Extra gap = 26px
+  */
+  padding:
+    100px
+    30px
+    30px;
+}
+
+/* =========================
+   SIDEBAR OVERLAY
+========================= */
+
+.sidebar-overlay {
+  display: none;
+}
+
+/* =========================
+   TABLET / MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  .dashboard-main {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .dashboard-content {
+    width: 100%;
+
+    /* top fixed header + bottom fixed nav */
+    padding:
+      78px
+      14px
+      105px;
+  }
+
+  .sidebar-overlay {
+    display: none;
+  }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 480px) {
+  .dashboard-content {
+    padding:
+      70px
+      10px
+      95px;
+  }
+}
+

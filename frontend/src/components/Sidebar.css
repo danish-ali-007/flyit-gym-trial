@@ -1,0 +1,402 @@
+/* =========================
+   DESKTOP SIDEBAR
+========================= */
+
+.sidebar {
+  width: 250px;
+  height: 100vh;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 22px 16px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #111318 0%,
+      #151820 100%
+    );
+
+  color: white;
+
+  border-right:
+    1px solid rgba(255, 255, 255, 0.05);
+
+  box-sizing: border-box;
+
+  z-index: 1000;
+}
+
+
+/* =========================
+   LOGO
+========================= */
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 8px 6px 24px;
+
+  margin-bottom: 15px;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.08);
+}
+
+.logo-mark {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff4d30,
+      #e63d23
+    );
+
+  color: white;
+
+  font-size: 15px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  box-shadow:
+    0 7px 18px rgba(255, 77, 48, 0.25);
+}
+
+.logo-text {
+  min-width: 0;
+}
+
+.logo-text h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 17px;
+  font-weight: 800;
+
+  letter-spacing: 0.5px;
+
+  white-space: nowrap;
+}
+
+.logo-text h2 span {
+  color: #ff4d30;
+}
+
+.logo-text p {
+  margin: 4px 0 0;
+
+  color: #7f8793;
+
+  font-size: 10px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================
+   MENU
+========================= */
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+
+  flex: 1;
+}
+
+.sidebar-link {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 13px 14px;
+
+  border-radius: 10px;
+
+  color: #aeb4bd;
+
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.sidebar-link:hover {
+  background:
+    rgba(255, 255, 255, 0.06);
+
+  color: #ffffff;
+
+  transform: translateX(2px);
+}
+
+.sidebar-link.active {
+  background:
+    linear-gradient(
+      135deg,
+      #ff4d30,
+      #e63d23
+    );
+
+  color: white;
+
+  box-shadow:
+    0 7px 18px rgba(255, 77, 48, 0.2);
+}
+
+.sidebar-icon {
+  font-size: 18px;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.sidebar-footer {
+  padding: 16px 10px 4px;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-footer p {
+  margin: 0 0 3px;
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.sidebar-footer span {
+  color: #777f8a;
+
+  font-size: 10px;
+}
+
+
+/* =========================
+   MOBILE BOTTOM NAV
+========================= */
+
+.mobile-bottom-nav {
+  display: none;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+  /* Hide desktop sidebar */
+
+  .sidebar {
+    display: none;
+  }
+
+
+  /* Bottom navigation */
+
+  .mobile-bottom-nav {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 66px;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(5, minmax(0, 1fr));
+
+    align-items: stretch;
+
+    background:
+      linear-gradient(
+        180deg,
+        #111318 0%,
+        #151820 100%
+      );
+
+    border-top:
+      1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+      0 -6px 20px
+      rgba(0, 0, 0, 0.22);
+
+    z-index: 9999;
+
+    isolation: isolate;
+
+    pointer-events: auto;
+
+    touch-action: manipulation;
+
+    -webkit-user-select: none;
+    user-select: none;
+
+    -webkit-tap-highlight-color:
+      transparent;
+  }
+
+
+  .mobile-nav-item {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 4px;
+
+    color: #8f96a1;
+
+    text-decoration: none;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color:
+      transparent;
+
+    -webkit-user-select: none;
+    user-select: none;
+
+    z-index: 1;
+
+    transition:
+      color 0.2s ease,
+      background 0.2s ease;
+  }
+
+
+  /*
+    Icon/text khud click capture nahi karenge.
+    Pura NavLink click target rahega.
+  */
+
+  .mobile-nav-item svg,
+  .mobile-nav-item span {
+    pointer-events: none;
+  }
+
+
+  .mobile-nav-item svg {
+    font-size: 19px;
+
+    flex-shrink: 0;
+  }
+
+
+  .mobile-nav-item.active {
+    color: #ff4d30;
+
+    background:
+      rgba(255, 77, 48, 0.08);
+  }
+
+
+  .mobile-nav-item.active svg {
+    transform: translateY(-1px);
+  }
+
+
+  /*
+    Tap feedback
+  */
+
+  .mobile-nav-item:active {
+    background:
+      rgba(255, 255, 255, 0.06);
+  }
+
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 420px) {
+
+  .mobile-bottom-nav {
+    height: 62px;
+  }
+
+
+  .mobile-nav-item {
+    gap: 3px;
+
+    font-size: 9px;
+  }
+
+
+  .mobile-nav-item svg {
+    font-size: 18px;
+  }
+
+}
+
+/* =========================================
+   SIDEBAR BOTTOM PROFILE AREA
+========================================= */
+
+.sidebar-bottom {
+  margin-top: auto;
+}
+
+.sidebar-profile-link {
+  margin-bottom: 14px;
+}

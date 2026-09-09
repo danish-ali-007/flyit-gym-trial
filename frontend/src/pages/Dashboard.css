@@ -1,0 +1,1728 @@
+.dashboard-page {
+  width: 100%;
+  min-width: 0;
+  padding-bottom: 30px;
+}
+
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.dashboard-page-header {
+  margin-bottom: 28px;
+}
+
+.dashboard-page-header h1 {
+  margin: 0 0 6px;
+
+  font-size: 32px;
+  font-weight: 800;
+
+  color: #161b22;
+
+  letter-spacing: -0.5px;
+}
+
+.dashboard-page-header p {
+  margin: 0;
+
+  font-size: 14px;
+  color: #7a818c;
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.dashboard-loading {
+  padding: 20px 0;
+
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+   STATS GRID
+   TOP CARDS - UNCHANGED
+========================= */
+
+.stats-grid {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+
+/* =========================
+   STAT CARD
+========================= */
+
+.stat-card {
+  position: relative;
+
+  min-width: 0;
+
+  padding: 22px;
+
+  background: linear-gradient(
+    145deg,
+    #ffffff,
+    #fbfbfc
+  );
+
+  border: 1px solid #eceef1;
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 6px 20px
+    rgba(17, 24, 39, 0.06);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+.stat-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 4px;
+  height: 100%;
+
+  background: #ff4d30;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+
+  border-color: #ffd1c8;
+
+  box-shadow:
+    0 12px 28px
+    rgba(17, 24, 39, 0.1);
+}
+
+
+/* =========================
+   CLICKABLE STAT CARD
+========================= */
+
+.clickable-stat-card {
+  cursor: pointer;
+
+  user-select: none;
+}
+
+.clickable-stat-card:hover {
+  background: linear-gradient(
+    145deg,
+    #ffffff,
+    #fff8f6
+  );
+
+  transform: translateY(-5px);
+
+  border-color: #ffb8aa;
+
+  box-shadow:
+    0 14px 30px
+    rgba(255, 77, 48, 0.12);
+}
+
+.clickable-stat-card:active {
+  transform:
+    translateY(-1px)
+    scale(0.985);
+}
+
+.clickable-stat-card:focus {
+  outline: none;
+}
+
+.clickable-stat-card:focus-visible {
+  border-color: #ff4d30;
+
+  box-shadow:
+    0 0 0 3px
+      rgba(255, 77, 48, 0.15),
+    0 12px 28px
+      rgba(17, 24, 39, 0.08);
+}
+
+
+/* =========================
+   STAT CARD TOP
+========================= */
+
+.stat-card-top {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.stat-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  background: #fff1ed;
+  color: #ff4d30;
+
+  font-size: 20px;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.clickable-stat-card:hover .stat-icon {
+  transform: scale(1.06);
+
+  background: #ffe5de;
+}
+
+.stat-label {
+  color: #6b7280;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.stat-card h2 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 30px;
+  font-weight: 800;
+
+  letter-spacing: -0.5px;
+}
+
+.stat-description {
+  margin: 8px 0 0;
+
+  color: #9ca3af;
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+/* =========================
+   SECTION HEADINGS
+========================= */
+
+.section-heading {
+  margin-bottom: 16px;
+}
+
+.section-heading h2 {
+  margin: 0 0 5px;
+
+  color: #1f2937;
+
+  font-size: 22px;
+  font-weight: 750;
+}
+
+.section-heading p {
+  margin: 0;
+
+  color: #7a818c;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+   EXPIRY SECTION
+========================= */
+
+.expiry-section {
+  width: 100%;
+
+  margin-top: 34px;
+}
+
+
+/* =========================
+   EXPIRY CARD
+========================= */
+
+.expiry-card {
+  width: 100%;
+
+  background: #ffffff;
+
+  border: 1px solid #eceef1;
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 5px 18px
+    rgba(17, 24, 39, 0.05);
+}
+
+.upcoming-expiry-card {
+  margin-top: 20px;
+}
+
+.past-expired-card {
+  margin-top: 20px;
+}
+
+.expiry-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 20px 22px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #eceef1;
+}
+
+.expiry-card-header h3 {
+  margin: 0;
+
+  color: #1f2937;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.expiry-card-subtitle {
+  margin: 4px 0 0;
+
+  color: #9ca3af;
+
+  font-size: 12px;
+}
+
+.expiry-count {
+  min-width: 34px;
+  height: 34px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0 10px;
+
+  border-radius: 999px;
+
+  background: #fff1ed;
+  color: #e63d23;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.expiry-message {
+  padding: 22px;
+
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+   DESKTOP / MOBILE VIEW
+========================= */
+
+.desktop-expiry-view {
+  display: block;
+}
+
+.mobile-expiry-view {
+  display: none;
+}
+
+
+/* =========================
+   DAYS LEFT BADGE
+========================= */
+
+.days-left-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  background: #fff7ed;
+  color: #ea580c;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* =========================
+   TABLE CONTAINERS
+========================= */
+
+.expiry-table-container,
+.revenue-table-container {
+  width: 100%;
+
+  overflow-x: auto;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+
+/* =========================
+   TABLES
+========================= */
+
+.expiry-table,
+.revenue-table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+.expiry-table {
+  min-width: 720px;
+}
+
+.revenue-table {
+  min-width: 560px;
+}
+
+.expiry-table th,
+.expiry-table td,
+.revenue-table th,
+.revenue-table td {
+  padding: 15px 18px;
+
+  text-align: left;
+
+  white-space: nowrap;
+
+  border-bottom: 1px solid #eef0f2;
+}
+
+.expiry-table th,
+.revenue-table th {
+  background: #f8f9fb;
+
+  color: #7a818c;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.3px;
+}
+
+.expiry-table td,
+.revenue-table td {
+  color: #374151;
+
+  font-size: 14px;
+}
+
+.expiry-table tbody tr,
+.revenue-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.expiry-table tbody tr:hover,
+.revenue-table tbody tr:hover {
+  background: #fcfcfd;
+}
+
+
+/* =========================
+   WHATSAPP BUTTON
+========================= */
+
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 13px;
+
+  border-radius: 8px;
+
+  background: #ecfdf3;
+  color: #15803d;
+
+  text-decoration: none;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.whatsapp-btn:hover {
+  background: #d9fbe6;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================
+   PAST EXPIRED
+   DESKTOP ACTION ICONS
+========================= */
+
+.past-expiry-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+.expiry-icon-btn {
+  width: 34px;
+  height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 17px;
+
+  cursor: pointer;
+
+  text-decoration: none;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.whatsapp-icon-btn {
+  background: #ecfdf3;
+
+  color: #15803d;
+}
+
+.whatsapp-icon-btn:hover {
+  background: #d9fbe6;
+
+  transform: translateY(-1px);
+}
+
+.delete-expiry-icon-btn {
+  background: #fee2e2;
+
+  color: #dc2626;
+}
+
+.delete-expiry-icon-btn:hover {
+  background: #fecaca;
+
+  transform: translateY(-1px);
+}
+
+.disabled-expiry-icon {
+  background: #f3f4f6;
+
+  color: #9ca3af;
+
+  cursor: not-allowed;
+
+  opacity: 0.65;
+}
+
+
+/* =========================
+   MOBILE EXPIRY MEMBER CARD
+========================= */
+
+.mobile-expiry-member-card {
+  width: 100%;
+
+  min-width: 0;
+
+  padding: 14px;
+
+  margin: 0;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 3px 12px
+    rgba(0, 0, 0, 0.05);
+}
+
+.mobile-expiry-card-top {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding-bottom: 11px;
+
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.mobile-expiry-avatar {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #fff3ef;
+
+  color: #ff4d30;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.mobile-expiry-main {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.mobile-expiry-main h3 {
+  margin: 0;
+
+  color: #1f2937;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+.mobile-expiry-main p {
+  margin: 3px 0 0;
+
+  color: #6b7280;
+
+  font-size: 11px;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+.mobile-expiry-info-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+
+  padding: 11px 0;
+}
+
+.mobile-expiry-info-grid > div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+
+  min-width: 0;
+}
+
+.mobile-expiry-info-grid span {
+  color: #9ca3af;
+
+  font-size: 9px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.3px;
+}
+
+.mobile-expiry-info-grid strong {
+  color: #374151;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  overflow-wrap: anywhere;
+}
+
+.mobile-days-left {
+  color: #ea580c !important;
+}
+
+.mobile-expired-text {
+  color: #dc2626 !important;
+}
+
+
+/* =========================
+   MOBILE CARD ACTIONS
+========================= */
+
+.mobile-expiry-actions {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 7px;
+
+  padding-top: 10px;
+
+  border-top: 1px solid #f1f1f1;
+}
+
+.mobile-expiry-actions.single-action {
+  grid-template-columns: 1fr;
+}
+
+.mobile-whatsapp-action,
+.mobile-delete-action {
+  width: 100%;
+
+  min-width: 0;
+  min-height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  padding: 8px 6px;
+
+  border: none;
+  border-radius: 8px;
+
+  box-sizing: border-box;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.mobile-whatsapp-action {
+  background: #ecfdf3;
+
+  color: #15803d;
+}
+
+.mobile-whatsapp-action:hover {
+  background: #d9fbe6;
+}
+
+.mobile-delete-action {
+  background: #fee2e2;
+
+  color: #dc2626;
+}
+
+.mobile-delete-action:hover {
+  background: #fecaca;
+}
+
+.mobile-whatsapp-action svg,
+.mobile-delete-action svg {
+  flex-shrink: 0;
+
+  font-size: 15px;
+}
+
+.disabled-mobile-action {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================
+   DELETE CONFIRMATION MODAL
+========================= */
+
+.dashboard-delete-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(17, 24, 39, 0.55);
+
+  backdrop-filter: blur(3px);
+
+  z-index: 5000;
+
+  box-sizing: border-box;
+}
+
+.dashboard-delete-modal {
+  width: 100%;
+  max-width: 420px;
+
+  padding: 26px;
+
+  background: #ffffff;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 24px 60px
+    rgba(17, 24, 39, 0.22);
+
+  box-sizing: border-box;
+}
+
+.dashboard-delete-icon {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 16px;
+
+  border-radius: 12px;
+
+  background: #fee2e2;
+
+  color: #dc2626;
+
+  font-size: 21px;
+}
+
+.dashboard-delete-modal h2 {
+  margin: 0 0 10px;
+
+  color: #1f2937;
+
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.dashboard-delete-modal p {
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.dashboard-delete-modal p strong {
+  color: #1f2937;
+}
+
+.dashboard-delete-warning {
+  margin-top: 5px !important;
+
+  color: #9ca3af !important;
+
+  font-size: 12px !important;
+}
+
+.dashboard-delete-error {
+  margin-top: 14px;
+
+  padding: 10px 12px;
+
+  border-radius: 8px;
+
+  background: #fee2e2;
+
+  color: #b91c1c;
+
+  font-size: 12px;
+}
+
+.dashboard-delete-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 24px;
+}
+
+.dashboard-delete-cancel,
+.dashboard-delete-confirm {
+  min-width: 95px;
+
+  padding: 10px 16px;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.dashboard-delete-cancel {
+  background: #f3f4f6;
+
+  color: #374151;
+}
+
+.dashboard-delete-cancel:hover {
+  background: #e5e7eb;
+}
+
+.dashboard-delete-confirm {
+  background: #dc2626;
+
+  color: #ffffff;
+}
+
+.dashboard-delete-confirm:hover:not(:disabled) {
+  background: #b91c1c;
+}
+
+.dashboard-delete-cancel:disabled,
+.dashboard-delete-confirm:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================
+   ANALYTICS CHARTS
+========================= */
+
+.charts-section {
+  width: 100%;
+
+  margin-top: 34px;
+}
+
+.charts-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 20px;
+}
+
+.chart-card {
+  width: 100%;
+  min-width: 0;
+
+  background: #ffffff;
+
+  border: 1px solid #eceef1;
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 5px 18px
+    rgba(17, 24, 39, 0.05);
+}
+
+.chart-card-header {
+  padding: 20px 22px;
+
+  border-bottom: 1px solid #eceef1;
+}
+
+.chart-card-header h3 {
+  margin: 0 0 5px;
+
+  color: #1f2937;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.chart-card-header p {
+  margin: 0;
+
+  color: #8b919b;
+
+  font-size: 12px;
+}
+
+.chart-wrapper {
+  width: 100%;
+
+  padding: 18px;
+
+  box-sizing: border-box;
+}
+
+.chart-empty {
+  margin: 0;
+
+  padding: 80px 20px;
+
+  text-align: center;
+
+  color: #7a818c;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+   REVENUE SECTION
+========================= */
+
+.revenue-section {
+  width: 100%;
+
+  margin-top: 34px;
+}
+
+.revenue-card {
+  width: 100%;
+
+  background: #ffffff;
+
+  border: 1px solid #eceef1;
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 5px 18px
+    rgba(17, 24, 39, 0.05);
+}
+
+.revenue-message {
+  padding: 22px;
+
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1000px) {
+  .stats-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+  .dashboard-page {
+    padding-bottom: 20px;
+  }
+
+  .dashboard-page-header {
+    margin-bottom: 22px;
+  }
+
+  .dashboard-page-header h1 {
+    font-size: 25px;
+  }
+
+  .dashboard-page-header p {
+    font-size: 13px;
+  }
+
+
+  /* =========================
+     TOP STATS
+     SAME AS BEFORE
+  ========================= */
+
+ /* =========================
+   TOP STATS - MOBILE
+   2 CARDS PER ROW
+========================= */
+
+.stats-grid {
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+/* odd last card full width */
+
+.stat-card:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.stat-card {
+  padding: 14px;
+}
+
+.stat-card-top {
+  gap: 8px;
+
+  margin-bottom: 10px;
+}
+
+.stat-icon {
+  width: 34px;
+  height: 34px;
+
+  font-size: 16px;
+
+  border-radius: 10px;
+}
+
+.stat-label {
+  font-size: 11px;
+
+  line-height: 1.25;
+}
+
+.stat-card h2 {
+  font-size: 21px;
+}
+
+.stat-description {
+  margin-top: 5px;
+
+  font-size: 10px;
+
+  line-height: 1.35;
+}
+
+.clickable-stat-card:hover {
+  transform: translateY(-2px);
+}
+
+  /* =========================
+     HEADINGS
+  ========================= */
+
+  .section-heading h2 {
+    font-size: 20px;
+  }
+
+  .section-heading p {
+    font-size: 13px;
+  }
+
+
+  /* =========================
+     SECTIONS
+  ========================= */
+
+  .expiry-section,
+  .revenue-section,
+  .charts-section {
+    margin-top: 28px;
+  }
+
+
+  /* =========================
+     EXPIRY
+  ========================= */
+
+  .expiry-card-header {
+    padding: 16px;
+
+    align-items: flex-start;
+  }
+
+  .expiry-card-header h3 {
+    font-size: 16px;
+  }
+
+  .expiry-card-subtitle {
+    font-size: 11px;
+  }
+
+  .expiry-count {
+    min-width: 30px;
+    height: 30px;
+
+    font-size: 12px;
+  }
+
+  .upcoming-expiry-card,
+  .past-expired-card {
+    margin-top: 14px;
+  }
+
+  .days-left-badge {
+    padding: 5px 8px;
+
+    font-size: 11px;
+  }
+
+
+  /* =========================
+     DESKTOP EXPIRY TABLE OFF
+  ========================= */
+
+  .desktop-expiry-view {
+    display: none;
+  }
+
+
+  /* =========================
+     MOBILE EXPIRY CARDS
+     2 CARDS PER ROW
+  ========================= */
+
+  .mobile-expiry-view {
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+
+    padding: 12px;
+
+    background: #f8f9fb;
+  }
+
+
+  /*
+    IMPORTANT:
+
+    1 card  = full width
+    2 cards = 2 columns
+
+    3 cards:
+    first 2 half
+    last full
+
+    5 cards:
+    first 4 half
+    last full
+
+    6 cards:
+    all half
+  */
+
+  .mobile-expiry-member-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+
+  /* =========================
+     COMPACT MOBILE CARD
+  ========================= */
+
+  .mobile-expiry-member-card {
+    min-width: 0;
+
+    padding: 11px;
+
+    border-radius: 12px;
+  }
+
+  .mobile-expiry-card-top {
+    gap: 8px;
+
+    padding-bottom: 9px;
+  }
+
+  .mobile-expiry-avatar {
+    width: 34px;
+    height: 34px;
+
+    font-size: 11px;
+  }
+
+  .mobile-expiry-main h3 {
+    font-size: 12px;
+  }
+
+  .mobile-expiry-main p {
+    margin-top: 2px;
+
+    font-size: 10px;
+  }
+
+  .mobile-expiry-info-grid {
+    grid-template-columns: 1fr;
+
+    gap: 7px;
+
+    padding: 9px 0;
+  }
+
+  .mobile-expiry-info-grid span {
+    font-size: 8px;
+  }
+
+  .mobile-expiry-info-grid strong {
+    font-size: 10px;
+  }
+
+
+  /* =========================
+     MOBILE ACTIONS
+  ========================= */
+
+  .mobile-expiry-actions {
+    gap: 5px;
+
+    padding-top: 8px;
+  }
+
+  .mobile-whatsapp-action,
+  .mobile-delete-action {
+    min-height: 32px;
+
+    gap: 4px;
+
+    padding: 6px 4px;
+
+    font-size: 9px;
+  }
+
+  .mobile-whatsapp-action svg,
+  .mobile-delete-action svg {
+    font-size: 13px;
+  }
+
+
+  /* =========================
+     FULL WIDTH ODD LAST CARD
+
+     Last odd card has extra room,
+     so its information can use
+     2 columns again.
+  ========================= */
+
+  .mobile-expiry-member-card:last-child:nth-child(odd)
+    .mobile-expiry-info-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  /* =========================
+     MONTHLY REVENUE - MOBILE
+  ========================= */
+
+  .revenue-card {
+    width: 100%;
+
+    background: transparent;
+
+    border: none;
+    border-radius: 0;
+
+    box-shadow: none;
+
+    overflow: visible;
+  }
+
+  .revenue-table-container {
+    width: 100%;
+
+    overflow: visible;
+  }
+
+  .revenue-table {
+    width: 100%;
+    min-width: 0;
+
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .revenue-table thead {
+    display: none;
+  }
+
+  .revenue-table tbody {
+    display: grid;
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+  .revenue-table tbody tr {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 12px 10px;
+
+    padding: 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+
+    box-sizing: border-box;
+
+    box-shadow:
+      0 3px 12px
+      rgba(0, 0, 0, 0.05);
+  }
+
+  .revenue-table tbody tr:hover {
+    background: #ffffff;
+  }
+
+  .revenue-table td {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+    padding: 0;
+
+    border: none;
+
+    white-space: normal;
+
+    color: #374151;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    word-break: break-word;
+  }
+
+  .revenue-table td::before {
+    display: block;
+
+    color: #9ca3af;
+
+    font-size: 9px;
+    font-weight: 600;
+
+    line-height: 1.2;
+
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .revenue-table td:nth-child(1)::before {
+    content: "Month";
+  }
+
+  .revenue-table td:nth-child(2)::before {
+    content: "Revenue";
+  }
+
+  .revenue-table td:nth-child(3)::before {
+    content: "Transactions";
+  }
+
+  .revenue-table td:nth-child(4)::before {
+    content: "Members";
+  }
+
+
+  /* =========================
+     CHARTS
+  ========================= */
+
+  .chart-card-header {
+    padding: 16px;
+  }
+
+  .chart-card-header h3 {
+    font-size: 16px;
+  }
+
+  .chart-wrapper {
+    padding: 10px;
+  }
+
+
+  /* =========================
+     DELETE MODAL
+  ========================= */
+
+  .dashboard-delete-modal {
+    padding: 22px;
+  }
+
+  .dashboard-delete-actions {
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboard-delete-cancel,
+  .dashboard-delete-confirm {
+    width: 100%;
+
+    min-width: 0;
+  }
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 420px) {
+  .dashboard-page-header h1 {
+    font-size: 23px;
+  }
+
+  .stat-card {
+  padding: 12px;
+}
+
+.stat-card-top {
+  gap: 7px;
+
+  margin-bottom: 9px;
+}
+
+.stat-icon {
+  width: 31px;
+  height: 31px;
+
+  font-size: 14px;
+}
+
+.stat-label {
+  font-size: 10px;
+}
+
+.stat-card h2 {
+  font-size: 19px;
+}
+
+.stat-description {
+  font-size: 9px;
+}
+
+  .expiry-card-header {
+    gap: 10px;
+  }
+
+  .mobile-expiry-view {
+    gap: 8px;
+
+    padding: 9px;
+  }
+
+  .mobile-expiry-member-card {
+    padding: 9px;
+
+    border-radius: 10px;
+  }
+
+  .mobile-expiry-avatar {
+    width: 30px;
+    height: 30px;
+
+    font-size: 10px;
+  }
+
+  .mobile-expiry-main h3 {
+    font-size: 11px;
+  }
+
+  .mobile-expiry-main p {
+    font-size: 9px;
+  }
+
+  .mobile-expiry-info-grid {
+    gap: 6px;
+
+    padding: 8px 0;
+  }
+
+  .mobile-expiry-info-grid span {
+    font-size: 7px;
+  }
+
+  .mobile-expiry-info-grid strong {
+    font-size: 9px;
+  }
+
+  .mobile-whatsapp-action,
+  .mobile-delete-action {
+    min-height: 30px;
+
+    font-size: 8px;
+  }
+
+  .mobile-whatsapp-action svg,
+  .mobile-delete-action svg {
+    font-size: 12px;
+  }
+
+  /* =========================
+     MONTHLY REVENUE - SMALL MOBILE
+  ========================= */
+
+  .revenue-table tbody {
+    gap: 8px;
+  }
+
+  .revenue-table tbody tr {
+    gap: 10px 8px;
+
+    padding: 12px;
+
+    border-radius: 10px;
+  }
+
+  .revenue-table td {
+    font-size: 11px;
+  }
+
+  .revenue-table td::before {
+    font-size: 8px;
+  }
+}
+
+/* =========================
+   POWERED BY
+========================= */
+
+.powered-by {
+  width: 100%;
+  text-align: center;
+
+  margin: 0;
+  padding: 0;
+
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+
+  color: #c5c8ce;
+
+  position: relative;
+  top: 14px;
+}
+
+.powered-by span {
+  color: #b8bcc3;
+  font-weight: 500;
+}
+
+/* =========================
+   POWERED BY - MOBILE
+========================= */
+
+.page-powered-by {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .page-powered-by {
+    display: block;
+
+    height: 0;
+    margin: 0;
+    padding: 0;
+
+    position: relative;
+    top: 35px;
+
+    text-align: center;
+
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+
+    color: #c5c9cf;
+
+    pointer-events: none;
+  }
+
+  .page-powered-by span {
+    color: #aeb3ba;
+    font-weight: 500;
+  }
+}
+

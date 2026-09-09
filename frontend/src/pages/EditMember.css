@@ -1,0 +1,339 @@
+.edit-member-page {
+  width: 100%;
+  min-width: 0;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.edit-member-header {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 20px;
+
+  margin-bottom: 25px;
+}
+
+.edit-member-header h1 {
+  margin: 0 0 5px;
+
+  color: #1f2937;
+
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.edit-member-header p {
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+   BACK ICON BUTTON
+========================= */
+
+.edit-back-btn {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  padding: 0;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #374151;
+
+  font-size: 21px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.edit-back-btn:hover {
+  background: #fff3ef;
+
+  border-color: #ff4d30;
+
+  color: #ff4d30;
+
+  transform: translateX(-2px);
+}
+
+.edit-back-btn:active {
+  transform: scale(0.95);
+}
+
+
+/* =========================
+   FORM CARD
+========================= */
+
+.edit-member-form {
+  width: 100%;
+  max-width: 1000px;
+
+  padding: 28px;
+
+  background: #ffffff;
+
+  border: 1px solid #eef0f3;
+  border-radius: 14px;
+
+  box-shadow:
+    0 3px 15px
+    rgba(0, 0, 0, 0.06);
+
+  box-sizing: border-box;
+}
+
+
+/* =========================
+   GRID
+========================= */
+
+.edit-form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 20px;
+}
+
+
+/* =========================
+   FORM GROUP
+========================= */
+
+.edit-form-group {
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.edit-form-group label {
+  color: #374151;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.edit-form-group input,
+.edit-form-group select {
+  width: 100%;
+
+  padding: 11px 13px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #1f2937;
+
+  font-size: 14px;
+
+  outline: none;
+
+  box-sizing: border-box;
+
+  transition: 0.2s;
+}
+
+.edit-form-group input:focus,
+.edit-form-group select:focus {
+  border-color: #ff4d30;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(255, 77, 48, 0.1);
+}
+
+
+/* =========================
+   ACTIONS
+========================= */
+
+.edit-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 26px;
+}
+
+.edit-cancel-btn,
+.update-member-btn {
+  padding: 11px 18px;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.edit-cancel-btn {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.edit-cancel-btn:hover:not(:disabled) {
+  background: #e5e7eb;
+}
+
+.update-member-btn {
+  background: #ff4d30;
+  color: #ffffff;
+}
+
+.update-member-btn:hover:not(:disabled) {
+  background: #e63d23;
+}
+
+.edit-cancel-btn:disabled,
+.update-member-btn:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.edit-member-loading {
+  padding: 20px 0;
+
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+.edit-member-error {
+  width: 100%;
+  max-width: 1000px;
+
+  margin: 0 0 16px;
+
+  padding: 11px 13px;
+
+  border-radius: 8px;
+
+  background: #fee2e2;
+  color: #b91c1c;
+
+  font-size: 13px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================
+   SUCCESS
+========================= */
+
+.edit-member-success {
+  margin: 18px 0 0;
+
+  padding: 11px 13px;
+
+  border-radius: 8px;
+
+  background: #dcfce7;
+  color: #15803d;
+
+  font-size: 13px;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 768px) {
+
+  .edit-member-header h1 {
+    font-size: 24px;
+  }
+
+  .edit-member-form {
+    padding: 20px;
+  }
+
+  .edit-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+  .edit-member-header {
+    align-items: flex-start;
+  }
+
+  .edit-member-header h1 {
+    font-size: 22px;
+  }
+
+  .edit-member-header p {
+    font-size: 13px;
+  }
+
+  .edit-back-btn {
+    width: 38px;
+    height: 38px;
+
+    font-size: 19px;
+  }
+
+  .edit-member-form {
+    padding: 16px;
+  }
+
+  .edit-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .edit-cancel-btn,
+  .update-member-btn {
+    width: 100%;
+  }
+
+}

@@ -1,0 +1,575 @@
+.profile-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.profile-page-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.profile-title-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111827;
+  color: #ffffff;
+  font-size: 22px;
+}
+
+.profile-page-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.profile-page-header p {
+  margin: 5px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.profile-loading {
+  padding: 30px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+
+/* =====================================================
+   SECTION
+===================================================== */
+
+.profile-section {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+}
+
+.profile-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.profile-section-heading h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.profile-section-heading p {
+  margin: 4px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.profile-section-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  color: #111827;
+  font-size: 18px;
+}
+
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.profile-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-field-full {
+  grid-column: 1 / -1;
+}
+
+.profile-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.profile-field small {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.profile-input-wrapper {
+  min-height: 46px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  background: #ffffff;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.profile-input-wrapper:focus-within {
+  border-color: #111827;
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08);
+}
+
+.profile-input-wrapper > svg {
+  flex-shrink: 0;
+  color: #6b7280;
+  font-size: 17px;
+}
+
+.profile-input-wrapper input {
+  width: 100%;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #111827;
+  font-size: 14px;
+}
+
+.profile-input-wrapper input::placeholder {
+  color: #9ca3af;
+}
+
+.profile-readonly {
+  background: #f9fafb;
+}
+
+.profile-readonly input {
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+
+/* =====================================================
+   PASSWORD EYE BUTTON
+===================================================== */
+
+.profile-eye-btn {
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  font-size: 17px;
+}
+
+.profile-eye-btn:hover {
+  color: #111827;
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+.profile-primary-btn {
+  margin-top: 20px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 11px;
+  background: #111827;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    opacity 0.2s ease;
+}
+
+.profile-primary-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.profile-primary-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+.profile-message {
+  margin-top: 16px;
+  padding: 11px 13px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.profile-message.success {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.profile-message.error {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+
+/* =====================================================
+   SECURITY STATUS
+===================================================== */
+
+.security-status {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.security-status > div {
+  padding: 15px 16px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.security-status span {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.security-status strong {
+  color: #111827;
+  font-size: 13px;
+}
+
+
+/* =====================================================
+   RECOVERY CODE
+===================================================== */
+
+.recovery-code-box {
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.recovery-code-box > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.recovery-code-box span {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.recovery-code-box strong {
+  color: #111827;
+  font-size: 18px;
+  letter-spacing: 1px;
+  word-break: break-word;
+}
+
+.recovery-code-box button {
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  min-height: 38px;
+  padding: 0 13px;
+  border-radius: 9px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #111827;
+  font-weight: 600;
+}
+
+.recovery-code-box p {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #92400e;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   POWERED BY
+===================================================== */
+
+.profile-page .page-powered-by {
+  margin-top: 2px;
+  padding-bottom: 10px;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.profile-page .page-powered-by span {
+  color: #111827;
+  font-weight: 600;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+  .profile-page {
+    gap: 18px;
+  }
+
+  .profile-page-header {
+    align-items: flex-start;
+  }
+
+  .profile-page-header h1 {
+    font-size: 23px;
+  }
+
+  .profile-section {
+    padding: 18px;
+    border-radius: 15px;
+  }
+
+  .profile-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-field-full {
+    grid-column: auto;
+  }
+
+  .security-status {
+    grid-template-columns: 1fr;
+  }
+
+  .recovery-code-box {
+    grid-template-columns: 1fr;
+  }
+
+  .recovery-code-box button {
+    width: fit-content;
+  }
+
+  .recovery-code-box p {
+    grid-column: auto;
+  }
+
+  .profile-primary-btn {
+    width: 100%;
+  }
+}
+
+/* =====================================================
+   FINAL MOBILE LOGIN + FORGOT PASSWORD FIX
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .login-page {
+    width: 100%;
+    min-height: 100dvh;
+
+    box-sizing: border-box;
+
+    overflow-x: hidden;
+  }
+
+  .login-container {
+    width: 100%;
+    max-width: 100%;
+
+    box-sizing: border-box;
+  }
+
+  .login-box {
+    width: 100%;
+    max-width: 100%;
+
+    box-sizing: border-box;
+  }
+
+
+  /* FORGOT PASSWORD */
+
+  .forgot-overlay {
+    box-sizing: border-box;
+
+    align-items: flex-end;
+
+    padding: 10px;
+  }
+
+  .forgot-modal {
+    width: 100%;
+    max-width: 100%;
+
+    max-height: calc(100dvh - 20px);
+
+    box-sizing: border-box;
+
+    padding: 20px 16px 18px;
+
+    border-radius: 18px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .forgot-header {
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .forgot-header > div {
+    min-width: 0;
+  }
+
+  .forgot-header h2 {
+    font-size: 19px;
+  }
+
+  .forgot-header p {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .forgot-close-btn {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+  }
+
+
+  /* FORM WIDTH FIX */
+
+  .forgot-modal form,
+  .forgot-modal .form-group {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .forgot-modal .form-group {
+    margin-bottom: 15px;
+  }
+
+  .forgot-modal .form-group input {
+    width: 100%;
+    max-width: 100%;
+
+    box-sizing: border-box;
+
+    font-size: 16px;
+  }
+
+
+  /* PIN / RECOVERY SWITCH */
+
+  .forgot-mode-switch {
+    width: 100%;
+    box-sizing: border-box;
+
+    margin-bottom: 17px;
+  }
+
+  .forgot-mode-switch button {
+    min-width: 0;
+    min-height: 40px;
+
+    padding: 6px;
+
+    font-size: 11px;
+  }
+
+
+  /* BUTTON */
+
+  .forgot-modal .login-button {
+    width: 100%;
+    min-height: 44px;
+  }
+
+
+  /* MESSAGES */
+
+  .forgot-message,
+  .forgot-success {
+    width: 100%;
+    box-sizing: border-box;
+
+    font-size: 12px;
+  }
+}
+
+
+/* =====================================================
+   VERY SMALL PHONES
+===================================================== */
+
+@media (max-width: 380px) {
+
+  .forgot-overlay {
+    padding: 6px;
+  }
+
+  .forgot-modal {
+    padding: 18px 14px 16px;
+
+    border-radius: 16px;
+  }
+
+  .forgot-header h2 {
+    font-size: 18px;
+  }
+
+  .forgot-mode-switch button {
+    font-size: 10px;
+  }
+}

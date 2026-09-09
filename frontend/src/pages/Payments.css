@@ -1,0 +1,1493 @@
+.payments-page {
+  width: 100%;
+  min-width: 0;
+
+  padding-bottom: 30px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.payments-header {
+  margin-bottom: 26px;
+}
+
+.payments-header h1 {
+  margin: 0 0 6px;
+
+  font-size: 30px;
+  font-weight: 800;
+
+  color: #161b22;
+}
+
+.payments-header p {
+  margin: 0;
+
+  color: #7a818c;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+   MAIN LAYOUT
+========================= */
+
+.payments-layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1.2fr);
+
+  gap: 20px;
+
+  align-items: start;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.payment-form-card,
+.payment-history-card {
+  min-width: 0;
+
+  background: #ffffff;
+
+  border: 1px solid #eceef1;
+  border-radius: 16px;
+
+  box-shadow:
+    0 5px 18px
+    rgba(17, 24, 39, 0.05);
+
+  overflow: hidden;
+}
+
+.payment-form-card {
+  padding: 24px;
+}
+
+.payment-card-heading {
+  margin-bottom: 22px;
+}
+
+.payment-history-card
+.payment-card-heading {
+  padding: 22px 22px 18px;
+
+  margin-bottom: 0;
+
+  border-bottom:
+    1px solid #eceef1;
+}
+
+.payment-card-heading h2 {
+  margin: 0 0 5px;
+
+  color: #1f2937;
+
+  font-size: 20px;
+  font-weight: 750;
+}
+
+.payment-card-heading p {
+  margin: 0;
+
+  color: #8b919b;
+
+  font-size: 13px;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.payment-form-group {
+  margin-bottom: 18px;
+}
+
+.payment-form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #374151;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.payment-form-group input,
+.payment-form-group select,
+.payment-form-group textarea {
+  width: 100%;
+  min-width: 0;
+
+  padding: 12px 13px;
+
+  border: 1px solid #d9dde3;
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #1f2937;
+
+  font-size: 14px;
+
+  outline: none;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.payment-form-group textarea {
+  resize: vertical;
+
+  min-height: 90px;
+}
+
+.payment-form-group input:focus,
+.payment-form-group select:focus,
+.payment-form-group textarea:focus {
+  border-color: #ff4d30;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(255, 77, 48, 0.1);
+}
+
+.payment-form-group input:disabled,
+.payment-form-group select:disabled {
+  background: #f4f5f7;
+
+  cursor: not-allowed;
+}
+
+.payment-form-group input[readonly] {
+  background: #f4f5f7;
+
+  color: #6b7280;
+}
+
+
+/* =========================
+   MEMBER SEARCH
+========================= */
+
+.payment-member-search {
+  position: relative;
+}
+
+.payment-search-results {
+  position: absolute;
+
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+
+  z-index: 500;
+
+  max-height: 260px;
+
+  overflow-y: auto;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 9px;
+
+  box-shadow:
+    0 10px 25px
+    rgba(0, 0, 0, 0.12);
+}
+
+.payment-search-item {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 11px 12px;
+
+  border: none;
+  border-bottom:
+    1px solid #f1f1f1;
+
+  background: #ffffff;
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+.payment-search-item:last-child {
+  border-bottom: none;
+}
+
+.payment-search-item:hover {
+  background: #fff5f2;
+}
+
+.payment-search-item div {
+  min-width: 0;
+}
+
+.payment-search-item strong {
+  display: block;
+
+  color: #1f2937;
+
+  font-size: 13px;
+}
+
+.payment-search-item div span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #9ca3af;
+
+  font-size: 10px;
+}
+
+.payment-search-item > span {
+  flex-shrink: 0;
+
+  color: #6b7280;
+
+  font-size: 11px;
+}
+
+.payment-search-empty {
+  margin: 0;
+
+  padding: 12px;
+
+  color: #9ca3af;
+
+  font-size: 12px;
+}
+
+
+/* =========================
+   SELECTED MEMBER TOP
+========================= */
+
+.selected-payment-member-top,
+.selected-renew-member-top {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 14px;
+
+  padding: 11px 13px;
+
+  background: #fff7f4;
+
+  border: 1px solid #ffd8cf;
+  border-radius: 9px;
+}
+
+.selected-payment-member-top div,
+.selected-renew-member-top div {
+  min-width: 0;
+}
+
+.selected-payment-member-top strong,
+.selected-renew-member-top strong {
+  display: block;
+
+  color: #1f2937;
+
+  font-size: 13px;
+}
+
+.selected-payment-member-top span,
+.selected-renew-member-top span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #7a818c;
+
+  font-size: 10px;
+}
+
+.payment-change-member-btn {
+  flex-shrink: 0;
+
+  padding: 7px 10px;
+
+  border: 1px solid #ff4d30;
+  border-radius: 7px;
+
+  background: #ffffff;
+
+  color: #e63d23;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.payment-change-member-btn:hover {
+  background: #fff1ed;
+}
+
+
+/* =========================
+   MEMBER SUMMARY
+========================= */
+
+.selected-member-summary {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+
+  margin-bottom: 20px;
+
+  padding: 16px;
+
+  background: #f8f9fb;
+
+  border: 1px solid #eceef1;
+  border-radius: 12px;
+}
+
+.selected-member-summary div {
+  min-width: 0;
+}
+
+.selected-member-summary span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #8a9099;
+
+  font-size: 11px;
+}
+
+.selected-member-summary strong {
+  display: block;
+
+  color: #1f2937;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  word-break: break-word;
+}
+
+
+/* =========================
+   MESSAGES
+========================= */
+
+.payment-error-message,
+.payment-success-message {
+  margin: 0 0 16px;
+
+  padding: 11px 13px;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.payment-error-message {
+  background: #fee2e2;
+
+  color: #b91c1c;
+}
+
+.payment-success-message {
+  background: #dcfce7;
+
+  color: #15803d;
+}
+
+
+/* =========================
+   RECORD BUTTON
+========================= */
+
+.record-payment-btn {
+  width: 100%;
+
+  padding: 13px 16px;
+
+  border: none;
+  border-radius: 9px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff4d30,
+      #e63d23
+    );
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 7px 16px
+    rgba(255, 77, 48, 0.18);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.record-payment-btn:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 10px 20px
+    rgba(255, 77, 48, 0.22);
+}
+
+.record-payment-btn:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* =========================
+   PAYMENT HISTORY
+========================= */
+
+.payment-empty {
+  padding: 24px 22px;
+
+  margin: 0;
+
+  color: #7a818c;
+
+  font-size: 14px;
+}
+
+.payment-table-container {
+  width: 100%;
+
+  overflow-x: auto;
+
+  -webkit-overflow-scrolling:
+    touch;
+}
+
+.payment-table {
+  width: 100%;
+
+  min-width: 620px;
+
+  border-collapse: collapse;
+}
+
+.payment-table th,
+.payment-table td {
+  padding: 14px 16px;
+
+  text-align: left;
+
+  white-space: nowrap;
+
+  border-bottom:
+    1px solid #eef0f2;
+}
+
+.payment-table th {
+  background: #f8f9fb;
+
+  color: #7a818c;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.3px;
+}
+
+.payment-table td {
+  color: #374151;
+
+  font-size: 13px;
+}
+
+.payment-table tbody tr:hover {
+  background: #fcfcfd;
+}
+
+
+/* =========================
+   RENEW MEMBERSHIP
+========================= */
+
+.renew-membership-section {
+  width: 100%;
+
+  margin-top: 22px;
+}
+
+.renew-membership-card {
+  width: 100%;
+
+  padding: 24px;
+
+  background: #ffffff;
+
+  border: 1px solid #eceef1;
+  border-radius: 16px;
+
+  box-shadow:
+    0 5px 18px
+    rgba(17, 24, 39, 0.05);
+
+  box-sizing: border-box;
+}
+
+.renew-heading {
+  margin-bottom: 22px;
+}
+
+.renew-heading h2 {
+  margin: 0 0 5px;
+
+  color: #1f2937;
+
+  font-size: 20px;
+  font-weight: 750;
+}
+
+.renew-heading p {
+  margin: 0;
+
+  color: #8b919b;
+
+  font-size: 13px;
+}
+
+.renew-empty {
+  margin: 0;
+
+  padding: 18px;
+
+  border-radius: 10px;
+
+  background: #f8f9fb;
+
+  color: #7a818c;
+
+  font-size: 14px;
+}
+
+.renew-member-info {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 12px;
+
+  margin-bottom: 22px;
+
+  padding: 16px;
+
+  border: 1px solid #eceef1;
+  border-radius: 12px;
+
+  background: #f8f9fb;
+}
+
+.renew-member-info span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #8a9099;
+
+  font-size: 11px;
+}
+
+.renew-member-info strong {
+  color: #1f2937;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.renew-form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 0 18px;
+}
+
+.renew-membership-btn {
+  min-width: 180px;
+
+  padding: 12px 18px;
+
+  border: none;
+  border-radius: 9px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff4d30,
+      #e63d23
+    );
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 7px 16px
+    rgba(255, 77, 48, 0.18);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.renew-membership-btn:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 10px 20px
+    rgba(255, 77, 48, 0.22);
+}
+
+.renew-membership-btn:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* =========================
+   RENEWAL HISTORY
+========================= */
+
+.renewal-history-section {
+  width: 100%;
+
+  margin-top: 22px;
+}
+
+.renewal-history-card {
+  width: 100%;
+
+  background: #ffffff;
+
+  border: 1px solid #eceef1;
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 5px 18px
+    rgba(17, 24, 39, 0.05);
+
+  box-sizing: border-box;
+}
+
+.renewal-history-heading {
+  padding: 22px;
+
+  border-bottom:
+    1px solid #eceef1;
+}
+
+.renewal-history-heading h2 {
+  margin: 0 0 5px;
+
+  color: #1f2937;
+
+  font-size: 20px;
+  font-weight: 750;
+}
+
+.renewal-history-heading p {
+  margin: 0;
+
+  color: #8b919b;
+
+  font-size: 13px;
+}
+
+.renewal-history-empty {
+  margin: 0;
+
+  padding: 22px;
+
+  color: #7a818c;
+
+  font-size: 14px;
+}
+
+.renewal-history-table-container {
+  width: 100%;
+
+  overflow-x: auto;
+
+  -webkit-overflow-scrolling:
+    touch;
+}
+
+.renewal-history-table {
+  width: 100%;
+
+  min-width: 650px;
+
+  border-collapse: collapse;
+}
+
+.renewal-history-table th,
+.renewal-history-table td {
+  padding: 14px 16px;
+
+  text-align: left;
+
+  white-space: nowrap;
+
+  border-bottom:
+    1px solid #eef0f2;
+}
+
+.renewal-history-table th {
+  background: #f8f9fb;
+
+  color: #7a818c;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.3px;
+}
+
+.renewal-history-table td {
+  color: #374151;
+
+  font-size: 13px;
+}
+
+.renewal-history-table
+tbody tr:hover {
+  background: #fcfcfd;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1000px) {
+
+  .payments-layout {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+  .payments-layout {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .renew-member-info {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .renew-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .renew-membership-btn {
+    width: 100%;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .payments-page {
+    padding-bottom: 20px;
+  }
+
+  .payments-header {
+    margin-bottom: 18px;
+  }
+
+  .payments-header h1 {
+    font-size: 24px;
+    line-height: 1.2;
+  }
+
+  .payments-header p {
+    margin-top: 5px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .payments-layout {
+    gap: 14px;
+  }
+
+  /* =========================
+     MAIN PAYMENT CARDS
+  ========================= */
+
+  .payment-form-card,
+  .payment-history-card,
+  .renew-membership-card,
+  .renewal-history-card {
+    border-radius: 13px;
+    box-shadow:
+      0 3px 12px
+      rgba(17, 24, 39, 0.05);
+  }
+
+  .payment-form-card {
+    padding: 16px;
+  }
+
+  .payment-card-heading {
+    margin-bottom: 18px;
+  }
+
+  .payment-history-card
+  .payment-card-heading {
+    padding: 16px;
+  }
+
+  .payment-card-heading h2,
+  .renew-heading h2,
+  .renewal-history-heading h2 {
+    font-size: 17px;
+    line-height: 1.25;
+  }
+
+  .payment-card-heading p,
+  .renew-heading p,
+  .renewal-history-heading p {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  /* =========================
+     FORM
+  ========================= */
+
+  .payment-form-group {
+    margin-bottom: 15px;
+  }
+
+  .payment-form-group label {
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+
+  .payment-form-group input,
+  .payment-form-group select,
+  .payment-form-group textarea {
+    min-height: 44px;
+    padding: 11px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+
+  .payment-form-group textarea {
+    min-height: 82px;
+  }
+
+  .record-payment-btn,
+  .renew-membership-btn {
+    min-height: 44px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+
+  /* =========================
+     MEMBER SEARCH
+  ========================= */
+
+  .payment-search-results {
+    max-height: 240px;
+    border-radius: 8px;
+  }
+
+  .payment-search-item {
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .payment-search-item strong {
+    font-size: 12px;
+  }
+
+  .payment-search-item div span {
+    font-size: 9px;
+  }
+
+  .payment-search-item > span {
+    max-width: 42%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 10px;
+  }
+
+  /* =========================
+     SELECTED MEMBER
+  ========================= */
+
+  .selected-payment-member-top,
+  .selected-renew-member-top {
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .selected-payment-member-top strong,
+  .selected-renew-member-top strong {
+    font-size: 12px;
+  }
+
+  .selected-payment-member-top span,
+  .selected-renew-member-top span {
+    font-size: 9px;
+    line-height: 1.4;
+  }
+
+  .payment-change-member-btn {
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+
+  /* =========================
+     MEMBER SUMMARY
+  ========================= */
+
+  .selected-member-summary {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+
+    margin-bottom: 17px;
+    padding: 13px;
+
+    border-radius: 10px;
+  }
+
+  .selected-member-summary span {
+    margin-bottom: 3px;
+    font-size: 9px;
+  }
+
+  .selected-member-summary strong {
+    font-size: 12px;
+  }
+
+  /* =========================
+     PAYMENT HISTORY - CARDS
+  ========================= */
+
+  .payment-table-container {
+    overflow: visible;
+    padding: 10px;
+  }
+
+  .payment-table {
+    min-width: 0;
+    border-collapse: separate;
+  }
+
+  .payment-table thead {
+    display: none;
+  }
+
+  .payment-table tbody {
+    display: grid;
+    gap: 9px;
+  }
+
+  .payment-table tbody tr {
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 10px 12px;
+
+    padding: 12px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8eaee;
+    border-radius: 10px;
+
+    box-shadow:
+      0 2px 8px
+      rgba(17, 24, 39, 0.04);
+  }
+
+  .payment-table tbody tr:hover {
+    background: #ffffff;
+  }
+
+  .payment-table td {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    padding: 0;
+
+    border: none;
+
+    white-space: normal;
+
+    color: #374151;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    word-break: break-word;
+  }
+
+  .payment-table td::before {
+    display: block;
+
+    color: #9ca3af;
+
+    font-size: 8px;
+    font-weight: 700;
+
+    letter-spacing: 0.25px;
+    text-transform: uppercase;
+  }
+
+  .payment-table td:nth-child(1)::before {
+    content: "Date";
+  }
+
+  .payment-table td:nth-child(2)::before {
+    content: "Amount";
+  }
+
+  .payment-table td:nth-child(3)::before {
+    content: "Method";
+  }
+
+  .payment-table td:nth-child(4)::before {
+    content: "Remarks";
+  }
+
+  /* =========================
+     RENEW MEMBERSHIP
+  ========================= */
+
+  .renew-membership-section,
+  .renewal-history-section {
+    margin-top: 16px;
+  }
+
+  .renew-membership-card {
+    padding: 16px;
+  }
+
+  .renew-heading {
+    margin-bottom: 18px;
+  }
+
+  .renew-member-info {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+
+    margin-bottom: 18px;
+    padding: 13px;
+
+    border-radius: 10px;
+  }
+
+  .renew-member-info span {
+    margin-bottom: 3px;
+    font-size: 9px;
+  }
+
+  .renew-member-info strong {
+    display: block;
+
+    font-size: 12px;
+
+    word-break: break-word;
+  }
+
+  /* =========================
+     RENEWAL HISTORY - CARDS
+  ========================= */
+
+  .renewal-history-heading {
+    padding: 16px;
+  }
+
+  .renewal-history-table-container {
+    overflow: visible;
+    padding: 10px;
+  }
+
+  .renewal-history-table {
+    min-width: 0;
+    border-collapse: separate;
+  }
+
+  .renewal-history-table thead {
+    display: none;
+  }
+
+  .renewal-history-table tbody {
+    display: grid;
+    gap: 9px;
+  }
+
+  .renewal-history-table tbody tr {
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 10px 12px;
+
+    padding: 12px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8eaee;
+    border-radius: 10px;
+
+    box-shadow:
+      0 2px 8px
+      rgba(17, 24, 39, 0.04);
+  }
+
+  .renewal-history-table
+  tbody tr:hover {
+    background: #ffffff;
+  }
+
+  .renewal-history-table td {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    padding: 0;
+
+    border: none;
+
+    white-space: normal;
+
+    color: #374151;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    word-break: break-word;
+  }
+
+  .renewal-history-table td::before {
+    display: block;
+
+    color: #9ca3af;
+
+    font-size: 8px;
+    font-weight: 700;
+
+    letter-spacing: 0.25px;
+    text-transform: uppercase;
+  }
+
+  .renewal-history-table
+  td:nth-child(1)::before {
+    content: "Renewal Date";
+  }
+
+  .renewal-history-table
+  td:nth-child(2)::before {
+    content: "Payment";
+  }
+
+  .renewal-history-table
+  td:nth-child(3)::before {
+    content: "Payment Method";
+  }
+
+  .renewal-history-table
+  td:nth-child(4)::before {
+    content: "Remarks";
+  }
+
+  /* =========================
+     EMPTY / STATUS MESSAGES
+  ========================= */
+
+  .payment-empty,
+  .renewal-history-empty {
+    padding: 18px 16px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .renew-empty {
+    padding: 14px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .payment-error-message,
+  .payment-success-message {
+    padding: 10px 11px;
+    font-size: 12px;
+  }
+
+}
+
+
+@media (max-width: 420px) {
+
+  .payment-form-card,
+  .renew-membership-card {
+    padding: 14px;
+  }
+
+  .payment-history-card
+  .payment-card-heading,
+  .renewal-history-heading {
+    padding: 14px;
+  }
+
+  .selected-member-summary,
+  .renew-member-info {
+    gap: 9px;
+    padding: 11px;
+  }
+
+  .payment-table-container,
+  .renewal-history-table-container {
+    padding: 8px;
+  }
+
+  .payment-table tbody tr,
+  .renewal-history-table tbody tr {
+    gap: 9px 8px;
+    padding: 11px;
+  }
+
+  .payment-table td,
+  .renewal-history-table td {
+    font-size: 10.5px;
+  }
+
+  .selected-payment-member-top,
+  .selected-renew-member-top {
+    flex-direction: column;
+  }
+
+  .payment-change-member-btn {
+    width: 100%;
+  }
+
+}
+/* =========================================
+   FINAL FIX - MEMBER SEARCH DROPDOWN
+========================================= */
+
+/* Payment form ko dropdown clip nahi karne dena */
+.payment-form-card {
+  overflow: visible;
+}
+
+/* Search area */
+.payment-member-search {
+  position: relative;
+}
+
+/* Dropdown */
+.payment-search-results {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+
+  z-index: 9999;
+
+  max-height: 260px;
+  overflow-y: auto;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 9px;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Every member result */
+.payment-search-item {
+  width: 100%;
+  min-height: 54px;
+  height: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+  padding: 11px 12px;
+
+  background: #ffffff;
+  border: none;
+  border-bottom: 1px solid #f1f1f1;
+
+  text-align: left;
+  cursor: pointer;
+
+  box-sizing: border-box;
+}
+
+/* Left section - name + member id */
+.payment-search-item > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.payment-search-item strong {
+  display: block;
+
+  color: #1f2937;
+
+  font-size: 13px;
+  line-height: 1.35;
+
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.payment-search-item div span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #9ca3af;
+
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+/* Right section - phone etc. */
+.payment-search-item > span {
+  flex-shrink: 0;
+
+  color: #6b7280;
+
+  font-size: 11px;
+
+  white-space: nowrap;
+}
+
+.payment-search-item:last-child {
+  border-bottom: none;
+}
+
+.payment-search-item:hover {
+  background: #fff5f2;
+}
+
+
+/* MOBILE - existing good behaviour preserve */
+@media (max-width: 600px) {
+
+  .payment-search-results {
+    max-height: 240px;
+  }
+
+  .payment-search-item {
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .payment-search-item strong {
+    font-size: 12px;
+  }
+
+  .payment-search-item div span {
+    font-size: 9px;
+  }
+
+  .payment-search-item > span {
+    max-width: 42%;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-size: 10px;
+  }
+}

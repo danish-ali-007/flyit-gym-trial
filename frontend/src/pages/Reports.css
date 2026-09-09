@@ -1,0 +1,933 @@
+.reports-page {
+  width: 100%;
+  min-width: 0;
+
+  padding-bottom: 30px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.reports-header {
+  margin-bottom: 26px;
+}
+
+.reports-header h1 {
+  margin: 0 0 6px;
+
+  color: #161b22;
+
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.reports-header p {
+  margin: 0;
+
+  color: #7a818c;
+
+  font-size: 14px;
+}
+
+.reports-loading {
+  padding: 20px 0;
+
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+   SUMMARY GRID
+========================= */
+
+.reports-summary-grid {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+
+/* =========================
+   SUMMARY CARD
+========================= */
+
+.report-summary-card {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  min-width: 0;
+
+  padding: 20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #fbfbfc
+    );
+
+  border: 1px solid #eceef1;
+  border-radius: 16px;
+
+  box-shadow:
+    0 5px 18px rgba(17, 24, 39, 0.05);
+
+  overflow: hidden;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.report-summary-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 4px;
+  height: 100%;
+
+  background: #ff4d30;
+}
+
+.report-summary-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 10px 25px rgba(17, 24, 39, 0.09);
+}
+
+.report-icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  background: #fff1ed;
+  color: #ff4d30;
+
+  font-size: 20px;
+}
+
+.report-summary-card span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #7a818c;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.report-summary-card h2 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 24px;
+  font-weight: 800;
+}
+
+
+/* =========================
+   REPORT SECTION
+========================= */
+
+.report-section {
+  width: 100%;
+
+  margin-top: 32px;
+}
+
+.report-section-heading {
+  margin-bottom: 16px;
+}
+
+.report-section-heading h2 {
+  margin: 0 0 5px;
+
+  color: #1f2937;
+
+  font-size: 21px;
+  font-weight: 750;
+}
+
+.report-section-heading p {
+  margin: 0;
+
+  color: #7a818c;
+
+  font-size: 13px;
+}
+
+
+/* =========================
+   PAYMENT STATUS
+========================= */
+
+.payment-status-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+.payment-status-card {
+  padding: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #eceef1;
+  border-radius: 14px;
+
+  box-shadow:
+    0 4px 15px rgba(17, 24, 39, 0.04);
+}
+
+.payment-status-card span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.payment-status-card h3 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.payment-status-card.paid {
+  border-left: 4px solid #16a34a;
+}
+
+.payment-status-card.paid span {
+  color: #15803d;
+}
+
+.payment-status-card.partial {
+  border-left: 4px solid #f59e0b;
+}
+
+.payment-status-card.partial span {
+  color: #b45309;
+}
+
+.payment-status-card.pending {
+  border-left: 4px solid #dc2626;
+}
+
+.payment-status-card.pending span {
+  color: #dc2626;
+}
+
+
+/* =========================
+   TABLE CARD
+========================= */
+
+.reports-table-card {
+  width: 100%;
+
+  background: #ffffff;
+
+  border: 1px solid #eceef1;
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 5px 18px rgba(17, 24, 39, 0.05);
+}
+
+.reports-table-container {
+  width: 100%;
+
+  overflow-x: auto;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.reports-table {
+  width: 100%;
+
+  min-width: 560px;
+
+  border-collapse: collapse;
+}
+
+.reports-table th,
+.reports-table td {
+  padding: 15px 18px;
+
+  text-align: left;
+
+  white-space: nowrap;
+
+  border-bottom: 1px solid #eef0f2;
+}
+
+.reports-table th {
+  background: #f8f9fb;
+
+  color: #7a818c;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.3px;
+}
+
+.reports-table td {
+  color: #374151;
+
+  font-size: 14px;
+}
+
+.reports-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.reports-table tbody tr:hover {
+  background: #fcfcfd;
+}
+
+.reports-empty {
+  margin: 0;
+
+  padding: 22px;
+
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1000px) {
+
+  .reports-summary-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+  .reports-page {
+    padding-bottom: 20px;
+  }
+
+  .reports-header {
+    margin-bottom: 20px;
+  }
+
+  .reports-header h1 {
+    font-size: 24px;
+  }
+
+  .reports-header p {
+    font-size: 13px;
+  }
+
+  .reports-summary-grid {
+    grid-template-columns: 1fr;
+
+    gap: 13px;
+  }
+
+  .report-summary-card {
+    padding: 17px;
+  }
+
+  .report-icon {
+    width: 40px;
+    height: 40px;
+
+    font-size: 18px;
+  }
+
+  .report-summary-card h2 {
+    font-size: 22px;
+  }
+
+  .payment-status-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .report-section {
+    margin-top: 27px;
+  }
+
+  .report-section-heading h2 {
+    font-size: 19px;
+  }
+
+  .reports-table th,
+  .reports-table td {
+    padding: 11px 12px;
+
+    font-size: 12px;
+  }
+
+}
+/* =========================
+   PENDING PAYMENT REPORT
+========================= */
+
+.pending-report-table {
+  min-width: 850px;
+}
+
+.pending-amount-text {
+  color: #dc2626;
+}
+
+.report-payment-status {
+  display: inline-flex;
+
+  padding: 5px 9px;
+
+  border-radius: 20px;
+
+  background: #fff7ed;
+  color: #c2410c;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+/* =========================
+   MEMBERSHIP REPORT
+========================= */
+
+.membership-report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  gap: 15px;
+
+  margin-bottom: 16px;
+}
+
+.membership-heading {
+  margin-bottom: 0;
+}
+
+.membership-report-filter {
+  min-width: 170px;
+
+  padding: 10px 12px;
+
+  border: 1px solid #d9dde3;
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #374151;
+
+  font-size: 13px;
+
+  outline: none;
+}
+
+.membership-report-filter:focus {
+  border-color: #ff4d30;
+
+  box-shadow:
+    0 0 0 3px rgba(255, 77, 48, 0.1);
+}
+
+.membership-report-table {
+  min-width: 900px;
+}
+
+.membership-report-status {
+  display: inline-flex;
+
+  padding: 5px 9px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.membership-report-status.active {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.membership-report-status.expired {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.membership-report-status.inactive {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+@media (max-width: 600px) {
+
+  .membership-report-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .membership-report-filter {
+    width: 100%;
+  }
+
+}
+
+/* =========================
+   REPORT LOADING
+========================= */
+
+.reports-loading-box {
+  min-height: 300px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 14px;
+
+  color: #6b7280;
+}
+
+.reports-spinner {
+  width: 34px;
+  height: 34px;
+
+  border: 4px solid #e5e7eb;
+  border-top-color: #ff4d30;
+
+  border-radius: 50%;
+
+  animation: reportsSpin 0.8s linear infinite;
+}
+
+@keyframes reportsSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================
+   REPORT ERROR
+========================= */
+
+.reports-error-box {
+  width: 100%;
+  max-width: 500px;
+
+  padding: 25px;
+
+  background: #ffffff;
+
+  border: 1px solid #fecaca;
+  border-radius: 12px;
+}
+
+.reports-error-box h2 {
+  margin: 0 0 8px;
+
+  color: #b91c1c;
+}
+
+.reports-error-box p {
+  margin: 0 0 18px;
+
+  color: #6b7280;
+}
+
+.reports-error-box button {
+  padding: 10px 16px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #ff4d30;
+  color: #ffffff;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.reports-error-box button:hover {
+  background: #e63d23;
+}
+
+/* =========================
+   REPORTS MOBILE CARDS
+========================= */
+
+@media (max-width: 768px) {
+
+  .reports-page {
+    padding-bottom: 20px;
+  }
+
+  .reports-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .report-summary-card {
+    padding: 14px;
+    gap: 10px;
+    border-radius: 12px;
+  }
+
+  .report-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .report-summary-card span {
+    font-size: 10px;
+    margin-bottom: 3px;
+  }
+
+  .report-summary-card h2 {
+    font-size: 19px;
+  }
+
+  .payment-status-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .payment-status-card {
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  .payment-status-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+  .payment-status-card span {
+    font-size: 11px;
+    margin-bottom: 5px;
+  }
+
+  .payment-status-card h3 {
+    font-size: 20px;
+  }
+
+  .report-section {
+    margin-top: 24px;
+  }
+
+  .report-section-heading {
+    margin-bottom: 12px;
+  }
+
+  .report-section-heading h2 {
+    font-size: 18px;
+  }
+
+  .report-section-heading p {
+    font-size: 11px;
+  }
+
+  /* Hide desktop report tables on mobile */
+
+  .reports-table-card {
+    overflow: visible;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  .reports-table-container {
+    overflow: visible;
+  }
+
+  .reports-table {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .reports-table thead {
+    display: none;
+  }
+
+  .reports-table tbody {
+    display: grid;
+    gap: 10px;
+  }
+
+  .reports-table tbody tr {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+
+    padding: 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+
+    box-shadow:
+      0 3px 12px
+      rgba(0, 0, 0, 0.05);
+  }
+
+  .reports-table tbody tr:hover {
+    background: #ffffff;
+  }
+
+  .reports-table td {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+
+    padding: 0;
+
+    border: none;
+
+    white-space: normal;
+
+    color: #374151;
+
+    font-size: 12px;
+
+    word-break: break-word;
+  }
+
+  .reports-table td::before {
+    margin-bottom: 3px;
+
+    color: #9ca3af;
+
+    font-size: 9px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+
+  /* =========================
+     PENDING PAYMENT CARD LABELS
+  ========================= */
+
+  .pending-report-table td:nth-child(1)::before {
+    content: "Member";
+  }
+
+  .pending-report-table td:nth-child(2)::before {
+    content: "Phone";
+  }
+
+  .pending-report-table td:nth-child(3)::before {
+    content: "Plan";
+  }
+
+  .pending-report-table td:nth-child(4)::before {
+    content: "Plan Amount";
+  }
+
+  .pending-report-table td:nth-child(5)::before {
+    content: "Paid";
+  }
+
+  .pending-report-table td:nth-child(6)::before {
+    content: "Pending";
+  }
+
+  .pending-report-table td:nth-child(7)::before {
+    content: "Status";
+  }
+
+
+  /* =========================
+     MEMBERSHIP REPORT CARD LABELS
+  ========================= */
+
+  .membership-report-table td:nth-child(1)::before {
+    content: "Member";
+  }
+
+  .membership-report-table td:nth-child(2)::before {
+    content: "Phone";
+  }
+
+  .membership-report-table td:nth-child(3)::before {
+    content: "Plan";
+  }
+
+  .membership-report-table td:nth-child(4)::before {
+    content: "Joining Date";
+  }
+
+  .membership-report-table td:nth-child(5)::before {
+    content: "Expiry Date";
+  }
+
+  .membership-report-table td:nth-child(6)::before {
+    content: "Status";
+  }
+
+  .membership-report-table td:nth-child(7)::before {
+    content: "Payment";
+  }
+
+  .membership-report-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .membership-report-filter {
+    width: 100%;
+    min-width: 0;
+
+    padding: 10px 11px;
+
+    font-size: 12px;
+  }
+
+  .report-payment-status,
+  .membership-report-status {
+    width: fit-content;
+
+    padding: 4px 8px;
+
+    font-size: 10px;
+  }
+
+  .reports-empty {
+    padding: 18px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+
+    font-size: 12px;
+
+    text-align: center;
+  }
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+  .reports-header h1 {
+    font-size: 21px;
+  }
+
+  .reports-header p {
+    font-size: 12px;
+  }
+
+  .reports-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .report-summary-card {
+    padding: 12px;
+  }
+
+  .report-icon {
+    width: 32px;
+    height: 32px;
+
+    font-size: 14px;
+  }
+
+  .report-summary-card span {
+    font-size: 9px;
+  }
+
+  .report-summary-card h2 {
+    font-size: 17px;
+  }
+
+  .payment-status-grid {
+    gap: 8px;
+  }
+
+  .payment-status-card {
+    padding: 12px;
+  }
+
+  .payment-status-card h3 {
+    font-size: 18px;
+  }
+
+  .reports-table tbody tr {
+    gap: 8px;
+
+    padding: 12px;
+
+    border-radius: 11px;
+  }
+
+  .reports-table td {
+    font-size: 11px;
+  }
+
+  .reports-table td::before {
+    font-size: 8px;
+  }
+}

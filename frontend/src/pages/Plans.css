@@ -1,0 +1,760 @@
+.memberships-page {
+  width: 100%;
+  min-width: 0;
+
+  padding-bottom: 30px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.memberships-header {
+  margin-bottom: 22px;
+}
+
+.memberships-header h1 {
+  margin: 0 0 6px;
+
+  color: #161b22;
+
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.memberships-header p {
+  margin: 0;
+
+  color: #7a818c;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+   FILTERS
+========================= */
+
+.membership-filters-card {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+
+  padding: 18px;
+
+  margin-bottom: 14px;
+
+  background: #ffffff;
+
+  border: 1px solid #eceef1;
+  border-radius: 14px;
+
+  box-shadow:
+    0 4px 15px
+    rgba(17, 24, 39, 0.04);
+}
+
+.membership-filter-group {
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.membership-filter-group label {
+  color: #6b7280;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.membership-filter-group select {
+  width: 100%;
+
+  padding: 11px 12px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #374151;
+
+  font-size: 13px;
+
+  outline: none;
+
+  box-sizing: border-box;
+}
+
+.membership-filter-group select:focus {
+  border-color: #ff4d30;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(255, 77, 48, 0.1);
+}
+
+
+/* =========================
+   JOINING / EXPIRY TOGGLE
+========================= */
+
+.membership-view-toggle {
+  display: inline-flex;
+
+  gap: 4px;
+
+  margin-bottom: 20px;
+
+  padding: 4px;
+
+  border-radius: 9px;
+
+  background: #f3f4f6;
+}
+
+.membership-toggle-btn {
+  padding: 8px 18px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: transparent;
+
+  color: #6b7280;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.membership-toggle-btn:hover {
+  color: #374151;
+}
+
+.membership-toggle-btn.active {
+  background: #ffffff;
+
+  color: #ff4d30;
+
+  box-shadow:
+    0 2px 7px
+    rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================
+   SUMMARY
+========================= */
+
+.membership-summary-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
+
+  gap: 12px;
+
+  margin-bottom: 28px;
+}
+
+.membership-summary-card {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  min-width: 0;
+
+  padding: 16px;
+
+  background: #ffffff;
+
+  border: 1px solid #eceef1;
+  border-radius: 12px;
+
+  box-shadow:
+    0 4px 14px
+    rgba(17, 24, 39, 0.04);
+}
+
+.membership-summary-icon {
+  width: 36px;
+  height: 36px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 10px;
+
+  background: #fff1ed;
+  color: #ff4d30;
+
+  font-size: 17px;
+}
+
+.membership-summary-card span {
+  display: block;
+
+  color: #9ca3af;
+
+  font-size: 10px;
+}
+
+.membership-summary-card strong {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #1f2937;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+
+/* =========================
+   LIST HEADING
+========================= */
+
+.membership-list-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 15px;
+
+  margin-bottom: 14px;
+}
+
+.membership-list-heading h2 {
+  margin: 0 0 4px;
+
+  color: #1f2937;
+
+  font-size: 20px;
+}
+
+.membership-list-heading p {
+  margin: 0;
+
+  color: #8b919b;
+
+  font-size: 12px;
+}
+
+.membership-count-badge {
+  min-width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 8px;
+
+  border-radius: 999px;
+
+  background: #fff1ed;
+  color: #e63d23;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* =========================
+   MESSAGE / ERROR
+========================= */
+
+.membership-message {
+  padding: 15px 0;
+
+  color: #6b7280;
+
+  font-size: 13px;
+}
+
+.membership-error {
+  padding: 13px;
+
+  border-radius: 9px;
+
+  background: #fee2e2;
+  color: #b91c1c;
+
+  font-size: 12px;
+}
+
+
+/* =========================
+   EMPTY
+========================= */
+
+.membership-empty {
+  padding: 35px 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #eceef1;
+  border-radius: 14px;
+
+  text-align: center;
+
+  box-sizing: border-box;
+}
+
+.membership-empty h3 {
+  margin: 0 0 6px;
+
+  color: #1f2937;
+}
+
+.membership-empty p {
+  margin: 0;
+
+  color: #9ca3af;
+
+  font-size: 12px;
+}
+
+
+/* =========================
+   DESKTOP / MOBILE
+========================= */
+
+.membership-desktop-view {
+  display: block;
+}
+
+.membership-mobile-view {
+  display: none;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.membership-table-container {
+  width: 100%;
+
+  overflow-x: auto;
+
+  background: #ffffff;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 4px 14px
+    rgba(17, 24, 39, 0.04);
+}
+
+.membership-table {
+  width: 100%;
+
+  min-width: 820px;
+
+  border-collapse: collapse;
+}
+
+.membership-table th,
+.membership-table td {
+  padding: 14px 16px;
+
+  text-align: left;
+
+  white-space: nowrap;
+
+  border-bottom:
+    1px solid #eef0f2;
+}
+
+.membership-table th {
+  background: #f8f9fb;
+
+  color: #7a818c;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+.membership-table td {
+  color: #374151;
+
+  font-size: 13px;
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.membership-status {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 5px 9px;
+
+  border-radius: 20px;
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.membership-status.active {
+  background: #dcfce7;
+
+  color: #15803d;
+}
+
+.membership-status.expired {
+  background: #fee2e2;
+
+  color: #dc2626;
+}
+
+.membership-status.inactive {
+  background: #f3f4f6;
+
+  color: #6b7280;
+}
+
+
+/* =========================
+   WHATSAPP REMINDER
+========================= */
+
+.membership-whatsapp-btn {
+  width: 34px;
+  height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #ecfdf3;
+  color: #15803d;
+
+  font-size: 17px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.membership-whatsapp-btn:hover {
+  background: #d9fbe6;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================
+   MOBILE MEMBER CARDS
+========================= */
+
+.membership-mobile-card {
+  width: 100%;
+
+  padding: 13px;
+
+  margin-bottom: 10px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 3px 10px
+    rgba(0, 0, 0, 0.04);
+}
+
+.membership-mobile-top {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding-bottom: 11px;
+
+  border-bottom:
+    1px solid #f1f1f1;
+}
+
+.membership-mobile-avatar {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50%;
+
+  background: #fff1ed;
+  color: #ff4d30;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.membership-mobile-main {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.membership-mobile-name-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 7px;
+}
+
+.membership-mobile-main h3 {
+  margin: 0;
+
+  color: #1f2937;
+
+  font-size: 14px;
+}
+
+.membership-mobile-main p {
+  margin: 3px 0 0;
+
+  color: #6b7280;
+
+  font-size: 11px;
+}
+
+.membership-mobile-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 9px;
+
+  padding-top: 11px;
+}
+
+.membership-mobile-grid > div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  min-width: 0;
+}
+
+.membership-mobile-grid span {
+  color: #9ca3af;
+
+  font-size: 9px;
+
+  text-transform: uppercase;
+}
+
+.membership-mobile-grid strong {
+  color: #374151;
+
+  font-size: 11px;
+
+  word-break: break-word;
+}
+
+
+/* =========================
+   MOBILE REMINDER ACTION
+========================= */
+
+.membership-mobile-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: 11px;
+
+  padding-top: 10px;
+
+  border-top:
+    1px solid #f1f1f1;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1000px) {
+
+  .membership-summary-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+  .memberships-page {
+    padding-bottom: 20px;
+  }
+
+  .memberships-header {
+    margin-bottom: 18px;
+  }
+
+  .memberships-header h1 {
+    font-size: 23px;
+  }
+
+  .memberships-header p {
+    font-size: 12px;
+  }
+
+
+  /* FILTERS */
+
+  .membership-filters-card {
+    grid-template-columns:
+      1fr 1fr;
+
+    gap: 9px;
+
+    padding: 13px;
+  }
+
+  .membership-filter-group:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .membership-filter-group select {
+    padding: 10px;
+
+    font-size: 12px;
+  }
+
+
+  /* SUMMARY */
+
+  .membership-summary-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+
+    margin-bottom: 22px;
+  }
+
+  .membership-summary-card {
+    padding: 12px;
+
+    gap: 8px;
+  }
+
+  .membership-summary-icon {
+    width: 32px;
+    height: 32px;
+
+    font-size: 14px;
+  }
+
+  .membership-summary-card strong {
+    font-size: 17px;
+  }
+
+  .membership-summary-card:first-child {
+    grid-column: 1 / -1;
+  }
+
+
+  /* TABLE -> CARD */
+
+  .membership-desktop-view {
+    display: none;
+  }
+
+  .membership-mobile-view {
+    display: block;
+  }
+
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+  .memberships-header h1 {
+    font-size: 21px;
+  }
+
+  .membership-filter-group label {
+    font-size: 10px;
+  }
+
+  .membership-filter-group select {
+    padding: 9px;
+
+    font-size: 11px;
+  }
+
+  .membership-toggle-btn {
+    padding: 7px 14px;
+
+    font-size: 11px;
+  }
+
+  .membership-list-heading h2 {
+    font-size: 17px;
+  }
+
+  .membership-summary-card {
+    padding: 10px;
+  }
+
+  .membership-mobile-card {
+    padding: 12px;
+  }
+
+  .membership-whatsapp-btn {
+    width: 32px;
+    height: 32px;
+
+    font-size: 16px;
+  }
+
+}
