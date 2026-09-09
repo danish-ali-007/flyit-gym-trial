@@ -6,6 +6,9 @@ const Member =
 const Payment =
   require("../models/Payment");
 
+const Gym =
+  require("../models/Gym");
+
 const {
   createWhatsAppLink,
 } = require("../utils/whatsappHelper");
@@ -324,6 +327,23 @@ exports.getExpiryAlerts =
 
 
       // =================================================
+      // CURRENT GYM NAME
+      // =================================================
+
+      const gym =
+        await Gym.findById(
+          gymId
+        ).select(
+          "gymName"
+        );
+
+
+      const gymName =
+        gym?.gymName ||
+        "Olympics Gym";
+
+
+      // =================================================
       // IST DAY BOUNDARY
       // =================================================
 
@@ -453,7 +473,8 @@ exports.getExpiryAlerts =
               whatsappLink:
                 createWhatsAppLink(
                   member,
-                  "TODAY_EXPIRY"
+                  "TODAY_EXPIRY",
+                  gymName
                 ),
             };
           }
@@ -508,7 +529,8 @@ exports.getExpiryAlerts =
               whatsappLink:
                 createWhatsAppLink(
                   member,
-                  "PAST_EXPIRED"
+                  "PAST_EXPIRED",
+                  gymName
                 ),
             };
           }

@@ -11,11 +11,13 @@ const IST_OFFSET_MS =
 const getISTDayStart = (
   date = new Date()
 ) => {
+
   const shiftedDate =
     new Date(
       date.getTime() +
         IST_OFFSET_MS
     );
+
 
   return new Date(
     Date.UTC(
@@ -34,23 +36,43 @@ const getISTDayStart = (
 
 exports.createWhatsAppLink = (
   member,
-  type = "TODAY_EXPIRY"
+  type = "TODAY_EXPIRY",
+  gymName = "Olympics Gym"
 ) => {
-  // Clean phone number
-  let cleanPhone = String(
-    member.phone || ""
-  ).replace(
-    /[^0-9]/g,
-    ""
-  );
+
+  // ==========================================
+  // CLEAN PHONE NUMBER
+  // ==========================================
+
+  let cleanPhone =
+    String(
+      member.phone || ""
+    ).replace(
+      /[^0-9]/g,
+      ""
+    );
 
 
   // 10-digit Indian number me
   // +91 country code add karo
-  if (cleanPhone.length === 10) {
+  if (
+    cleanPhone.length === 10
+  ) {
+
     cleanPhone =
       "91" + cleanPhone;
   }
+
+
+  // ==========================================
+  // SAFE GYM NAME
+  // ==========================================
+
+  const displayGymName =
+    String(
+      gymName ||
+        "Olympics Gym"
+    ).trim();
 
 
   let message = "";
@@ -61,7 +83,8 @@ exports.createWhatsAppLink = (
   // ==========================================
 
   const memberId =
-    member._id || "N/A";
+    member._id ||
+    "N/A";
 
 
   // ==========================================
@@ -80,16 +103,23 @@ exports.createWhatsAppLink = (
   // ==========================================
 
   const formattedExpiryDate =
-    expiryDateObj.toLocaleDateString(
-      "en-IN",
-      {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        timeZone:
-          "Asia/Kolkata",
-      }
-    );
+    expiryDateObj
+      .toLocaleDateString(
+        "en-IN",
+        {
+          day:
+            "2-digit",
+
+          month:
+            "2-digit",
+
+          year:
+            "numeric",
+
+          timeZone:
+            "Asia/Kolkata",
+        }
+      );
 
 
   // ==========================================
@@ -97,14 +127,23 @@ exports.createWhatsAppLink = (
   // MEMBERSHIP EXPIRES TODAY
   // ==========================================
 
-  if (type === "TODAY_EXPIRY") {
+  if (
+    type ===
+    "TODAY_EXPIRY"
+  ) {
+
     message =
       `Hello *${member.name}*,\n\n` +
+
       `Member ID: *${memberId}*\n\n` +
-      `Your *${member.planName}* membership at *Olympics Gym* expires today, *${formattedExpiryDate}*.\n\n` +
+
+      `Your *${member.planName}* membership at *${displayGymName}* expires today, *${formattedExpiryDate}*.\n\n` +
+
       `Please renew your membership to continue your training without interruption.\n\n` +
+
       `Thank you,\n` +
-      `*Olympics Gym*`;
+
+      `*${displayGymName}*`;
   }
 
 
@@ -114,8 +153,10 @@ exports.createWhatsAppLink = (
   // ==========================================
 
   else if (
-    type === "PAST_EXPIRED"
+    type ===
+    "PAST_EXPIRED"
   ) {
+
     const todayStart =
       getISTDayStart(
         new Date()
@@ -135,7 +176,9 @@ exports.createWhatsAppLink = (
 
     const daysAgo =
       Math.max(
+
         1,
+
         Math.floor(
           diffTime /
             (
@@ -156,11 +199,16 @@ exports.createWhatsAppLink = (
 
     message =
       `Hello *${member.name}*,\n\n` +
+
       `Member ID: *${memberId}*\n\n` +
-      `Your *${member.planName}* membership at *Olympics Gym* expired on *${formattedExpiryDate}* (${daysAgo} ${dayText} ago).\n\n` +
+
+      `Your *${member.planName}* membership at *${displayGymName}* expired on *${formattedExpiryDate}* (${daysAgo} ${dayText} ago).\n\n` +
+
       `Please renew your membership to continue your training.\n\n` +
+
       `Thank you,\n` +
-      `*Olympics Gym*`;
+
+      `*${displayGymName}*`;
   }
 
 
@@ -168,7 +216,10 @@ exports.createWhatsAppLink = (
   // WHATSAPP URL
   // ==========================================
 
-  return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(
-    message
-  )}`;
+  return (
+    `https://wa.me/${cleanPhone}` +
+    `?text=${encodeURIComponent(
+      message
+    )}`
+  );
 };
