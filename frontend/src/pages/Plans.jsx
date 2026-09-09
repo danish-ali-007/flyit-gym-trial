@@ -22,6 +22,65 @@ import "./Plans.css";
 
 const plansCache = new Map();
 
+let plansMemoryGymKey = null;
+
+
+const getPlansGymContext = () => {
+
+  const isTrial =
+    localStorage.getItem("isTrial") ===
+    "true";
+
+
+  if (isTrial) {
+
+    const trialGym =
+      JSON.parse(
+        localStorage.getItem(
+          "trialGym"
+        ) || "{}"
+      );
+
+
+    return {
+      gymKey: `trial:${
+        trialGym._id ||
+        trialGym.gymId ||
+        trialGym.trialToken ||
+        "unknown"
+      }`,
+
+      gymName:
+        trialGym.gymName ||
+        "Trial Gym",
+    };
+  }
+
+
+  const admin =
+    JSON.parse(
+      localStorage.getItem(
+        "admin"
+      ) || "{}"
+    );
+
+
+  return {
+    gymKey: `admin:${
+      admin.gymId ||
+      admin._id ||
+      "olympics-gym"
+    }`,
+
+    gymName: "Olympics Gym",
+  };
+};
+
+
+const getPlansGymKey = () => {
+  return getPlansGymContext().gymKey;
+};
+
 
 // ====================================================
 // MEMBERSHIP PAGE MEMORY
@@ -45,6 +104,7 @@ const createPlansCacheKey = (
   planDuration
 ) => {
   return [
+    getPlansGymKey(),
     year,
     month,
     view,
@@ -54,6 +114,38 @@ const createPlansCacheKey = (
 
 
 const Plans = () => {
+
+  const {
+    gymKey: currentGymKey,
+    gymName,
+  } = getPlansGymContext();
+
+
+  if (
+    plansMemoryGymKey !==
+    currentGymKey
+  ) {
+
+    plansMemoryGymKey =
+      currentGymKey;
+
+    plansPageMemory.initialized =
+      false;
+
+    plansPageMemory.year =
+      null;
+
+    plansPageMemory.month =
+      null;
+
+    plansPageMemory.view =
+      "joining";
+
+    plansPageMemory.planDuration =
+      "All";
+  }
+
+
   const currentDate = new Date();
 
 
@@ -662,10 +754,10 @@ const Plans = () => {
         message =
           `Hello *${member.name}*,\n\n` +
           `Member ID: *${memberId}*\n\n` +
-          `Your *${member.planName}* membership at *Olympics Gym* expires today, *${formattedExpiryDate}*.\n\n` +
+          `Your *${member.planName}* membership at *${gymName}* expires today, *${formattedExpiryDate}*.\n\n` +
           `Please renew your membership to continue your training without interruption.\n\n` +
           `Thank you,\n` +
-          `*Olympics Gym*`;
+          `*${gymName}*`;
       }
 
 
@@ -716,10 +808,10 @@ const Plans = () => {
         message =
           `Hello *${member.name}*,\n\n` +
           `Member ID: *${memberId}*\n\n` +
-          `Your *${member.planName}* membership at *Olympics Gym* expired on *${formattedExpiryDate}* (${daysAgo} ${dayText} ago).\n\n` +
+          `Your *${member.planName}* membership at *${gymName}* expired on *${formattedExpiryDate}* (${daysAgo} ${dayText} ago).\n\n` +
           `Please renew your membership to continue your training.\n\n` +
           `Thank you,\n` +
-          `*Olympics Gym*`;
+          `*${gymName}*`;
       }
 
 

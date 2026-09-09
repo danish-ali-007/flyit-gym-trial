@@ -25,11 +25,82 @@ import "./Reports.css";
 // ====================================================
 
 let reportsCache = null;
+let reportsCacheOwnerKey = null;
+
+
+const getReportsGymContext = () => {
+
+  const isTrial =
+    localStorage.getItem("isTrial") ===
+    "true";
+
+
+  if (isTrial) {
+
+    const trialGym =
+      JSON.parse(
+        localStorage.getItem(
+          "trialGym"
+        ) || "{}"
+      );
+
+
+    return {
+      gymKey: `trial:${
+        trialGym._id ||
+        trialGym.gymId ||
+        trialGym.trialToken ||
+        "unknown"
+      }`,
+
+      gymName:
+        trialGym.gymName ||
+        "Trial Gym",
+    };
+  }
+
+
+  const admin =
+    JSON.parse(
+      localStorage.getItem(
+        "admin"
+      ) || "{}"
+    );
+
+
+  return {
+    gymKey: `admin:${
+      admin.gymId ||
+      admin._id ||
+      "olympics-gym"
+    }`,
+
+    gymName: "Olympics Gym",
+  };
+};
 
 
 const Reports = () => {
 
   const revenueSectionRef = useRef(null);
+
+
+  const {
+    gymKey: reportsGymKey,
+    gymName,
+  } = getReportsGymContext();
+
+
+  if (
+    reportsCacheOwnerKey !==
+    reportsGymKey
+  ) {
+
+    reportsCacheOwnerKey =
+      reportsGymKey;
+
+    reportsCache = null;
+  }
 
   /* =========================
      STATE
@@ -597,7 +668,7 @@ const Reports = () => {
           </h1>
 
           <p>
-            Olympic Gym performance and
+            {gymName} performance and
             financial overview
           </p>
 
@@ -765,7 +836,7 @@ const Reports = () => {
 
           <p>
             Current payment position of
-            Olympic Gym members
+            {gymName} members
           </p>
 
         </div>
@@ -1090,7 +1161,7 @@ const Reports = () => {
             </h2>
 
             <p>
-              Detailed Olympic Gym
+              Detailed {gymName}
               membership status
             </p>
 

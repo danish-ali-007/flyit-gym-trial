@@ -8,6 +8,27 @@ import api from "../services/api";
 import "./Payments.css";
 
 const Payments = () => {
+
+  const isTrial =
+    localStorage.getItem("isTrial") ===
+    "true";
+
+
+  const trialGym =
+    JSON.parse(
+      localStorage.getItem(
+        "trialGym"
+      ) || "{}"
+    );
+
+
+  const gymName =
+    isTrial
+      ? trialGym.gymName ||
+        "Trial Gym"
+      : "Olympics Gym";
+
+
   const [members, setMembers] =
     useState([]);
 
@@ -950,7 +971,7 @@ const Payments = () => {
           </h1>
 
           <p>
-            Manage Olympic Gym member
+            Manage {gymName} member
             payments and renewals
           </p>
         </div>

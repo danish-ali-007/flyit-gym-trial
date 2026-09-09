@@ -16,26 +16,68 @@ const MemberDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [member, setMember] =
+
+  // =========================================
+  // CURRENT GYM
+  // =========================================
+
+  const isTrial =
+    localStorage.getItem("isTrial") ===
+    "true";
+
+
+  const trialGym =
+    JSON.parse(
+      localStorage.getItem(
+        "trialGym"
+      ) || "{}"
+    );
+
+
+  const gymName =
+    isTrial
+      ? trialGym.gymName ||
+        "Trial Gym"
+      : "Olympics Gym";
+
+
+  // =========================================
+  // STATE
+  // =========================================
+
+  const [
+    member,
+    setMember,
+  ] =
     useState(null);
+
 
   const [
     upcomingRenewal,
     setUpcomingRenewal,
-  ] = useState(null);
+  ] =
+    useState(null);
 
-  const [loading, setLoading] =
+
+  const [
+    loading,
+    setLoading,
+  ] =
     useState(true);
+
 
   const [
     errorMessage,
     setErrorMessage,
-  ] = useState("");
+  ] =
+    useState("");
+
 
   const [
     reminderError,
     setReminderError,
-  ] = useState("");
+  ] =
+    useState("");
 
 
   // =========================================
@@ -44,55 +86,78 @@ const MemberDetails = () => {
 
   const fetchMemberDetails =
     async () => {
+
       try {
+
         setLoading(true);
+
         setErrorMessage("");
+
 
         const [
           memberResponse,
           renewalResponse,
-        ] = await Promise.all([
-          api.get(
-            `/members/${id}`
-          ),
+        ] =
+          await Promise.all([
 
-          api.get(
-            `/payments/renewal/${id}`
-          ),
-        ]);
+            api.get(
+              `/members/${id}`
+            ),
+
+            api.get(
+              `/payments/renewal/${id}`
+            ),
+
+          ]);
+
 
         setMember(
-          memberResponse.data.data
+          memberResponse
+            .data
+            .data
         );
 
+
         setUpcomingRenewal(
-          renewalResponse.data.data ||
+          renewalResponse
+            .data
+            .data ||
             null
         );
 
       } catch (error) {
+
         console.error(
           "Member Details Fetch Error:",
           error
         );
 
+
         setErrorMessage(
-          error.response?.data
+          error.response
+            ?.data
             ?.message ||
             "Unable to load member details."
         );
 
+
         setMember(null);
-        setUpcomingRenewal(null);
+
+        setUpcomingRenewal(
+          null
+        );
 
       } finally {
+
         setLoading(false);
       }
     };
 
 
   useEffect(() => {
+
     fetchMemberDetails();
+
   }, [id]);
 
 
@@ -100,32 +165,50 @@ const MemberDetails = () => {
   // DATE FORMAT
   // =========================================
 
-  const formatDate = (date) => {
+  const formatDate = (
+    date
+  ) => {
+
     if (!date) {
+
       return "-";
     }
 
+
     const parsedDate =
-      new Date(date);
+      new Date(
+        date
+      );
+
 
     if (
       Number.isNaN(
-        parsedDate.getTime()
+        parsedDate
+          .getTime()
       )
     ) {
+
       return "-";
     }
 
-    return parsedDate.toLocaleDateString(
-      "en-IN",
-      {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        timeZone:
-          "Asia/Kolkata",
-      }
-    );
+
+    return parsedDate
+      .toLocaleDateString(
+        "en-IN",
+        {
+          day:
+            "2-digit",
+
+          month:
+            "2-digit",
+
+          year:
+            "numeric",
+
+          timeZone:
+            "Asia/Kolkata",
+        }
+      );
   };
 
 
@@ -133,139 +216,263 @@ const MemberDetails = () => {
   // WHATSAPP REMINDER
   // =========================================
 
-  const handleWhatsAppReminder = () => {
-    try {
-      setReminderError("");
+  const handleWhatsAppReminder =
+    () => {
 
-      if (!member) {
+      try {
+
         setReminderError(
-          "Member details are not available."
-        );
-
-        return;
-      }
-
-      let cleanPhone =
-        String(
-          member.phone || ""
-        ).replace(
-          /\D/g,
           ""
         );
 
-      if (
-        cleanPhone.length === 10
-      ) {
-        cleanPhone =
-          `91${cleanPhone}`;
-      }
 
-      if (!cleanPhone) {
-        setReminderError(
-          "Member phone number is not available."
-        );
+        if (!member) {
 
-        return;
-      }
-
-      const memberId =
-        member._id || "N/A";
-
-      const pendingAmount =
-        Number(
-          member.pendingAmount ||
-            0
-        );
-
-      const isExpired =
-        member.membershipStatus ===
-        "Expired";
-
-      let message = "";
-
-      // =========================================
-      // EXPIRED
-      // =========================================
-
-      if (isExpired) {
-        const expiryDate =
-          formatDate(
-            member.expiryDate ||
-              member.endDate
+          setReminderError(
+            "Member details are not available."
           );
 
-        message =
-          `Hello *${member.name}*,\n\n` +
-          `Member ID: *${memberId}*\n\n` +
-          `Your *${member.planName}* membership at *Olympics Gym* has expired.\n\n` +
-          `Expiry Date: *${expiryDate}*\n\n` +
-          `Please renew your membership to continue your training without interruption.\n\n` +
-          `Thank you,\n` +
-          `*Olympics Gym*`;
-      }
+          return;
+        }
 
-      // =========================================
-      // ACTIVE + PAYMENT PENDING
-      // =========================================
 
-      else if (
-        pendingAmount > 0
-      ) {
-        message =
-          `Hello *${member.name}*,\n\n` +
-          `Member ID: *${memberId}*\n\n` +
-          `Your pending membership payment at *Olympics Gym* is *₹${pendingAmount}*.\n\n` +
-          `Please clear the pending amount at your earliest convenience.\n\n` +
-          `Thank you,\n` +
-          `*Olympics Gym*`;
-      }
+        let cleanPhone =
+          String(
+            member.phone ||
+            ""
+          ).replace(
+            /\D/g,
+            ""
+          );
 
-      // =========================================
-      // NO REMINDER
-      // =========================================
 
-      else {
-        setReminderError(
-          "No reminder is required for this member."
+        if (
+          cleanPhone.length ===
+          10
+        ) {
+
+          cleanPhone =
+            `91${cleanPhone}`;
+        }
+
+
+        if (!cleanPhone) {
+
+          setReminderError(
+            "Member phone number is not available."
+          );
+
+          return;
+        }
+
+
+        const memberId =
+          member._id ||
+          "N/A";
+
+
+        const pendingAmount =
+          Number(
+            member.pendingAmount ||
+            0
+          );
+
+
+        const isExpired =
+          member
+            .membershipStatus ===
+          "Expired";
+
+
+        let message = "";
+
+
+        // =========================================
+        // EXPIRED
+        // =========================================
+
+        if (isExpired) {
+
+          const expiryDate =
+            formatDate(
+              member.expiryDate ||
+              member.endDate
+            );
+
+
+          message =
+            `Hello *${member.name}*,\n\n` +
+
+            `Member ID: *${memberId}*\n\n` +
+
+            `Your *${member.planName}* membership at *${gymName}* has expired.\n\n` +
+
+            `Expiry Date: *${expiryDate}*\n\n` +
+
+            `Please renew your membership to continue your training without interruption.\n\n` +
+
+            `Thank you,\n` +
+
+            `*${gymName}*`;
+        }
+
+
+        // =========================================
+        // ACTIVE + PAYMENT PENDING
+        // =========================================
+
+        else if (
+          pendingAmount > 0
+        ) {
+
+          message =
+            `Hello *${member.name}*,\n\n` +
+
+            `Member ID: *${memberId}*\n\n` +
+
+            `Your pending membership payment at *${gymName}* is *₹${pendingAmount}*.\n\n` +
+
+            `Please clear the pending amount at your earliest convenience.\n\n` +
+
+            `Thank you,\n` +
+
+            `*${gymName}*`;
+        }
+
+
+        // =========================================
+        // NO REMINDER
+        // =========================================
+
+        else {
+
+          setReminderError(
+            "No reminder is required for this member."
+          );
+
+          return;
+        }
+
+
+        const whatsappUrl =
+          `https://wa.me/${cleanPhone}?text=${encodeURIComponent(
+            message
+          )}`;
+
+
+        window.open(
+          whatsappUrl,
+          "_blank",
+          "noopener,noreferrer"
         );
 
-        return;
+      } catch (error) {
+
+        console.error(
+          "WhatsApp Reminder Error:",
+          error
+        );
+
+
+        setReminderError(
+          "Unable to open WhatsApp reminder."
+        );
       }
-
-      const whatsappUrl =
-        `https://wa.me/${cleanPhone}?text=${encodeURIComponent(
-          message
-        )}`;
-
-      window.open(
-        whatsappUrl,
-        "_blank",
-        "noopener,noreferrer"
-      );
-
-    } catch (error) {
-      console.error(
-        "WhatsApp Reminder Error:",
-        error
-      );
-
-      setReminderError(
-        "Unable to open WhatsApp reminder."
-      );
-    }
-  };
+    };
 
 
   // =========================================
-  // LOADING
+  // SKELETON LOADING
   // =========================================
 
   if (loading) {
+
     return (
       <div className="member-details-page">
-        <p className="member-details-loading">
-          Loading member details...
-        </p>
+
+        <div className="member-details-header">
+
+          <div>
+
+            <div className="skeleton-line skeleton-title" />
+
+            <div className="skeleton-line skeleton-subtitle" />
+
+          </div>
+
+
+          <div className="skeleton-back-button" />
+
+        </div>
+
+
+        <div
+          className="member-details-card member-details-skeleton"
+          aria-hidden="true"
+        >
+
+          {/* PROFILE */}
+
+          <div className="member-profile-section">
+
+            <div className="skeleton-avatar" />
+
+
+            <div className="skeleton-profile-text">
+
+              <div className="skeleton-line skeleton-name" />
+
+              <div className="skeleton-line skeleton-id" />
+
+            </div>
+
+
+            <div className="skeleton-status" />
+
+          </div>
+
+
+          {/* DETAILS */}
+
+          <div className="member-details-grid">
+
+            {Array.from({
+              length: 10,
+            }).map(
+              (
+                _,
+                index
+              ) => (
+
+                <div
+                  className="detail-item skeleton-detail-item"
+                  key={index}
+                >
+
+                  <div className="skeleton-line skeleton-label" />
+
+                  <div className="skeleton-line skeleton-value" />
+
+                </div>
+
+              )
+            )}
+
+          </div>
+
+
+          {/* ACTIONS */}
+
+          <div className="member-details-actions skeleton-actions">
+
+            <div className="skeleton-action-button" />
+
+            <div className="skeleton-action-button skeleton-action-wide" />
+
+          </div>
+
+        </div>
+
       </div>
     );
   }
@@ -279,6 +486,7 @@ const MemberDetails = () => {
     errorMessage ||
     !member
   ) {
+
     return (
       <div className="member-details-page">
 
@@ -288,10 +496,12 @@ const MemberDetails = () => {
             Member not found
           </h2>
 
+
           <p>
             {errorMessage ||
               "Unable to find this member."}
           </p>
+
 
           <button
             type="button"
@@ -318,20 +528,28 @@ const MemberDetails = () => {
   const pendingAmount =
     Number(
       member.pendingAmount ||
-        0
+      0
     );
+
 
   const hasPendingPayment =
     pendingAmount > 0;
 
+
   const isExpired =
-    member.membershipStatus ===
+    member
+      .membershipStatus ===
     "Expired";
+
 
   const canSendReminder =
     isExpired ||
     hasPendingPayment;
 
+
+  // =========================================
+  // UI
+  // =========================================
 
   return (
     <div className="member-details-page">
@@ -341,15 +559,17 @@ const MemberDetails = () => {
       <div className="member-details-header">
 
         <div>
+
           <h1>
             Member Details
           </h1>
 
           <p>
-            View complete Olympics Gym
-            member information
+            View complete {gymName} member information
           </p>
+
         </div>
+
 
         <button
           type="button"
@@ -373,14 +593,18 @@ const MemberDetails = () => {
         <div className="member-profile-section">
 
           <div className="member-avatar">
+
             {member.name
               ? member.name
                   .charAt(0)
                   .toUpperCase()
               : "M"}
+
           </div>
 
+
           <div>
+
             <h2>
               {member.name ||
                 "-"}
@@ -391,7 +615,9 @@ const MemberDetails = () => {
               {member._id ||
                 "-"}
             </p>
+
           </div>
+
 
           <span
             className={
@@ -404,8 +630,10 @@ const MemberDetails = () => {
                 : "details-status inactive"
             }
           >
+
             {member.membershipStatus ||
               "-"}
+
           </span>
 
         </div>
@@ -414,6 +642,7 @@ const MemberDetails = () => {
         <div className="member-details-grid">
 
           <div className="detail-item">
+
             <span>
               Phone Number
             </span>
@@ -422,10 +651,12 @@ const MemberDetails = () => {
               {member.phone ||
                 "-"}
             </strong>
+
           </div>
 
 
           <div className="detail-item">
+
             <span>
               Membership Plan
             </span>
@@ -434,15 +665,18 @@ const MemberDetails = () => {
               {member.planName ||
                 "-"}
             </strong>
+
           </div>
 
 
           <div className="detail-item">
+
             <span>
               Plan Duration
             </span>
 
             <strong>
+
               {member.planDurationMonths
                 ? `${
                     member.planDurationMonths
@@ -454,11 +688,14 @@ const MemberDetails = () => {
                       : "Months"
                   }`
                 : "-"}
+
             </strong>
+
           </div>
 
 
           <div className="detail-item">
+
             <span>
               Total Amount
             </span>
@@ -468,10 +705,12 @@ const MemberDetails = () => {
               {member.totalAmount ??
                 0}
             </strong>
+
           </div>
 
 
           <div className="detail-item">
+
             <span>
               Paid Amount
             </span>
@@ -481,10 +720,12 @@ const MemberDetails = () => {
               {member.paidAmount ??
                 0}
             </strong>
+
           </div>
 
 
           <div className="detail-item">
+
             <span>
               Pending Amount
             </span>
@@ -494,10 +735,12 @@ const MemberDetails = () => {
               {member.pendingAmount ??
                 0}
             </strong>
+
           </div>
 
 
           <div className="detail-item">
+
             <span>
               Payment Status
             </span>
@@ -506,10 +749,12 @@ const MemberDetails = () => {
               {member.paymentStatus ||
                 "-"}
             </strong>
+
           </div>
 
 
           <div className="detail-item">
+
             <span>
               Membership Status
             </span>
@@ -518,33 +763,42 @@ const MemberDetails = () => {
               {member.membershipStatus ||
                 "-"}
             </strong>
+
           </div>
 
 
           <div className="detail-item">
+
             <span>
               Joining Date
             </span>
 
             <strong>
+
               {formatDate(
                 member.joiningDate
               )}
+
             </strong>
+
           </div>
 
 
           <div className="detail-item">
+
             <span>
               Expiry Date
             </span>
 
             <strong>
+
               {formatDate(
                 member.expiryDate ||
-                  member.endDate
+                member.endDate
               )}
+
             </strong>
+
           </div>
 
         </div>
@@ -562,6 +816,7 @@ const MemberDetails = () => {
             <div className="upcoming-renewal-header">
 
               <div>
+
                 <h3>
                   Upcoming Renewal
                 </h3>
@@ -569,7 +824,9 @@ const MemberDetails = () => {
                 <p>
                   Advance membership renewal
                 </p>
+
               </div>
+
 
               <span className="upcoming-renewal-badge">
                 Upcoming
@@ -581,6 +838,7 @@ const MemberDetails = () => {
             <div className="upcoming-renewal-grid">
 
               <div className="upcoming-renewal-item">
+
                 <span>
                   Next Start Date
                 </span>
@@ -590,10 +848,12 @@ const MemberDetails = () => {
                     upcomingRenewal.startDate
                   )}
                 </strong>
+
               </div>
 
 
               <div className="upcoming-renewal-item">
+
                 <span>
                   Next Expiry Date
                 </span>
@@ -603,10 +863,12 @@ const MemberDetails = () => {
                     upcomingRenewal.expiryDate
                   )}
                 </strong>
+
               </div>
 
 
               <div className="upcoming-renewal-item">
+
                 <span>
                   Membership Plan
                 </span>
@@ -615,15 +877,18 @@ const MemberDetails = () => {
                   {upcomingRenewal.planName ||
                     "-"}
                 </strong>
+
               </div>
 
 
               <div className="upcoming-renewal-item">
+
                 <span>
                   Plan Duration
                 </span>
 
                 <strong>
+
                   {upcomingRenewal
                     .planDurationMonths
                     ? `${
@@ -638,11 +903,14 @@ const MemberDetails = () => {
                           : "Months"
                       }`
                     : "-"}
+
                 </strong>
+
               </div>
 
 
               <div className="upcoming-renewal-item">
+
                 <span>
                   Total Amount
                 </span>
@@ -653,10 +921,12 @@ const MemberDetails = () => {
                     .totalAmount ??
                     0}
                 </strong>
+
               </div>
 
 
               <div className="upcoming-renewal-item">
+
                 <span>
                   Paid Amount
                 </span>
@@ -667,10 +937,12 @@ const MemberDetails = () => {
                     .paidAmount ??
                     0}
                 </strong>
+
               </div>
 
 
               <div className="upcoming-renewal-item">
+
                 <span>
                   Pending Amount
                 </span>
@@ -681,10 +953,12 @@ const MemberDetails = () => {
                     .pendingAmount ??
                     0}
                 </strong>
+
               </div>
 
 
               <div className="upcoming-renewal-item">
+
                 <span>
                   Payment Status
                 </span>
@@ -694,10 +968,12 @@ const MemberDetails = () => {
                     .paymentStatus ||
                     "-"}
                 </strong>
+
               </div>
 
 
               <div className="upcoming-renewal-item">
+
                 <span>
                   Payment Method
                 </span>
@@ -707,10 +983,12 @@ const MemberDetails = () => {
                     .paymentMethod ||
                     "-"}
                 </strong>
+
               </div>
 
 
               <div className="upcoming-renewal-item">
+
                 <span>
                   Advance Payment Date
                 </span>
@@ -720,12 +998,14 @@ const MemberDetails = () => {
                     upcomingRenewal.paymentDate
                   )}
                 </strong>
+
               </div>
 
             </div>
 
 
             {upcomingRenewal.remarks && (
+
               <div className="upcoming-renewal-remarks">
 
                 <span>
@@ -737,6 +1017,7 @@ const MemberDetails = () => {
                 </p>
 
               </div>
+
             )}
 
           </div>
@@ -745,9 +1026,11 @@ const MemberDetails = () => {
 
 
         {reminderError && (
+
           <p className="details-reminder-error">
             {reminderError}
           </p>
+
         )}
 
 
@@ -776,11 +1059,13 @@ const MemberDetails = () => {
               !canSendReminder
             }
           >
+
             {isExpired
               ? "WhatsApp Renewal Reminder"
               : hasPendingPayment
               ? "WhatsApp Payment Reminder"
               : "No Reminder Needed"}
+
           </button>
 
         </div>
@@ -790,5 +1075,6 @@ const MemberDetails = () => {
     </div>
   );
 };
+
 
 export default MemberDetails;

@@ -3,6 +3,11 @@
   min-width: 0;
 }
 
+
+/* =========================
+   HEADER
+========================= */
+
 .member-details-header {
   width: 100%;
 
@@ -48,6 +53,11 @@
   background: #d1d5db;
 }
 
+
+/* =========================
+   MEMBER CARD
+========================= */
+
 .member-details-card {
   width: 100%;
   max-width: 1000px;
@@ -64,6 +74,11 @@
 
   box-sizing: border-box;
 }
+
+
+/* =========================
+   PROFILE
+========================= */
 
 .member-profile-section {
   display: flex;
@@ -133,6 +148,11 @@
   background: #f3f4f6;
   color: #6b7280;
 }
+
+
+/* =========================
+   DETAILS GRID
+========================= */
 
 .member-details-grid {
   display: grid;
@@ -401,13 +421,197 @@
 }
 
 
+/* =========================================
+   SKELETON LOADER
+========================================= */
+
+.member-details-skeleton {
+  overflow: hidden;
+}
+
+
 /* =========================
-   LOADING / NOT FOUND
+   SHARED SKELETON
 ========================= */
 
-.member-details-loading {
-  color: #6b7280;
+.skeleton-line,
+.skeleton-avatar,
+.skeleton-status,
+.skeleton-back-button,
+.skeleton-action-button {
+  position: relative;
+
+  overflow: hidden;
+
+  background: #e9edf2;
 }
+
+
+/* =========================
+   SHIMMER
+========================= */
+
+.skeleton-line::after,
+.skeleton-avatar::after,
+.skeleton-status::after,
+.skeleton-back-button::after,
+.skeleton-action-button::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+
+  left: -100%;
+
+  width: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.75),
+      transparent
+    );
+
+  animation:
+    memberSkeletonShimmer
+    1.25s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes memberSkeletonShimmer {
+
+  100% {
+    left: 100%;
+  }
+
+}
+
+
+/* =========================
+   HEADER SKELETON
+========================= */
+
+.skeleton-title {
+  width: 180px;
+  height: 30px;
+
+  border-radius: 7px;
+}
+
+.skeleton-subtitle {
+  width: 260px;
+  height: 14px;
+
+  margin-top: 9px;
+
+  border-radius: 5px;
+}
+
+.skeleton-back-button {
+  width: 75px;
+  height: 38px;
+
+  border-radius: 8px;
+}
+
+
+/* =========================
+   PROFILE SKELETON
+========================= */
+
+.skeleton-avatar {
+  width: 60px;
+  height: 60px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+}
+
+.skeleton-profile-text {
+  flex: 1;
+}
+
+.skeleton-name {
+  width: 160px;
+  height: 22px;
+
+  border-radius: 6px;
+}
+
+.skeleton-id {
+  width: 120px;
+  height: 12px;
+
+  margin-top: 9px;
+
+  border-radius: 5px;
+}
+
+.skeleton-status {
+  width: 72px;
+  height: 27px;
+
+  margin-left: auto;
+
+  border-radius: 20px;
+}
+
+
+/* =========================
+   DETAILS SKELETON
+========================= */
+
+.skeleton-detail-item {
+  min-height: 70px;
+}
+
+.skeleton-label {
+  width: 90px;
+  height: 11px;
+
+  margin-bottom: 11px;
+
+  border-radius: 4px;
+}
+
+.skeleton-value {
+  width: 135px;
+  max-width: 75%;
+  height: 16px;
+
+  border-radius: 5px;
+}
+
+
+/* =========================
+   ACTION SKELETON
+========================= */
+
+.skeleton-actions {
+  pointer-events: none;
+}
+
+.skeleton-action-button {
+  width: 105px;
+  height: 40px;
+
+  border-radius: 8px;
+}
+
+.skeleton-action-wide {
+  width: 190px;
+}
+
+
+/* =========================
+   NOT FOUND
+========================= */
 
 .member-not-found {
   padding: 25px;
@@ -475,6 +679,21 @@
 
   .details-edit-btn,
   .details-whatsapp-btn {
+    flex: 1;
+  }
+
+
+  /* SKELETON */
+
+  .skeleton-back-button {
+    width: 100%;
+  }
+
+  .skeleton-actions {
+    display: flex;
+  }
+
+  .skeleton-action-button {
     flex: 1;
   }
 }
@@ -557,5 +776,77 @@
   .details-edit-btn,
   .details-whatsapp-btn {
     width: 100%;
+  }
+
+
+  /* =========================
+     MOBILE SKELETON
+  ========================= */
+
+  .skeleton-title {
+    width: 145px;
+    height: 25px;
+  }
+
+  .skeleton-subtitle {
+    width: 210px;
+    max-width: 80%;
+  }
+
+  .skeleton-avatar {
+    width: 52px;
+    height: 52px;
+  }
+
+  .skeleton-profile-text {
+    min-width: 150px;
+  }
+
+  .skeleton-name {
+    width: 130px;
+  }
+
+  .skeleton-id {
+    width: 100px;
+  }
+
+  .skeleton-status {
+    width: 65px;
+
+    margin-left: 0;
+  }
+
+  .skeleton-detail-item {
+    min-height: 65px;
+  }
+
+  .skeleton-actions {
+    flex-direction: column;
+
+    width: 100%;
+  }
+
+  .skeleton-action-button,
+  .skeleton-action-wide {
+    width: 100%;
+  }
+}
+
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+
+  .skeleton-line::after,
+  .skeleton-avatar::after,
+  .skeleton-status::after,
+  .skeleton-back-button::after,
+  .skeleton-action-button::after {
+    animation: none;
   }
 }
