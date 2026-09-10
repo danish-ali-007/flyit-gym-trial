@@ -7,6 +7,31 @@ import "./AddMember.css";
 const AddMember = () => {
   const navigate = useNavigate();
 
+
+  // =========================================
+  // CURRENT GYM
+  // =========================================
+
+  const isTrial =
+    localStorage.getItem("isTrial") ===
+    "true";
+
+
+  const trialGym =
+    JSON.parse(
+      localStorage.getItem(
+        "trialGym"
+      ) || "{}"
+    );
+
+
+  const gymName =
+    isTrial
+      ? trialGym.gymName ||
+        "Trial Gym"
+      : "Olympics Gym";
+
+
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -269,7 +294,7 @@ const AddMember = () => {
           </h1>
 
           <p>
-            Add a new Olympic Gym member
+            Add a new {gymName} member
           </p>
 
         </div>

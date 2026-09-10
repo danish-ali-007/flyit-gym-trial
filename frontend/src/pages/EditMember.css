@@ -337,3 +337,153 @@
   }
 
 }
+/* =========================================
+   EDIT MEMBER SKELETON
+========================================= */
+
+.edit-member-skeleton {
+  pointer-events: none;
+}
+
+
+.edit-skeleton {
+  position: relative;
+
+  overflow: hidden;
+
+  background: #e7ebf0;
+
+  border-radius: 7px;
+}
+
+
+.edit-skeleton::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+
+  left: -100%;
+
+  width: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.75),
+      transparent
+    );
+
+  animation:
+    editMemberSkeletonShimmer
+    1.2s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes editMemberSkeletonShimmer {
+
+  100% {
+    left: 100%;
+  }
+
+}
+
+
+/* HEADER */
+
+.edit-skeleton-title {
+  width: 155px;
+  height: 30px;
+}
+
+
+.edit-skeleton-subtitle {
+  width: 250px;
+  max-width: 80%;
+
+  height: 14px;
+
+  margin-top: 8px;
+}
+
+
+.edit-skeleton-back {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 8px;
+}
+
+
+/* FORM */
+
+.edit-skeleton-label {
+  width: 95px;
+  height: 12px;
+
+  margin-bottom: 9px;
+}
+
+
+.edit-skeleton-input {
+  width: 100%;
+  height: 44px;
+}
+
+
+/* ACTION */
+
+.edit-skeleton-action {
+  width: 130px;
+  height: 42px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+  .edit-skeleton-back {
+    width: 100%;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .edit-skeleton-title {
+    width: 135px;
+    height: 25px;
+  }
+
+
+  .edit-skeleton-subtitle {
+    width: 210px;
+  }
+
+
+  .edit-skeleton-action {
+    width: 100%;
+  }
+
+}
+
+
+/* ACCESSIBILITY */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+
+  .edit-skeleton::after {
+    animation: none;
+  }
+
+}

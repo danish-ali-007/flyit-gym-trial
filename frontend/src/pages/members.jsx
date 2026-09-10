@@ -110,6 +110,30 @@ const createCacheKey = (
 
 const Members = () => {
 
+  // ====================================================
+  // CURRENT GYM
+  // ====================================================
+
+  const isTrial =
+    localStorage.getItem("isTrial") ===
+    "true";
+
+
+  const trialGym =
+    JSON.parse(
+      localStorage.getItem(
+        "trialGym"
+      ) || "{}"
+    );
+
+
+  const gymName =
+    isTrial
+      ? trialGym.gymName ||
+        "Trial Gym"
+      : "Olympics Gym";
+
+
   const currentGymMemoryKey =
     getMembersGymKey();
 
@@ -1235,7 +1259,7 @@ const Members = () => {
           </h1>
 
           <p>
-            Manage Olympic Gym members
+            Manage {gymName} members
           </p>
 
         </div>

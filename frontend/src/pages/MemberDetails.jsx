@@ -360,11 +360,11 @@ const MemberDetails = () => {
           )}`;
 
 
-        window.open(
-          whatsappUrl,
-          "_blank",
-          "noopener,noreferrer"
-        );
+        // Same browser tab use karo.
+        // Mobile par WhatsApp se back aane ke baad
+        // extra blank/white tab nahi rahega.
+        window.location.href =
+          whatsappUrl;
 
       } catch (error) {
 

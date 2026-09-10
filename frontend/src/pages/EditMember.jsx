@@ -1,4 +1,8 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
+
 import {
   useNavigate,
   useParams,
@@ -9,13 +13,54 @@ import {
 } from "react-icons/fi";
 
 import api from "../services/api";
+
 import "./EditMember.css";
 
-const EditMember = () => {
-  const navigate = useNavigate();
-  const { id } = useParams();
 
-  const [formData, setFormData] =
+const EditMember = () => {
+
+  const navigate =
+    useNavigate();
+
+
+  const {
+    id,
+  } = useParams();
+
+
+  // =========================================
+  // CURRENT GYM
+  // =========================================
+
+  const isTrial =
+    localStorage.getItem(
+      "isTrial"
+    ) === "true";
+
+
+  const trialGym =
+    JSON.parse(
+      localStorage.getItem(
+        "trialGym"
+      ) || "{}"
+    );
+
+
+  const gymName =
+    isTrial
+      ? trialGym.gymName ||
+        "Trial Gym"
+      : "Olympics Gym";
+
+
+  // =========================================
+  // FORM STATE
+  // =========================================
+
+  const [
+    formData,
+    setFormData,
+  ] =
     useState({
       name: "",
       phone: "",
@@ -23,20 +68,37 @@ const EditMember = () => {
       planDurationMonths: "",
       totalAmount: "",
       paidAmount: "",
-      membershipStatus: "Active",
+      membershipStatus:
+        "Active",
       joiningDate: "",
     });
 
-  const [loading, setLoading] =
+
+  const [
+    loading,
+    setLoading,
+  ] =
     useState(true);
 
-  const [submitting, setSubmitting] =
+
+  const [
+    submitting,
+    setSubmitting,
+  ] =
     useState(false);
 
-  const [errorMessage, setErrorMessage] =
+
+  const [
+    errorMessage,
+    setErrorMessage,
+  ] =
     useState("");
 
-  const [successMessage, setSuccessMessage] =
+
+  const [
+    successMessage,
+    setSuccessMessage,
+  ] =
     useState("");
 
 
@@ -44,99 +106,136 @@ const EditMember = () => {
   // FETCH MEMBER
   // =========================================
 
-  const fetchMember = async () => {
-    try {
-      setLoading(true);
-      setErrorMessage("");
+  const fetchMember =
+    async () => {
 
-      const response = await api.get(
-        `/members/${id}`
-      );
+      try {
 
-      const member =
-        response.data.data;
+        setLoading(
+          true
+        );
 
-      let normalizedPlanName =
-        member.planName || "";
 
-      // Old database plan names support
-      const oldPlanMap = {
-        Monthly: "1 Month Plan",
-        Quarterly: "3 Month Plan",
-        "Half Yearly": "6 Month Plan",
-        Yearly: "1 Year Plan",
-      };
+        setErrorMessage(
+          ""
+        );
 
-      if (
-        oldPlanMap[
-          normalizedPlanName
-        ]
-      ) {
-        normalizedPlanName =
+
+        const response =
+          await api.get(
+            `/members/${id}`
+          );
+
+
+        const member =
+          response.data.data;
+
+
+        let normalizedPlanName =
+          member.planName ||
+          "";
+
+
+        // Old database plan names support
+
+        const oldPlanMap = {
+          Monthly:
+            "1 Month Plan",
+
+          Quarterly:
+            "3 Month Plan",
+
+          "Half Yearly":
+            "6 Month Plan",
+
+          Yearly:
+            "1 Year Plan",
+        };
+
+
+        if (
           oldPlanMap[
             normalizedPlanName
-          ];
-      }
+          ]
+        ) {
 
-      setFormData({
-        name:
-          member.name || "",
+          normalizedPlanName =
+            oldPlanMap[
+              normalizedPlanName
+            ];
+        }
 
-        phone:
-          member.phone || "",
 
-        planName:
-          normalizedPlanName,
+        setFormData({
+          name:
+            member.name ||
+            "",
 
-        planDurationMonths:
-          String(
-            member.planDurationMonths ||
+          phone:
+            member.phone ||
+            "",
+
+          planName:
+            normalizedPlanName,
+
+          planDurationMonths:
+            String(
+              member
+                .planDurationMonths ||
               ""
-          ),
+            ),
 
-        totalAmount:
-          member.totalAmount ?? "",
+          totalAmount:
+            member.totalAmount ??
+            "",
 
-        paidAmount:
-          member.paidAmount ?? "",
+          paidAmount:
+            member.paidAmount ??
+            "",
 
-        membershipStatus:
-          member.membershipStatus ||
-          "Active",
+          membershipStatus:
+            member
+              .membershipStatus ||
+            "Active",
 
-        joiningDate:
-          member.joiningDate
-            ? new Date(
-                member.joiningDate
-              )
-                .toISOString()
-                .split("T")[0]
-            : "",
-      });
+          joiningDate:
+            member.joiningDate
+              ? new Date(
+                  member.joiningDate
+                )
+                  .toISOString()
+                  .split("T")[0]
+              : "",
+        });
 
-    } catch (error) {
+      } catch (error) {
 
-      console.error(
-        "Edit Member Fetch Error:",
-        error
-      );
+        console.error(
+          "Edit Member Fetch Error:",
+          error
+        );
 
-      setErrorMessage(
-        error.response?.data
-          ?.message ||
-          "Unable to load member details."
-      );
 
-    } finally {
+        setErrorMessage(
+          error.response
+            ?.data
+            ?.message ||
+            "Unable to load member details."
+        );
 
-      setLoading(false);
+      } finally {
 
-    }
-  };
+        setLoading(
+          false
+        );
+      }
+    };
 
 
   useEffect(() => {
+
     fetchMember();
+
   }, [id]);
 
 
@@ -144,270 +243,426 @@ const EditMember = () => {
   // NORMAL INPUT CHANGE
   // =========================================
 
-  const handleChange = (e) => {
-    const {
-      name,
-      value,
-    } = e.target;
+  const handleChange =
+    (e) => {
 
-    setFormData(
-      (previous) => ({
-        ...previous,
-        [name]: value,
-      })
-    );
+      const {
+        name,
+        value,
+      } = e.target;
 
-    setErrorMessage("");
-    setSuccessMessage("");
-  };
+
+      setFormData(
+        (previous) => ({
+          ...previous,
+
+          [name]:
+            value,
+        })
+      );
+
+
+      setErrorMessage(
+        ""
+      );
+
+
+      setSuccessMessage(
+        ""
+      );
+    };
 
 
   // =========================================
   // PLAN CHANGE
   // =========================================
 
-  const handlePlanChange = (e) => {
-    const planName =
-      e.target.value;
+  const handlePlanChange =
+    (e) => {
 
-    const durationMap = {
-      "1 Month Plan": 1,
-      "3 Month Plan": 3,
-      "6 Month Plan": 6,
-      "1 Year Plan": 12,
-    };
+      const planName =
+        e.target.value;
 
-    setFormData(
-      (previous) => ({
-        ...previous,
 
-        planName,
+      const durationMap = {
 
-        planDurationMonths:
-          String(
-            durationMap[planName] ||
+        "1 Month Plan":
+          1,
+
+        "3 Month Plan":
+          3,
+
+        "6 Month Plan":
+          6,
+
+        "1 Year Plan":
+          12,
+      };
+
+
+      setFormData(
+        (previous) => ({
+          ...previous,
+
+          planName,
+
+          planDurationMonths:
+            String(
+              durationMap[
+                planName
+              ] ||
               1
-          ),
-      })
-    );
+            ),
+        })
+      );
 
-    setErrorMessage("");
-    setSuccessMessage("");
-  };
+
+      setErrorMessage(
+        ""
+      );
+
+
+      setSuccessMessage(
+        ""
+      );
+    };
 
 
   // =========================================
   // UPDATE MEMBER
   // =========================================
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit =
+    async (e) => {
 
-    setErrorMessage("");
-    setSuccessMessage("");
+      e.preventDefault();
 
 
-    // Name
-    if (
-      !formData.name.trim()
-    ) {
       setErrorMessage(
-        "Please enter member name."
-      );
-
-      return;
-    }
-
-
-    // Phone
-    const cleanPhone =
-      formData.phone.replace(
-        /\D/g,
         ""
       );
 
-    if (
-      cleanPhone.length !== 10
-    ) {
-      setErrorMessage(
-        "Please enter a valid 10 digit phone number."
-      );
 
-      return;
-    }
-
-
-    // Duration
-    const duration =
-      Number(
-        formData.planDurationMonths
-      );
-
-    if (
-      ![
-        1,
-        3,
-        6,
-        12,
-      ].includes(
-        duration
-      )
-    ) {
-      setErrorMessage(
-        "Plan duration must be 1, 3, 6 or 12 months."
-      );
-
-      return;
-    }
-
-
-    // Amounts
-    const totalAmount =
-      Number(
-        formData.totalAmount
-      );
-
-    const paidAmount =
-      Number(
-        formData.paidAmount ||
-          0
+      setSuccessMessage(
+        ""
       );
 
 
-    if (
-      Number.isNaN(
-        totalAmount
-      ) ||
-      totalAmount < 0
-    ) {
-      setErrorMessage(
-        "Please enter a valid total amount."
-      );
-
-      return;
-    }
-
-
-    if (
-      Number.isNaN(
-        paidAmount
-      ) ||
-      paidAmount < 0
-    ) {
-      setErrorMessage(
-        "Please enter a valid paid amount."
-      );
-
-      return;
-    }
-
-
-    if (
-      paidAmount >
-      totalAmount
-    ) {
-      setErrorMessage(
-        "Paid amount cannot exceed total amount."
-      );
-
-      return;
-    }
-
-
-    try {
-      setSubmitting(true);
-
-
-      const payload = {
-        name:
-          formData.name.trim(),
-
-        phone:
-          cleanPhone,
-
-        planName:
-          formData.planName,
-
-        planDurationMonths:
-          duration,
-
-        totalAmount,
-
-        paidAmount,
-
-        membershipStatus:
-          formData.membershipStatus,
-      };
-
+      // =====================================
+      // NAME
+      // =====================================
 
       if (
-        formData.joiningDate
+        !formData.name
+          .trim()
       ) {
-        payload.joiningDate =
-          formData.joiningDate;
+
+        setErrorMessage(
+          "Please enter member name."
+        );
+
+
+        return;
       }
 
 
-      const response =
-        await api.put(
-          `/members/${id}`,
-          payload
+      // =====================================
+      // PHONE
+      // =====================================
+
+      const cleanPhone =
+        formData.phone
+          .replace(
+            /\D/g,
+            ""
+          );
+
+
+      if (
+        cleanPhone.length !==
+        10
+      ) {
+
+        setErrorMessage(
+          "Please enter a valid 10 digit phone number."
         );
 
 
-      setSuccessMessage(
-        response.data.message ||
-          "Member updated successfully."
-      );
+        return;
+      }
 
 
-      setTimeout(() => {
-        navigate(
-          `/members/view/${id}`,
-          {
-            replace: true,
-          }
+      // =====================================
+      // DURATION
+      // =====================================
+
+      const duration =
+        Number(
+          formData
+            .planDurationMonths
         );
-      }, 500);
-
-    } catch (error) {
-
-      console.error(
-        "Update Member Error:",
-        error
-      );
 
 
-      setErrorMessage(
-        error.response?.data
-          ?.message ||
-          "Unable to update member."
-      );
+      if (
+        ![
+          1,
+          3,
+          6,
+          12,
+        ].includes(
+          duration
+        )
+      ) {
 
-    } finally {
+        setErrorMessage(
+          "Plan duration must be 1, 3, 6 or 12 months."
+        );
 
-      setSubmitting(false);
 
-    }
-  };
+        return;
+      }
+
+
+      // =====================================
+      // AMOUNTS
+      // =====================================
+
+      const totalAmount =
+        Number(
+          formData
+            .totalAmount
+        );
+
+
+      const paidAmount =
+        Number(
+          formData
+            .paidAmount ||
+          0
+        );
+
+
+      if (
+        Number.isNaN(
+          totalAmount
+        ) ||
+        totalAmount < 0
+      ) {
+
+        setErrorMessage(
+          "Please enter a valid total amount."
+        );
+
+
+        return;
+      }
+
+
+      if (
+        Number.isNaN(
+          paidAmount
+        ) ||
+        paidAmount < 0
+      ) {
+
+        setErrorMessage(
+          "Please enter a valid paid amount."
+        );
+
+
+        return;
+      }
+
+
+      if (
+        paidAmount >
+        totalAmount
+      ) {
+
+        setErrorMessage(
+          "Paid amount cannot exceed total amount."
+        );
+
+
+        return;
+      }
+
+
+      try {
+
+        setSubmitting(
+          true
+        );
+
+
+        const payload = {
+
+          name:
+            formData.name
+              .trim(),
+
+          phone:
+            cleanPhone,
+
+          planName:
+            formData
+              .planName,
+
+          planDurationMonths:
+            duration,
+
+          totalAmount,
+
+          paidAmount,
+
+          membershipStatus:
+            formData
+              .membershipStatus,
+        };
+
+
+        if (
+          formData
+            .joiningDate
+        ) {
+
+          payload.joiningDate =
+            formData
+              .joiningDate;
+        }
+
+
+        const response =
+          await api.put(
+            `/members/${id}`,
+            payload
+          );
+
+
+        setSuccessMessage(
+          response.data
+            .message ||
+            "Member updated successfully."
+        );
+
+
+        setTimeout(
+          () => {
+
+            navigate(
+              `/members/view/${id}`,
+              {
+                replace:
+                  true,
+              }
+            );
+
+          },
+          500
+        );
+
+      } catch (error) {
+
+        console.error(
+          "Update Member Error:",
+          error
+        );
+
+
+        setErrorMessage(
+          error.response
+            ?.data
+            ?.message ||
+            "Unable to update member."
+        );
+
+      } finally {
+
+        setSubmitting(
+          false
+        );
+      }
+    };
 
 
   // =========================================
-  // LOADING
+  // SKELETON LOADING
   // =========================================
 
   if (loading) {
+
     return (
       <div className="edit-member-page">
 
-        <p className="edit-member-loading">
-          Loading member details...
-        </p>
+        {/* HEADER */}
+
+        <div className="edit-member-header">
+
+          <div>
+
+            <div className="edit-skeleton edit-skeleton-title" />
+
+            <div className="edit-skeleton edit-skeleton-subtitle" />
+
+          </div>
+
+
+          <div className="edit-skeleton edit-skeleton-back" />
+
+        </div>
+
+
+        {/* FORM SKELETON */}
+
+        <div className="edit-member-form edit-member-skeleton">
+
+          <div className="edit-form-grid">
+
+            {Array.from({
+              length: 8,
+            }).map(
+              (
+                _,
+                index
+              ) => (
+
+                <div
+                  className="edit-form-group"
+                  key={
+                    index
+                  }
+                >
+
+                  <div className="edit-skeleton edit-skeleton-label" />
+
+                  <div className="edit-skeleton edit-skeleton-input" />
+
+                </div>
+
+              )
+            )}
+
+          </div>
+
+
+          <div className="edit-form-actions">
+
+            <div className="edit-skeleton edit-skeleton-action" />
+
+            <div className="edit-skeleton edit-skeleton-action" />
+
+          </div>
+
+        </div>
 
       </div>
     );
   }
 
+
+  // =========================================
+  // UI
+  // =========================================
 
   return (
     <div className="edit-member-page">
@@ -425,8 +680,9 @@ const EditMember = () => {
             Edit Member
           </h1>
 
+
           <p>
-            Update Olympic Gym member information
+            Update {gymName} member information
           </p>
 
         </div>
@@ -436,12 +692,16 @@ const EditMember = () => {
           type="button"
           className="edit-back-btn"
           onClick={() =>
-            navigate("/members")
+            navigate(
+              "/members"
+            )
           }
           aria-label="Back to members"
           title="Back to Members"
         >
+
           <FiArrowLeft />
+
         </button>
 
       </div>
@@ -452,9 +712,11 @@ const EditMember = () => {
       ========================================= */}
 
       {errorMessage && (
+
         <p className="edit-member-error">
           {errorMessage}
         </p>
+
       )}
 
 
@@ -464,7 +726,9 @@ const EditMember = () => {
 
       <form
         className="edit-member-form"
-        onSubmit={handleSubmit}
+        onSubmit={
+          handleSubmit
+        }
       >
 
         <div className="edit-form-grid">
@@ -477,6 +741,7 @@ const EditMember = () => {
             <label>
               Full Name
             </label>
+
 
             <input
               type="text"
@@ -500,6 +765,7 @@ const EditMember = () => {
             <label>
               Phone Number
             </label>
+
 
             <input
               type="tel"
@@ -525,6 +791,7 @@ const EditMember = () => {
               Membership Plan
             </label>
 
+
             <select
               name="planName"
               value={
@@ -540,11 +807,13 @@ const EditMember = () => {
                 Select Plan
               </option>
 
+
               <option
                 value="1 Month Plan"
               >
                 1 Month Plan
               </option>
+
 
               <option
                 value="3 Month Plan"
@@ -552,11 +821,13 @@ const EditMember = () => {
                 3 Month Plan
               </option>
 
+
               <option
                 value="6 Month Plan"
               >
                 6 Month Plan
               </option>
+
 
               <option
                 value="1 Year Plan"
@@ -577,11 +848,13 @@ const EditMember = () => {
               Plan Duration
             </label>
 
+
             <input
               type="number"
               name="planDurationMonths"
               value={
-                formData.planDurationMonths
+                formData
+                  .planDurationMonths
               }
               readOnly
             />
@@ -597,12 +870,14 @@ const EditMember = () => {
               Total Fee
             </label>
 
+
             <input
               type="number"
               name="totalAmount"
               min="0"
               value={
-                formData.totalAmount
+                formData
+                  .totalAmount
               }
               onChange={
                 handleChange
@@ -621,12 +896,14 @@ const EditMember = () => {
               Paid Amount
             </label>
 
+
             <input
               type="number"
               name="paidAmount"
               min="0"
               value={
-                formData.paidAmount
+                formData
+                  .paidAmount
               }
               onChange={
                 handleChange
@@ -644,11 +921,13 @@ const EditMember = () => {
               Joining Date
             </label>
 
+
             <input
               type="date"
               name="joiningDate"
               value={
-                formData.joiningDate
+                formData
+                  .joiningDate
               }
               onChange={
                 handleChange
@@ -666,10 +945,12 @@ const EditMember = () => {
               Membership Status
             </label>
 
+
             <select
               name="membershipStatus"
               value={
-                formData.membershipStatus
+                formData
+                  .membershipStatus
               }
               onChange={
                 handleChange
@@ -680,9 +961,11 @@ const EditMember = () => {
                 Active
               </option>
 
+
               <option value="Expired">
                 Expired
               </option>
+
 
               <option value="Inactive">
                 Inactive
@@ -698,9 +981,11 @@ const EditMember = () => {
         {/* SUCCESS */}
 
         {successMessage && (
+
           <p className="edit-member-success">
             {successMessage}
           </p>
+
         )}
 
 
@@ -712,7 +997,9 @@ const EditMember = () => {
             type="button"
             className="edit-cancel-btn"
             onClick={() =>
-              navigate("/members")
+              navigate(
+                "/members"
+              )
             }
             disabled={
               submitting
@@ -729,9 +1016,11 @@ const EditMember = () => {
               submitting
             }
           >
+
             {submitting
               ? "Updating..."
               : "Update Member"}
+
           </button>
 
         </div>
@@ -741,5 +1030,6 @@ const EditMember = () => {
     </div>
   );
 };
+
 
 export default EditMember;
