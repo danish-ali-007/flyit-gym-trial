@@ -1,5 +1,6 @@
 const Member = require("../models/Member");
 const Payment = require("../models/Payment");
+const generateMemberId = require("./memberIdGenerator");
 
 
 // =====================================================
@@ -48,30 +49,6 @@ const subtractDays = (
 
 
 // =====================================================
-// DEMO MEMBER ID
-// =====================================================
-
-const createDemoMemberId = (
-  gymId,
-  serial
-) => {
-  const gymPart =
-    String(gymId)
-      .slice(-6)
-      .toUpperCase();
-
-  const number =
-    String(serial)
-      .padStart(
-        3,
-        "0"
-      );
-
-  return `DEMO-${gymPart}-${number}`;
-};
-
-
-// =====================================================
 // DEMO PAYMENT REQUEST ID
 // =====================================================
 
@@ -102,13 +79,27 @@ const seedTrialDemoData =
     // DUPLICATE SAFETY
     // =================================================
 
+    const demoPhones = [
+      "9876500001",
+      "9876500002",
+      "9876500003",
+      "9876500004",
+      "9876500005",
+      "9876500006",
+      "9876500007",
+      "9876500008",
+      "9876500009",
+      "9876500010",
+    ];
+
+
     const existingDemoMembers =
       await Member.countDocuments({
         gymId,
 
-        _id: {
-          $regex:
-            /^DEMO-/,
+        phone: {
+          $in:
+            demoPhones,
         },
       });
 
@@ -146,7 +137,7 @@ const seedTrialDemoData =
           "9876500001",
 
         planName:
-          "Monthly",
+          "1 Month Plan",
 
         planDurationMonths:
           1,
@@ -191,7 +182,7 @@ const seedTrialDemoData =
           "9876500002",
 
         planName:
-          "3 Months",
+          "3 Month Plan",
 
         planDurationMonths:
           3,
@@ -236,7 +227,7 @@ const seedTrialDemoData =
           "9876500003",
 
         planName:
-          "Monthly",
+          "1 Month Plan",
 
         planDurationMonths:
           1,
@@ -281,7 +272,7 @@ const seedTrialDemoData =
           "9876500004",
 
         planName:
-          "Monthly",
+          "1 Month Plan",
 
         planDurationMonths:
           1,
@@ -323,7 +314,7 @@ const seedTrialDemoData =
           "9876500005",
 
         planName:
-          "Monthly",
+          "1 Month Plan",
 
         planDurationMonths:
           1,
@@ -368,7 +359,7 @@ const seedTrialDemoData =
           "9876500006",
 
         planName:
-          "Monthly",
+          "1 Month Plan",
 
         planDurationMonths:
           1,
@@ -413,7 +404,7 @@ const seedTrialDemoData =
           "9876500007",
 
         planName:
-          "Monthly",
+          "1 Month Plan",
 
         planDurationMonths:
           1,
@@ -458,7 +449,7 @@ const seedTrialDemoData =
           "9876500008",
 
         planName:
-          "Monthly",
+          "1 Month Plan",
 
         planDurationMonths:
           1,
@@ -503,7 +494,7 @@ const seedTrialDemoData =
           "9876500009",
 
         planName:
-          "6 Months",
+          "6 Month Plan",
 
         planDurationMonths:
           6,
@@ -548,7 +539,7 @@ const seedTrialDemoData =
           "9876500010",
 
         planName:
-          "12 Months",
+          "1 Year Plan",
 
         planDurationMonths:
           12,
@@ -618,11 +609,27 @@ const seedTrialDemoData =
           index + 1;
 
 
+        // Same ID generator used by normal manually-added members.
+        // Trial client ko DEMO-* aur GYM* mixed IDs nahi dikhenge.
         const memberId =
-          createDemoMemberId(
-            gymId,
-            serial
+          await generateMemberId();
+
+
+        // =================================================
+        // DEFENSIVE DEMO DATA VALIDATION
+        // Future me incomplete/blank demo row create na ho.
+        // =================================================
+
+        if (
+          !demo.name ||
+          !demo.phone ||
+          !demo.planName ||
+          !demo.planDurationMonths
+        ) {
+          throw new Error(
+            `Invalid demo member data at serial ${serial}`
           );
+        }
 
 
         const member =
