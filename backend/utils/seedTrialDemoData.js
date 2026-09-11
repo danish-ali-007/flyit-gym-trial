@@ -1,6 +1,8 @@
 const Member = require("../models/Member");
 const Payment = require("../models/Payment");
-const generateMemberId = require("./memberIdGenerator");
+
+const generateTrialMemberId =
+  require("./trialMemberIdGenerator");
 
 
 // =====================================================
@@ -8,7 +10,9 @@ const generateMemberId = require("./memberIdGenerator");
 // =====================================================
 
 const getTodayStart = () => {
-  const date = new Date();
+  const date =
+    new Date();
+
 
   date.setHours(
     0,
@@ -16,6 +20,7 @@ const getTodayStart = () => {
     0,
     0
   );
+
 
   return date;
 };
@@ -25,13 +30,18 @@ const addDays = (
   date,
   days
 ) => {
+
   const next =
-    new Date(date);
+    new Date(
+      date
+    );
+
 
   next.setDate(
     next.getDate() +
       days
   );
+
 
   return next;
 };
@@ -41,6 +51,7 @@ const subtractDays = (
   date,
   days
 ) => {
+
   return addDays(
     date,
     -days
@@ -56,6 +67,7 @@ const createDemoRequestId = (
   gymId,
   serial
 ) => {
+
   return `TRIAL-DEMO-${String(
     gymId
   )}-${serial}`;
@@ -67,8 +79,12 @@ const createDemoRequestId = (
 // =====================================================
 
 const seedTrialDemoData =
-  async (gymId) => {
+  async (
+    gymId
+  ) => {
+
     if (!gymId) {
+
       throw new Error(
         "Gym ID is required to seed trial demo data"
       );
@@ -105,16 +121,24 @@ const seedTrialDemoData =
 
 
     if (
-      existingDemoMembers > 0
+      existingDemoMembers >
+      0
     ) {
+
       console.log(
         `Trial demo data already exists for gym ${gymId}`
       );
 
+
       return {
-        membersCreated: 0,
-        paymentsCreated: 0,
-        skipped: true,
+        membersCreated:
+          0,
+
+        paymentsCreated:
+          0,
+
+        skipped:
+          true,
       };
     }
 
@@ -125,6 +149,13 @@ const seedTrialDemoData =
 
     // =================================================
     // 10 DEMO MEMBERS
+    //
+    // PLAN NAMES EXACTLY FRONTEND FILTER KE SAME HAIN:
+    //
+    // 1 Month Plan
+    // 3 Month Plan
+    // 6 Month Plan
+    // 1 Year Plan
     // =================================================
 
     const demoMembers = [
@@ -299,7 +330,9 @@ const seedTrialDemoData =
           ),
 
         expiryDate:
-          new Date(today),
+          new Date(
+            today
+          ),
 
         paymentMethod:
           "Cash",
@@ -574,11 +607,13 @@ const seedTrialDemoData =
         paymentMethod:
           "Bank Transfer",
       },
+
     ];
 
 
     let membersCreated =
       0;
+
 
     let paymentsCreated =
       0;
@@ -602,38 +637,49 @@ const seedTrialDemoData =
       ) {
 
         const demo =
-          demoMembers[index];
+          demoMembers[
+            index
+          ];
 
 
         const serial =
           index + 1;
 
 
-        // Same ID generator used by normal manually-added members.
-        // Trial client ko DEMO-* aur GYM* mixed IDs nahi dikhenge.
-        const memberId =
-          await generateMemberId();
-
-
         // =================================================
-        // DEFENSIVE DEMO DATA VALIDATION
-        // Future me incomplete/blank demo row create na ho.
+        // DEFENSIVE VALIDATION
+        // Blank demo member DB me create nahi hoga.
         // =================================================
 
         if (
           !demo.name ||
           !demo.phone ||
           !demo.planName ||
-          !demo.planDurationMonths
+          !demo
+            .planDurationMonths
         ) {
+
           throw new Error(
             `Invalid demo member data at serial ${serial}`
           );
         }
 
 
+        // =================================================
+        // TRIAL-SPECIFIC MEMBER ID
+        //
+        // Normal memberIdGenerator.js yahan use nahi hoga.
+        // =================================================
+
+        const memberId =
+          await generateTrialMemberId(
+            gymId
+          );
+
+
         const member =
           await Member.create({
+
             _id:
               memberId,
 
@@ -649,7 +695,8 @@ const seedTrialDemoData =
               demo.planName,
 
             planDurationMonths:
-              demo.planDurationMonths,
+              demo
+                .planDurationMonths,
 
             totalAmount:
               demo.totalAmount,
@@ -664,7 +711,8 @@ const seedTrialDemoData =
               demo.paymentStatus,
 
             membershipStatus:
-              demo.membershipStatus,
+              demo
+                .membershipStatus,
 
             joiningDate:
               demo.joiningDate,
@@ -683,11 +731,17 @@ const seedTrialDemoData =
           1;
 
 
+        // =================================================
+        // PAYMENT
+        // =================================================
+
         if (
-          demo.paidAmount > 0
+          demo.paidAmount >
+          0
         ) {
 
           await Payment.create({
+
             gymId,
 
             member:
@@ -697,7 +751,8 @@ const seedTrialDemoData =
               demo.paidAmount,
 
             paymentMethod:
-              demo.paymentMethod ||
+              demo
+                .paymentMethod ||
               "Cash",
 
             paymentDate:
@@ -736,9 +791,13 @@ const seedTrialDemoData =
 
 
       return {
+
         membersCreated,
+
         paymentsCreated,
-        skipped: false,
+
+        skipped:
+          false,
       };
 
     } catch (error) {
@@ -754,6 +813,7 @@ const seedTrialDemoData =
       // =================================================
 
       await Payment.deleteMany({
+
         gymId,
 
         requestId: {
@@ -771,6 +831,7 @@ const seedTrialDemoData =
       ) {
 
         await Member.deleteMany({
+
           gymId,
 
           _id: {
