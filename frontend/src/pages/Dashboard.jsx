@@ -1071,7 +1071,7 @@ const Dashboard = () => {
 
             onClick={() =>
               navigate(
-                "/members"
+                "/members?status=All"
               )
             }
 
@@ -1080,7 +1080,7 @@ const Dashboard = () => {
             ) =>
               handleCardKeyDown(
                 event,
-                "/members"
+                "/members?status=All"
               )
             }
 

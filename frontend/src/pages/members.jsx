@@ -183,6 +183,7 @@ const Members = () => {
     searchParams.get("status");
 
   const validStatuses = [
+    "All",
     "Active",
     "Expired",
     "Inactive",
@@ -374,7 +375,18 @@ const Members = () => {
       );
 
       setCurrentPage(1);
+
+      if (status === "All") {
+        setPlanFilter("All");
+        setSearchTerm("");
+      }
     }
+
+    // IMPORTANT:
+    // URL me status na ho to current/memory filters
+    // preserve rahenge.
+    // Isse View/Edit se Back karne par filter reset nahi hoga.
+    // Dashboard Total Members already ?status=All bhejta hai.
 
   }, [searchParams]);
 
@@ -1544,7 +1556,12 @@ const Members = () => {
                             className="action-btn"
                             onClick={() =>
                               navigate(
-                                `/members/view/${member._id}`
+                                `/members/view/${member._id}`,
+                                {
+                                  state: {
+                                    member,
+                                  },
+                                }
                               )
                             }
                           >
@@ -1751,7 +1768,12 @@ const Members = () => {
                     className="action-btn"
                     onClick={() =>
                       navigate(
-                        `/members/view/${member._id}`
+                        `/members/view/${member._id}`,
+                        {
+                          state: {
+                            member,
+                          },
+                        }
                       )
                     }
                   >

@@ -4,6 +4,7 @@ import {
 } from "react";
 
 import {
+  useLocation,
   useNavigate,
   useParams,
 } from "react-router-dom";
@@ -12,9 +13,92 @@ import api from "../services/api";
 import "./MemberDetails.css";
 
 
+// =========================================
+// MEMBER DETAILS MEMORY CACHE
+// Gym + member wise isolated.
+// =========================================
+
+const memberDetailsCache =
+  new Map();
+
+
+const getMemberDetailsGymKey =
+  () => {
+
+    const isTrial =
+      localStorage.getItem(
+        "isTrial"
+      ) === "true";
+
+
+    if (isTrial) {
+
+      const trialGym =
+        JSON.parse(
+          localStorage.getItem(
+            "trialGym"
+          ) || "{}"
+        );
+
+
+      return `trial:${
+        trialGym._id ||
+        trialGym.gymId ||
+        trialGym.trialToken ||
+        "unknown"
+      }`;
+    }
+
+
+    const admin =
+      JSON.parse(
+        localStorage.getItem(
+          "admin"
+        ) || "{}"
+      );
+
+
+    return `admin:${
+      admin.gymId ||
+      admin._id ||
+      "olympics-gym"
+    }`;
+  };
+
+
 const MemberDetails = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { id } = useParams();
+
+
+  const detailsGymKey =
+    getMemberDetailsGymKey();
+
+
+  const detailsCacheKey =
+    `${detailsGymKey}|${id}`;
+
+
+  const cachedDetails =
+    memberDetailsCache.get(
+      detailsCacheKey
+    );
+
+
+  const navigationMember =
+    location.state?.member &&
+    String(
+      location.state.member._id
+    ) === String(id)
+      ? location.state.member
+      : null;
+
+
+  const initialMember =
+    cachedDetails?.member ||
+    navigationMember ||
+    null;
 
 
   // =========================================
@@ -49,21 +133,29 @@ const MemberDetails = () => {
     member,
     setMember,
   ] =
-    useState(null);
+    useState(
+      initialMember
+    );
 
 
   const [
     upcomingRenewal,
     setUpcomingRenewal,
   ] =
-    useState(null);
+    useState(
+      cachedDetails
+        ?.upcomingRenewal ||
+      null
+    );
 
 
   const [
     loading,
     setLoading,
   ] =
-    useState(true);
+    useState(
+      !initialMember
+    );
 
 
   const [
@@ -85,11 +177,15 @@ const MemberDetails = () => {
   // =========================================
 
   const fetchMemberDetails =
-    async () => {
+    async (
+      showLoader = false
+    ) => {
 
       try {
 
-        setLoading(true);
+        if (showLoader) {
+          setLoading(true);
+        }
 
         setErrorMessage("");
 
@@ -111,18 +207,38 @@ const MemberDetails = () => {
           ]);
 
 
-        setMember(
+        const nextMember =
           memberResponse
             .data
+            .data;
+
+
+        const nextUpcomingRenewal =
+          renewalResponse
             .data
+            .data ||
+          null;
+
+
+        setMember(
+          nextMember
         );
 
 
         setUpcomingRenewal(
-          renewalResponse
-            .data
-            .data ||
-            null
+          nextUpcomingRenewal
+        );
+
+
+        memberDetailsCache.set(
+          detailsCacheKey,
+          {
+            member:
+              nextMember,
+
+            upcomingRenewal:
+              nextUpcomingRenewal,
+          }
         );
 
       } catch (error) {
@@ -133,32 +249,93 @@ const MemberDetails = () => {
         );
 
 
-        setErrorMessage(
-          error.response
-            ?.data
-            ?.message ||
-            "Unable to load member details."
-        );
+        const existingCache =
+          memberDetailsCache.get(
+            detailsCacheKey
+          );
 
 
-        setMember(null);
+        // Cached/navigation data available ho to
+        // page ko blank/error me convert nahi karenge.
+        if (
+          !existingCache &&
+          !navigationMember
+        ) {
 
-        setUpcomingRenewal(
-          null
-        );
+          setErrorMessage(
+            error.response
+              ?.data
+              ?.message ||
+              "Unable to load member details."
+          );
+
+
+          setMember(null);
+
+          setUpcomingRenewal(
+            null
+          );
+        }
 
       } finally {
 
-        setLoading(false);
+        if (showLoader) {
+          setLoading(false);
+        }
       }
     };
 
 
   useEffect(() => {
 
-    fetchMemberDetails();
+    const cached =
+      memberDetailsCache.get(
+        detailsCacheKey
+      );
 
-  }, [id]);
+
+    if (cached) {
+
+      setMember(
+        cached.member
+      );
+
+      setUpcomingRenewal(
+        cached.upcomingRenewal ||
+        null
+      );
+
+      setLoading(false);
+
+      // Fresh data background me update hogi.
+      fetchMemberDetails(false);
+
+      return;
+    }
+
+
+    if (navigationMember) {
+
+      setMember(
+        navigationMember
+      );
+
+      setLoading(false);
+
+      // Members page se aaya member instantly
+      // show karo, full details background me lao.
+      fetchMemberDetails(false);
+
+      return;
+    }
+
+
+    // Direct URL / first visit only.
+    fetchMemberDetails(true);
+
+  }, [
+    detailsCacheKey,
+  ]);
 
 
   // =========================================
